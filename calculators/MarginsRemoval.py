@@ -8,7 +8,6 @@ def run():
     st.markdown(
         f"""
         <style>
-            /* Global background and text styling */
             .stApp {{
                 background-color: {BACKGROUND_COLOR} !important;
                 color: {TEXT_COLOR} !important;
@@ -21,12 +20,11 @@ def run():
                 border-radius: 5px !important;
                 padding: 5px !important;
                 margin: 0 !important;
-                width: 120px !important; /* Fixed width for input fields */
+                width: 120px !important;
                 box-sizing: border-box;
             }}
-            /* Styling for Results Boxes */
             .result-box {{
-                background-color: #2B3A42; /* Darker background */
+                background-color: #2B3A42;
                 border: 1px solid #DEE2E6;
                 border-radius: 8px;
                 padding: 15px;
@@ -36,10 +34,9 @@ def run():
             }}
             .result-box h4 {{
                 margin-bottom: 10px;
-                color: #FFFFFF !important; /* Force white for header */
                 font-size: 18px;
-                text-align: center;
                 text-decoration: underline;
+                text-align: center;
             }}
             .result-box ul {{
                 list-style-type: none;
@@ -50,25 +47,15 @@ def run():
                 margin-bottom: 10px;
                 font-size: 16px;
             }}
-            .result-box ul li span {{
-                font-weight: bold;
-            }}
-            /* Profit and Loss Colors */
-            .profit-positive {{
-                color: green !important; /* Green for positive values */
-            }}
-            .profit-negative {{
-                color: red !important; /* Red for negative values */
-            }}
         </style>
         """,
         unsafe_allow_html=True,
     )
 
-    st.title("Margins Removal Calculator")
-    st.markdown("Calculate margin, probabilities, pseudo-probabilities, and fair odds for 2-Way or 3-Way Odds.")
+    st.title("Odds Margin Calculator")
+    st.markdown("Calculate the margin, implied probabilities, and fair odds for 2-way or 3-way betting markets.")
 
-    # Function to calculate probabilities and fair odds
+    # Function to calculate probabilities, margin, and fair odds
     def calculate_margins(odds):
         probabilities = [100 / odd for odd in odds]
         margin = sum(probabilities) - 100
@@ -82,34 +69,34 @@ def run():
             "Fair Odds": [round(fair_odd, 2) for fair_odd in fair_odds],
         }
 
-    # Input: Select Odds Type
-    odds_type = st.radio("Select Odds Type:", ["2-Way Odds", "3-Way Odds"])
+    # Input Type Selection
+    st.markdown("### Select Market Type")
+    market_type = st.radio("Market Type", ["2-Way Market", "3-Way Market"], horizontal=True)
 
-    # Input Fields
-    if odds_type == "2-Way Odds":
-        col1, col2, col_fake = st.columns([1, 1, 2])  # Fake column for layout adjustment
+    # Inputs for Odds
+    odds = []
+    if market_type == "2-Way Market":
+        st.markdown("### Enter Odds for 2-Way Market")
+        col1, col2, col_fake = st.columns([1, 1, 1])  # Adjust layout
         with col1:
-            odd1 = st.number_input("Odd 1", min_value=1.01, value=2.0, step=0.01, key="odd1_2way")
+            odd1 = st.number_input("Odd 1", min_value=1.01, value=2.0, step=0.01)
         with col2:
-            odd2 = st.number_input("Odd 2", min_value=1.01, value=2.0, step=0.01, key="odd2_2way")
-        with col_fake:
-            st.markdown("")  # Empty column for spacing
+            odd2 = st.number_input("Odd 2", min_value=1.01, value=2.0, step=0.01)
         odds = [odd1, odd2]
 
-    elif odds_type == "3-Way Odds":
-        col1, col2, col3, col_fake = st.columns([1, 1, 1, 1])  # Fake column for layout adjustment
+    elif market_type == "3-Way Market":
+        st.markdown("### Enter Odds for 3-Way Market")
+        col1, col2, col3, col_fake = st.columns([1, 1, 1, 1])  # Adjust layout
         with col1:
-            odd1 = st.number_input("Odd 1", min_value=1.01, value=3.0, step=0.01, key="odd1_3way")
+            odd1 = st.number_input("Odd 1", min_value=1.01, value=3.0, step=0.01)
         with col2:
-            odd2 = st.number_input("Odd 2", min_value=1.01, value=3.5, step=0.01, key="odd2_3way")
+            odd2 = st.number_input("Odd 2", min_value=1.01, value=3.5, step=0.01)
         with col3:
-            odd3 = st.number_input("Odd 3", min_value=1.01, value=4.0, step=0.01, key="odd3_3way")
-        with col_fake:
-            st.markdown("")  # Empty column for spacing
+            odd3 = st.number_input("Odd 3", min_value=1.01, value=4.0, step=0.01)
         odds = [odd1, odd2, odd3]
 
-    # Calculation Button
-    if st.button("Calculate"):
+    # Calculate Results
+    if st.button("Calculate Margin"):
         results = calculate_margins(odds)
 
         # Display Results
@@ -134,4 +121,3 @@ def run():
 
     # Footer
     st.markdown("---")
-
