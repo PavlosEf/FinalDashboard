@@ -132,7 +132,7 @@ def run():
                 }}
                 .result-box h4 {{
                     margin-bottom: 10px;
-                    color: #FFFFFF; /* White color for headers */
+                    color: #FFFFFF !important; /* Force white for header */
                     font-size: 18px;
                     text-align: center;
                     text-decoration: underline;
@@ -148,6 +148,14 @@ def run():
                 }}
                 .result-box ul li span {{
                     font-weight: bold;
+                    color: inherit !important; /* Use inherited color for numbers */
+                }}
+                /* Force specific styles for Profit and Arbitrage values */
+                .result-box ul li span.profit-positive {{
+                    color: green !important; /* Green for positive values */
+                }}
+                .result-box ul li span.profit-negative {{
+                    color: red !important; /* Red for negative values */
                 }}
             </style>
             <div class="result-box">
@@ -157,13 +165,19 @@ def run():
                     <li>Competition Stakes: <span>{results['W2 Stake']}€</span></li>
                     <li>Total Stake: <span>{results['Total Stake']}€</span></li>
                     <li>Profit Kaizen: 
-                        <span style="color:{profit_w1_color};">{results['Profit W1']}€</span>
+                        <span class="{'profit-positive' if results['Profit W1'] >= 0 else 'profit-negative'}">
+                            {results['Profit W1']}€
+                        </span>
                     </li>
                     <li>Profit Competition: 
-                        <span style="color:{profit_w2_color};">{results['Profit W2']}€</span>
+                        <span class="{'profit-positive' if results['Profit W2'] >= 0 else 'profit-negative'}">
+                            {results['Profit W2']}€
+                        </span>
                     </li>
                     <li>Arbitrage: 
-                        <span style="color:{arbitrage_color};">{results['Arbitrage %']}%</span>
+                        <span class="{'profit-positive' if results['Arbitrage %'] >= 0 else 'profit-negative'}">
+                            {results['Arbitrage %']}%
+                        </span>
                     </li>
                 </ul>
             </div>
