@@ -18,8 +18,9 @@ def run():
                 color: {TEXT_COLOR} !important;
                 caret-color: {TEXT_COLOR} !important;
                 border: 1px solid #DEE2E6 !important;
-                border-radius: 1px !important;
-                padding: 1px !important;
+                border-radius: 5px !important;
+                padding: 5px !important;
+                width: 120px !important; /* Set smaller input box width */
             }}
             .result-box {{
                 background-color: #FFD700;
@@ -78,17 +79,17 @@ def run():
     # Input Fields
     col1, col2 = st.columns([1, 1])
     with col1:
-        w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01)
+        w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
     with col2:
-        w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01)
+        w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
 
     col1, col2, col3 = st.columns([1, 1, 1])
     with col1:
-        w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=0.0, step=0.01)
+        w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w1_stake")
     with col2:
-        w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01)
+        w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w2_stake")
     with col3:
-        total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01)
+        total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01, key="total_stake")
 
     # Perform Calculation
     if total_stake > 0:
