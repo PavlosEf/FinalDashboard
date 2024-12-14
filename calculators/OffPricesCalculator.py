@@ -1,9 +1,11 @@
 import streamlit as st
 
-    st.title("Off Prices Calculator")
-    st.markdown("Enter prices below to calculate the percentage difference Kaizen odds are 1st! .")
+# Title and description
+st.title("Off Prices Calculator")
+st.markdown("Enter prices below to calculate the percentage difference. Kaizen odds are entered first!")
 
-    st.markdown(
+# Custom CSS for styling
+st.markdown(
     """
     <style>
         /* Input fields with black text */
@@ -18,7 +20,7 @@ import streamlit as st
         }
 
         /* Result boxes for percentage */
-       .result-box {
+        .result-box {
             border: 2px solid #FFFFFF; /* White border */
             padding: 5px;
             margin: 5px 10px; /* Adjust the spacing around the box */
@@ -30,14 +32,13 @@ import streamlit as st
             top: 20px; /* Moves the box slightly up */
         }
        
-     .result-container {
+        .result-container {
             display: flex; /* Use flexbox for alignment */
             align-items: center; /* Vertically align items */
             justify-content: flex-start; /* Align items to the left */
             gap: 2px; /* Add spacing between the percentage and label boxes */
             margin-top: 5px; /* Optional: Add some space above the container */
         }
-
 
         /* Color-coded labels */
         .ok {
@@ -62,59 +63,59 @@ import streamlit as st
     unsafe_allow_html=True,
 )
 
-    # Define helper functions
-    def parse_number(number_str):
-        try:
-            return float(number_str.replace(",", "."))
-        except ValueError:
-            return None
+# Define helper functions
+def parse_number(number_str):
+    try:
+        return float(number_str.replace(",", "."))
+    except ValueError:
+        return None
 
-    def get_label(difference):
-        if difference > -2:
-            return '<div class="result-box ok">OK</div>' 
-        elif -3 <= difference <= -2:
-            return '<div class="result-box off2">OFF 2</div>'
-        elif difference < -3:
-            return '<div class="result-box off1">OFF 1</div>'
-        else:
-            return '<div class="result-box">None</div>'
+def get_label(difference):
+    if difference > -2:
+        return '<div class="result-box ok">OK</div>' 
+    elif -3 <= difference <= -2:
+        return '<div class="result-box off2">OFF 2</div>'
+    elif difference < -3:
+        return '<div class="result-box off1">OFF 1</div>'
+    else:
+        return '<div class="result-box">None</div>'
 
-    # Create input fields and calculate results
-    for i in range(5):
-        col1, col2, col3, col4 = st.columns([0.3, 0.3, 1, 1])  # Adjust column sizes
-        
-        with col1:
-            price_a = st.text_input(f"Kaizen Odds {i + 1}:", key=f"price_a_{i}")
-        with col2:
-            price_b = st.text_input(f"Competition Odds {i + 1}:", key=f"price_b_{i}")
-        
-        if price_a and price_b:
-            parsed_a = parse_number(price_a)
-            parsed_b = parse_number(price_b)
-       
-            if parsed_a and parsed_b and parsed_a > 0 and parsed_b > 0:
-                 # Calculate percentage difference
-                 difference = ((1 / parsed_a) - (1 / parsed_b)) * 100
+# Create input fields and calculate results
+for i in range(5):
+    col1, col2, col3, col4 = st.columns([0.3, 0.3, 1, 1])  # Adjust column sizes
+    
+    with col1:
+        price_a = st.text_input(f"Kaizen Odds {i + 1}:", key=f"price_a_{i}")
+    with col2:
+        price_b = st.text_input(f"Competition Odds {i + 1}:", key=f"price_b_{i}")
+    
+    if price_a and price_b:
+        parsed_a = parse_number(price_a)
+        parsed_b = parse_number(price_b)
+    
+        if parsed_a and parsed_b and parsed_a > 0 and parsed_b > 0:
+            # Calculate percentage difference
+            difference = ((1 / parsed_a) - (1 / parsed_b)) * 100
 
-                    # Display percentage difference and label together in col3
-                 with col3:
-                     st.markdown(
-                         f"""
-                         <div class="result-container">
-                             <div class="result-box">{difference:.2f}%</div>
-                             {get_label(difference)}
-                         </div>
-                         """,
-                         unsafe_allow_html=True,
-                     )
-elif selected_tool == "Surebet Calculator":
+            # Display percentage difference and label together in col3
+            with col3:
+                st.markdown(
+                    f"""
+                    <div class="result-container">
+                        <div class="result-box">{difference:.2f}%</div>
+                        {get_label(difference)}
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+
+# Placeholder for Surebet Calculator
+if "selected_tool" in locals() and selected_tool == "Surebet Calculator":
     st.title("Surebet Calculator")
     st.write("Placeholder for the Surebet Calculator.")
     # Add your Surebet Calculator logic here
 
-import streamlit as st
-
-# Function to calculate stakes and arbitrage
+# Surebet calculation logic
 def calculate_surebet(w1_odds, w2_odds, w1_stake=None, w2_stake=None, total_stake=None):
     if total_stake:
         # Split total stake for equal profit
@@ -142,5 +143,5 @@ def calculate_surebet(w1_odds, w2_odds, w1_stake=None, w2_stake=None, total_stak
         "Total Stake": round(total_stake, 2),
         "Profit W1": round(profit_w1, 2),
         "Profit W2": round(profit_w2, 2),
-        "Arbitrage %": round(arbitrage_percentage, 2)
+        "Arbitrage %": round(arbitrage_percentage, 2),
     }
