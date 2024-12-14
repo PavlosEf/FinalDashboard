@@ -24,32 +24,11 @@ def run():
                 width: 120px !important; /* Set smaller input box width */
                 box-sizing: border-box; /* Ensure proper size alignment */
             }}
-            div[data-testid="stBlock"] {{
-                gap: 0px !important; /* Remove extra space between Streamlit blocks */
+            div[data-testid="stHorizontalBlock"] > div {{
+                gap: 0px !important; /* Remove extra gaps between columns */
             }}
             .css-18e3th9 {{
                 padding: 0px !important; /* Remove padding around input fields */
-            }}
-            .result-box {{
-                background-color: #FFD700;
-                border: 1px solid #000000;
-                border-radius: 5px;
-                padding: 15px;
-                margin-top: 15px;
-                color: #000000;
-            }}
-            .result-box h4 {{
-                margin-bottom: 10px;
-            }}
-            .result-box ul {{
-                list-style-type: none;
-                padding: 0;
-            }}
-            .result-box ul li {{
-                margin-bottom: 5px;
-            }}
-            .result-box span {{
-                font-weight: bold;
             }}
         </style>
         """,
@@ -85,13 +64,13 @@ def run():
         }
 
     # Input Fields
-    col1, col2 = st.columns([1, 1])
+    col1, col2 = st.columns([1, 1], gap="small")  # Use the "gap" argument to reduce column spacing
     with col1:
         w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
     with col2:
         w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
 
-    col1, col2, col3 = st.columns([1, 1, 1])
+    col1, col2, col3 = st.columns([1, 1, 1], gap="small")  # Use "small" to reduce gap
     with col1:
         w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w1_stake")
     with col2:
