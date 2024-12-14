@@ -80,13 +80,16 @@ def run():
             st.markdown("")  # Empty "fake" column for spacing
 
         # Row 2: Stake Inputs
-        col1, col2, col3 = st.columns([1, 1, 2])  # Maintain uniform alignment for stake inputs
-        with col1:
+       col1, col2, col3, col_fake = st.columns([1, 1, 2, 0.5])  # Fake column added at the end
+       with col1:
             w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
-        with col2:
+       with col2:
             w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w2_stake")
-        with col3:
+       with col3:
             total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01, key="total_stake")
+       with col_fake:
+            st.markdown("")  # Fake column left empty for spacing
+
 
     # Perform Calculation
     if total_stake > 0:
