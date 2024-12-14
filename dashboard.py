@@ -14,10 +14,10 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Locked global styles (for sidebar and main background)
+# Locked global styles (for sidebar and main background, and text color)
 BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
 SIDEBAR_BACKGROUND = "#2B3A42"  # Darker grey for the sidebar
-TEXT_COLOR = "#FFFFFF"  # White text
+TEXT_COLOR = "#FFFFFF"  # White text for all elements
 
 # Apply locked global CSS
 st.markdown(f"""
@@ -40,6 +40,21 @@ st.markdown(f"""
         /* Locked main content styling */
         .stApp {{
             background-color: {BACKGROUND_COLOR} !important;
+            color: {TEXT_COLOR} !important;
+        }}
+
+        /* Default input styling (make text white and background consistent) */
+        input[type="text"], input[type="number"], textarea {{
+            background-color: #3E4E56 !important; /* Same as app background */
+            color: {TEXT_COLOR} !important; /* White text */
+            caret-color: {TEXT_COLOR} !important; /* White caret */
+            border: 1px solid #DEE2E6 !important;
+            border-radius: 5px !important;
+            padding: 8px !important;
+        }}
+
+        /* Make all text across the app white */
+        .stApp * {{
             color: {TEXT_COLOR} !important;
         }}
     </style>
