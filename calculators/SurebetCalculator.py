@@ -18,7 +18,7 @@ def run():
                 color: {TEXT_COLOR} !important;
                 caret-color: {TEXT_COLOR} !important;
                 border: 1px solid #DEE2E6 !important;
-                border-radius: 5px !important;
+                border-radius: 1px !important;
                 padding: 8px !important;
             }}
             .result-box {{
