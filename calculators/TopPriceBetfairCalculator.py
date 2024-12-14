@@ -4,8 +4,6 @@ def run():
     # Global Styles
     BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
     TEXT_COLOR = "#FFFFFF"  # White text for all elements
-    BUTTON_COLOR = "#FF0000"  # Red color for buttons
-    BUTTON_HOVER_COLOR = "#CC0000"  # Darker red for button hover
 
     st.markdown(
         f"""
@@ -26,31 +24,41 @@ def run():
                 width: 120px !important; /* Fixed width for input fields */
                 box-sizing: border-box;
             }}
-            /* Styling for + and - buttons with red background */
-            div.stApp input[type="number"]::-webkit-inner-spin-button, 
-            div.stApp input[type="number"]::-webkit-outer-spin-button {{
-                background-color: {BUTTON_COLOR} !important; /* Red color */
-                color: {TEXT_COLOR} !important; /* White text */
-                border: none !important; /* Remove borders */
+            /* Styling for Results Box */
+            .result-box {{
+                background-color: #2B3A42; /* Darker background */
+                border: 1px solid #DEE2E6;
+                border-radius: 8px;
+                padding: 15px;
+                margin: 15px 0;
+                color: {TEXT_COLOR};
+                font-family: Arial, sans-serif;
             }}
-            div.stApp input[type="number"]::-webkit-inner-spin-button:hover, 
-            div.stApp input[type="number"]::-webkit-outer-spin-button:hover {{
-                background-color: {BUTTON_HOVER_COLOR} !important; /* Darker red on hover */
-                color: #FFFFFF !important; /* Keep text white */
+            .result-box h4 {{
+                margin-bottom: 10px;
+                color: #FFFFFF !important; /* Force white for header */
+                font-size: 18px;
+                text-align: center;
+                text-decoration: underline;
             }}
-            /* Styling for Streamlit buttons */
-            button[kind="primary"] {{
-                background-color: {BUTTON_COLOR} !important; /* Red color */
-                border: none !important; /* Remove borders */
-                color: #FFFFFF !important; /* White text */
-                border-radius: 5px !important;
-                padding: 8px 16px !important;
-                font-size: 16px !important;
-                font-weight: bold !important;
+            .result-box ul {{
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
             }}
-            button[kind="primary"]:hover {{
-                background-color: {BUTTON_HOVER_COLOR} !important; /* Darker red on hover */
-                color: #FFFFFF !important; /* Keep text white */
+            .result-box ul li {{
+                margin-bottom: 10px;
+                font-size: 16px;
+            }}
+            .result-box ul li span {{
+                font-weight: bold;
+            }}
+            /* Profit and Loss Colors */
+            .profit-positive {{
+                color: green !important; /* Green for positive values */
+            }}
+            .profit-negative {{
+                color: red !important; /* Red for negative values */
             }}
         </style>
         """,
