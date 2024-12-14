@@ -66,7 +66,7 @@ def run():
     # Input Fields
     for i in range(1):  # Adjusted to match layout from OffPricesCalculator.py
         # Row 1: Odds Inputs
-        col1, col2 = st.columns([1, 0.5])  # Equal column widths
+        col1, col2 = st.columns([1, 5])  # Equal column widths
         with col1:
             w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
         with col2:
