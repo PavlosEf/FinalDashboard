@@ -9,10 +9,7 @@ def run():
         f"""
         <style>
             /* Global background and text styling */
-            .stApp {{
-                background-color: {BACKGROUND_COLOR} !important;
-                color: {TEXT_COLOR} !important;
-            }}
+            .stApp {background-color: {BACKGROUND_COLOR} !important; color: {TEXT_COLOR} !important;}
             input[type="text"], input[type="number"] {{
                 background-color: {BACKGROUND_COLOR} !important;
                 color: {TEXT_COLOR} !important;
@@ -24,12 +21,8 @@ def run():
                 width: 120px !important; /* Fixed width for input fields */
                 box-sizing: border-box;
             }}
-            div[data-testid="stBlock"] {{
-                gap: 0px !important; /* Remove extra gaps between Streamlit blocks */
-            }}
-            .css-18e3th9 {{
-                padding: 0px !important; /* Remove padding around input fields */
-            }}
+            div[data-testid="stBlock"] {{ gap: 0px !important; }} /* Remove extra gaps between Streamlit blocks */
+            .css-18e3th9 {{ padding: 0px !important; }} /* Remove padding around input fields */
         </style>
         """,
         unsafe_allow_html=True,
@@ -63,19 +56,19 @@ def run():
             "Arbitrage %": round(arbitrage_percentage, 2)
         }
 
-    # Input Fields with a Fake Column
+    # Input Fields with Fake Column After Competition Odds
     for i in range(1):  # Adjusted to match layout from OffPricesCalculator.py
-        # Row 1: Odds Inputs with Fake Column
-        col1, col_fake, col2 = st.columns([1, 0.3, 5])  # Added a small fake column for adjustment
+        # Row 1: Odds Inputs
+        col1, col2, col_fake = st.columns([1, 5, 0.5])  # Fake column added after Competition Odds
         with col1:
             w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
-        with col_fake:
-            st.markdown("")  # Fake column with no content
         with col2:
             w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
+        with col_fake:
+            st.markdown("")  # Empty "fake" column for spacing
 
-        # Row 2: Stake Inputs with Fake Column
-        col1, col_fake, col2, col_fake2, col3 = st.columns([1, 0.2, 1, 0.2, 2])  # Fake columns for more fine-tuning
+        # Row 2: Stake Inputs
+        col1, col2, col3 = st.columns([1, 1, 2])  # Maintain uniform alignment for stake inputs
         with col1:
             w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
         with col2:
