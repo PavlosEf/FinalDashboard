@@ -19,8 +19,16 @@ def run():
                 caret-color: {TEXT_COLOR} !important;
                 border: 1px solid #DEE2E6 !important;
                 border-radius: 5px !important;
-                padding: 5px !important;
+                padding: 5px !important; /* Ensure minimal padding inside the input */
+                margin: 0 !important; /* Remove additional margins */
                 width: 120px !important; /* Set smaller input box width */
+                box-sizing: border-box; /* Ensure proper size alignment */
+            }}
+            div[data-testid="stBlock"] {{
+                gap: 0px !important; /* Remove extra space between Streamlit blocks */
+            }}
+            .css-18e3th9 {{
+                padding: 0px !important; /* Remove padding around input fields */
             }}
             .result-box {{
                 background-color: #FFD700;
