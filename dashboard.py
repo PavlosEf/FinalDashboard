@@ -23,44 +23,58 @@ TEXT_COLOR = "#FFFFFF"  # White text for all elements
 # Apply locked global CSS
 st.markdown(f"""
     <style>
-        /* Sidebar styling */
+        /* Sidebar background and text styling */
         section[data-testid="stSidebar"] {{
             background-color: {SIDEBAR_BACKGROUND} !important;
+        }}
+        
+        /* Sidebar headings and titles */
+        section[data-testid="stSidebar"] h1, 
+        section[data-testid="stSidebar"] h2, 
+        section[data-testid="stSidebar"] h3, 
+        section[data-testid="stSidebar"] h4, 
+        section[data-testid="stSidebar"] h5, 
+        section[data-testid="stSidebar"] h6 {{
             color: {TEXT_COLOR} !important;
         }}
-        section[data-testid="stSidebar"] h1, h2, h3, h4, h5, h6 {{
-            color: {TEXT_COLOR} !important; /* Ensure sidebar headings are white */
+        
+        /* Sidebar labels and text */
+        section[data-testid="stSidebar"] label, 
+        section[data-testid="stSidebar"] div[data-testid="stSidebarNav"], 
+        [data-testid="stSidebar"] .stRadio {{
+            color: {TEXT_COLOR} !important; /* Force sidebar text to white */
+            font-size: 14px !important; /* Optional: Adjust font size */
+            font-weight: bold !important; /* Optional: Make text bold */
         }}
-        section[data-testid="stSidebar"] label {{
-            color: {TEXT_COLOR} !important; /* Ensure sidebar labels are white */
-        }}
-        section[data-testid="stSidebar"] div[data-testid="stSidebarNav"] {{
-            background-color: transparent !important;
-            color: {TEXT_COLOR} !important;
-        }}
+
+        /* Sidebar hover effects */
         section[data-testid="stSidebar"] div[data-testid="stSidebarNav"]:hover {{
-            background-color: #1F2A32 !important; /* Darker background on hover */
+            background-color: #1F2A32 !important; /* Slightly darker on hover */
+            color: {TEXT_COLOR} !important;
         }}
+
+        /* Sidebar padding */
         section[data-testid="stSidebar"] {{
             padding: 20px;
         }}
 
-        /* Main content styling */
+        /* Global main content styling */
         .stApp {{
             background-color: {BACKGROUND_COLOR} !important;
+            color: {TEXT_COLOR} !important;
         }}
 
-        /* Input titles and labels */
+        /* Input titles */
         label {{
             color: {TEXT_COLOR} !important; /* Ensure input titles are white */
             font-weight: bold !important; /* Optional: Make titles bold */
         }}
 
-        /* Input field styling */
+        /* Default input styling */
         input[type="text"], input[type="number"], textarea {{
-            background-color: #3E4E56 !important;
-            color: {TEXT_COLOR} !important;
-            caret-color: {TEXT_COLOR} !important;
+            background-color: #3E4E56 !important; /* Same as app background */
+            color: {TEXT_COLOR} !important; /* White text */
+            caret-color: {TEXT_COLOR} !important; /* White caret */
             border: 1px solid #DEE2E6 !important;
             border-radius: 5px !important;
             padding: 8px !important;
@@ -91,16 +105,9 @@ st.markdown(f"""
         button[kind="primary"]:hover {{
             background-color: #CC0000 !important; /* Darker red on hover */
         }}
-
-        /* Fix for sidebar radio button text */
-        [data-testid="stSidebar"] .stRadio {{
-            color: {TEXT_COLOR} !important; /* White text for sidebar radio buttons */
-        }}
-        [data-testid="stSidebar"] .stRadio:hover {{
-            color: {TEXT_COLOR} !important;
-        }}
     </style>
 """, unsafe_allow_html=True)
+
 
 # Sidebar navigation
 with st.sidebar:
