@@ -21,7 +21,7 @@ def run():
                 border-radius: 5px !important;
                 padding: 5px !important; /* Minimal padding inside the input */
                 margin: 0 !important; /* Remove additional margins */
-                width: 100% !important; /* Ensure input fills column space */
+                width: 30% !important; /* Ensure input fills column space */
                 box-sizing: border-box; /* Ensure proper size alignment */
             }}
             div[data-testid="stBlock"] {{
