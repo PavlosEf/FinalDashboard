@@ -91,7 +91,7 @@ def run():
     # Input Fields
     for i in range(1):  # Adjusted to match layout from OffPricesCalculator.py
         # Row 1: Odds Inputs
-        col1, col2 = st.columns([1, 1])  # Adjusted column widths for better alignment
+        col1, col2 = st.columns([2, 2])  # Adjusted column widths for better alignment
         with col1:
             w1_odds = st.text_input("Kaizen Odds 1:", "2.5", key=f"w1_odds_{i}")
             w1_odds = parse_number(w1_odds) or 0
