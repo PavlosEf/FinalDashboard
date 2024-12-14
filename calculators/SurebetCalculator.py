@@ -73,7 +73,7 @@ def run():
             w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
 
         # Row 2: Stake Inputs
-        col1, col2, col3 = st.columns([1, 1, 0.5])  # Equal column widths
+        col1, col2, col3 = st.columns([1, 1, 1.8])  # Equal column widths
         with col1:
             w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
         with col2:
