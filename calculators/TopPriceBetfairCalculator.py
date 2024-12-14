@@ -21,7 +21,7 @@ def run():
                 border-radius: 5px !important;
                 padding: 5px !important;
                 margin: 0 !important;
-                width: 300px !important; /* Fixed width for input fields */
+                width: 3000px !important; /* Fixed width for input fields */
                 box-sizing: border-box;
             }}
             /* Styling for Results Box */
