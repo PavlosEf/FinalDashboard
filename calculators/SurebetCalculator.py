@@ -5,6 +5,7 @@ def run():
     BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
     TEXT_COLOR = "#FFFFFF"  # White text for all elements
 
+    # Inject custom CSS
     st.markdown(
         f"""
         <style>
@@ -20,8 +21,9 @@ def run():
                 border: 1px solid #DEE2E6 !important;
                 border-radius: 5px !important;
                 padding: 5px !important;
-                margin: 2 !important;
-                width: 200px !important; /* Fixed width for input fields */
+                margin: 0 !important;
+                width: 100% !important; /* Make input fields fit their column */
+                max-width: 120px !important; /* Explicitly limit field size */
                 box-sizing: border-box;
             }}
             div[data-testid="stBlock"] {{
@@ -64,22 +66,21 @@ def run():
         }
 
     # Input Fields
-    for i in range(1):  # Adjusted to match layout from OffPricesCalculator.py
-        # Row 1: Odds Inputs
-        col1, col2 = st.columns([1, 5])  # Equal column widths
-        with col1:
-            w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
-        with col2:
-            w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
+    # Row 1: Odds Inputs
+    col1, col2 = st.columns([1, 5])  # Set specific column ratios
+    with col1:
+        w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
+    with col2:
+        w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
 
-        # Row 2: Stake Inputs
-        col1, col2, col3 = st.columns([1, 1, 2.1])  # Equal column widths
-        with col1:
-            w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
-        with col2:
-            w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w2_stake")
-        with col3:
-            total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01, key="total_stake")
+    # Row 2: Stake Inputs
+    col1, col2, col3 = st.columns([1, 1, 2.1])  # Set specific column ratios
+    with col1:
+        w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
+    with col2:
+        w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w2_stake")
+    with col3:
+        total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01, key="total_stake")
 
     # Perform Calculation
     if total_stake > 0:
