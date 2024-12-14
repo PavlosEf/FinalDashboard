@@ -2,7 +2,7 @@ import streamlit as st
 
 def run():
     st.title("Off Prices Calculator")
-    st.markdown("Enter prices below to calculate the percentage difference Kaizen odds are 1st!")
+    st.markdown("Enter prices below to calculate the percentage difference. Kaizen odds are 1st!")
 
     # Add custom CSS for styling
     st.markdown(
@@ -72,6 +72,13 @@ def run():
         else:
             return '<div class="result-box">None</div>'
 
+    # Initialize session state for inputs
+    for i in range(5):
+        if f"price_a_{i}" not in st.session_state:
+            st.session_state[f"price_a_{i}"] = ""
+        if f"price_b_{i}" not in st.session_state:
+            st.session_state[f"price_b_{i}"] = ""
+
     # Create input fields and calculate results
     for i in range(5):
         col1, col2, col3, col4 = st.columns([0.3, 0.3, 1, 1])  # Adjust column sizes
@@ -100,3 +107,9 @@ def run():
                         """,
                         unsafe_allow_html=True,
                     )
+
+    # Add a button to clear inputs
+    if st.button("Clear All Inputs"):
+        for i in range(5):
+            st.session_state[f"price_a_{i}"] = ""
+            st.session_state[f"price_b_{i}"] = ""
