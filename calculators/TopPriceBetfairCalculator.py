@@ -4,6 +4,8 @@ def run():
     # Global Styles
     BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
     TEXT_COLOR = "#FFFFFF"  # White text for all elements
+    BUTTON_COLOR = "#FF0000"  # Red color for buttons
+    BUTTON_HOVER_COLOR = "#CC0000"  # Darker red for button hover
 
     st.markdown(
         f"""
@@ -24,16 +26,30 @@ def run():
                 width: 120px !important; /* Fixed width for input fields */
                 box-sizing: border-box;
             }}
-            /* Styling for + and - buttons with higher specificity */
+            /* Styling for + and - buttons with red background */
             div.stApp input[type="number"]::-webkit-inner-spin-button, 
             div.stApp input[type="number"]::-webkit-outer-spin-button {{
-                background-color: #2B3A42 !important; /* Dark background */
-                color: #FFFFFF !important; /* White text */
+                background-color: {BUTTON_COLOR} !important; /* Red color */
+                color: {TEXT_COLOR} !important; /* White text */
                 border: none !important; /* Remove borders */
             }}
             div.stApp input[type="number"]::-webkit-inner-spin-button:hover, 
             div.stApp input[type="number"]::-webkit-outer-spin-button:hover {{
-                background-color: #1F2A32 !important; /* Slightly darker background on hover */
+                background-color: {BUTTON_HOVER_COLOR} !important; /* Darker red on hover */
+                color: #FFFFFF !important; /* Keep text white */
+            }}
+            /* Styling for Streamlit buttons */
+            button[kind="primary"] {{
+                background-color: {BUTTON_COLOR} !important; /* Red color */
+                border: none !important; /* Remove borders */
+                color: #FFFFFF !important; /* White text */
+                border-radius: 5px !important;
+                padding: 8px 16px !important;
+                font-size: 16px !important;
+                font-weight: bold !important;
+            }}
+            button[kind="primary"]:hover {{
+                background-color: {BUTTON_HOVER_COLOR} !important; /* Darker red on hover */
                 color: #FFFFFF !important; /* Keep text white */
             }}
         </style>
