@@ -8,6 +8,7 @@ def run():
     st.markdown(
         f"""
         <style>
+            /* Global background and text styling */
             .stApp {{
                 background-color: {BACKGROUND_COLOR} !important;
                 color: {TEXT_COLOR} !important;
@@ -20,32 +21,36 @@ def run():
                 border-radius: 5px !important;
                 padding: 5px !important;
                 margin: 0 !important;
-                width: 300px !important;
+                width: 120px !important; /* Fixed width for input fields */
                 box-sizing: border-box;
             }}
-            .result-box {{
+            /* Styling for Smaller Results Box */
+            .small-result-box {{
                 background-color: #2B3A42;
                 border: 1px solid #DEE2E6;
                 border-radius: 8px;
                 padding: 15px;
                 margin: 15px 0;
+                width: 50%; /* Smaller width */
                 color: {TEXT_COLOR};
                 font-family: Arial, sans-serif;
+                display: inline-block;
+                vertical-align: top;
             }}
-            .result-box h4 {{
+            .small-result-box h4 {{
                 margin-bottom: 10px;
-                font-size: 18px;
+                font-size: 16px;
                 text-decoration: underline;
                 text-align: center;
             }}
-            .result-box ul {{
+            .small-result-box ul {{
                 list-style-type: none;
                 padding: 0;
                 margin: 0;
             }}
-            .result-box ul li {{
+            .small-result-box ul li {{
                 margin-bottom: 10px;
-                font-size: 16px;
+                font-size: 14px;
             }}
         </style>
         """,
@@ -86,7 +91,7 @@ def run():
 
     elif market_type == "3-Way Market":
         st.markdown("### Enter Odds for 3-Way Market")
-        col1, col2, col3, col_fake = st.columns([1, 1, 1, 2])  # Adjust layout
+        col1, col2, col3, col_fake = st.columns([1, 1, 1, 1])  # Adjust layout
         with col1:
             odd1 = st.number_input("Odd 1", min_value=1.01, value=3.0, step=0.01)
         with col2:
@@ -99,11 +104,11 @@ def run():
     if st.button("Calculate Margin"):
         results = calculate_margins(odds)
 
-        # Display Results
+        # Display Results in Smaller Box
         st.markdown("### Results")
         st.markdown(
             f"""
-            <div class="result-box">
+            <div class="small-result-box">
                 <h4>Calculation Results</h4>
                 <ul>
                     <li>Margin: <span>{results['Margin %']}%</span></li>
