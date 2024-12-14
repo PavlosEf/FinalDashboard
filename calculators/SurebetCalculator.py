@@ -75,7 +75,7 @@ def run():
             st.markdown("")  # Empty fake column for spacing
 
         # Row 2: Stake Inputs with Fake Column at the End
-        col1, col2, col3, col_fake = st.columns([1, 1, 1, 2])  # Fake column added at the end
+        col1, col2, col3, col_fake = st.columns([0.5, 0.5, 0.5, 2])  # Fake column added at the end
         with col1:
             w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
         with col2:
