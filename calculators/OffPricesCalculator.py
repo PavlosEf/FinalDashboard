@@ -1,6 +1,7 @@
 import streamlit as st
 
 def run():
+       st.title("Off Prices Calculator")
        st.markdown("Enter prices below to calculate the percentage difference Kaizen odds are 1st!")
 
     # Add custom CSS for styling
