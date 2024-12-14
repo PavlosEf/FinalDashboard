@@ -1,138 +1,99 @@
 import streamlit as st
+import calculators.OffPricesCalculator as OffPricesCalculator
+import calculators.SurebetCalculator as SurebetCalculator
+import calculators.TopPriceBetfairCalculator as TopPriceBetfairCalculator
+import calculators.MarginsRemoval as MarginsRemoval
+import calculators.AlternativeLinesConverter as AlternativeLinesConverter
+import calculators.GeneralTab1 as GeneralTab1
+import calculators.GeneralTab2 as GeneralTab2
 
-def run():
-    # Global Styles
-    BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
-    TEXT_COLOR = "#FFFFFF"  # White text for all elements
+# Set page configuration
+st.set_page_config(
+    page_title="Betting Tools Dashboard",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-    st.markdown(
-        f"""
-        <style>
-            /* Global background and text styling */
-            .stApp {{
-                background-color: {BACKGROUND_COLOR} !important;
-                color: {TEXT_COLOR} !important;
-            }}
-            input[type="text"], input[type="number"] {{
-                background-color: {BACKGROUND_COLOR} !important;
-                color: {TEXT_COLOR} !important;
-                caret-color: {TEXT_COLOR} !important;
-                border: 1px solid #DEE2E6 !important;
-                border-radius: 5px !important;
-                padding: 5px !important;
-                margin: 0 !important;
-                width: 120px !important; /* Fixed width for input fields */
-                box-sizing: border-box;
-            }}
-            /* Styling for + and - buttons with higher specificity */
-            div.stApp input[type="number"]::-webkit-inner-spin-button, 
-            div.stApp input[type="number"]::-webkit-outer-spin-button {{
-                background-color: #2B3A42 !important; /* Dark background */
-                color: #FFFFFF !important; /* White text */
-                border: none !important; /* Remove borders */
-            }}
-            div.stApp input[type="number"]::-webkit-inner-spin-button:hover, 
-            div.stApp input[type="number"]::-webkit-outer-spin-button:hover {{
-                background-color: #1F2A32 !important; /* Slightly darker background on hover */
-                color: #FFFFFF !important; /* Keep text white */
-            }}
-        </style>
-        """,
-        unsafe_allow_html=True,
+# Locked global styles (for sidebar and main background, and text color)
+BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
+SIDEBAR_BACKGROUND = "#2B3A42"  # Darker grey for the sidebar
+TEXT_COLOR = "#FFFFFF"  # White text for all elements
+
+# Apply locked global CSS
+st.markdown(f"""
+    <style>
+        /* Locked sidebar styling */
+        section[data-testid="stSidebar"] {{
+            background-color: {SIDEBAR_BACKGROUND} !important;
+            color: {TEXT_COLOR} !important;
+        }}
+        section[data-testid="stSidebar"] h1, h2, h3, h4, h5, h6 {{
+            color: {TEXT_COLOR} !important;
+        }}
+        section[data-testid="stSidebar"] label {{
+            color: {TEXT_COLOR} !important;
+        }}
+        section[data-testid="stSidebar"] {{
+            padding: 20px;
+        }}
+        
+        /* Locked main content styling */
+        .stApp {{
+            background-color: {BACKGROUND_COLOR} !important;
+            color: {TEXT_COLOR} !important;
+        }}
+
+        /* Default input styling (make text white and background consistent) */
+        input[type="text"], input[type="number"], textarea {{
+            background-color: #3E4E56 !important; /* Same as app background */
+            color: {TEXT_COLOR} !important; /* White text */
+            caret-color: {TEXT_COLOR} !important; /* White caret */
+            border: 1px solid #DEE2E6 !important;
+            border-radius: 5px !important;
+            padding: 8px !important;
+        }}
+
+        /* Make all text across the app white */
+        .stApp * {{
+            color: {TEXT_COLOR} !important;
+        }}
+    </style>
+""", unsafe_allow_html=True)
+
+# Sidebar navigation
+with st.sidebar:
+    st.title("Tools Menu")
+    selected_tool = st.radio(
+        "Select a Tool:",
+        [
+            "Off Prices Calculator",
+            "Surebet Calculator",
+            "Top Price / Betfair Calculator",
+            "Margins Removal",
+            "Alternative Lines Converter",
+            "General Tab 1",
+            "General Tab 2"
+        ]
     )
 
-    st.title("Lay Bet Calculator")
-    st.markdown("Calculate lay stakes, liabilities, and profits for betting scenarios on Top Price Market prices.")
+# Display content based on selected tool
+if selected_tool == "Off Prices Calculator":
+    OffPricesCalculator.run()
 
-    # Function for calculation
-    def calculate_back_lay_bet(back_stake, back_odds, lay_odds):
-        lay_stake = (back_stake * back_odds) / lay_odds
-        liability = lay_stake * (lay_odds - 1)
+elif selected_tool == "Surebet Calculator":
+    SurebetCalculator.run()
 
-        # Back Bet Outcomes
-        back_bet_profit_win = back_stake * (back_odds - 1)  # Profit when back bet wins
-        back_bet_profit_lose = -back_stake  # Loss when back bet loses
+elif selected_tool == "Top Price / Betfair Calculator":
+    TopPriceBetfairCalculator.run()
 
-        # Lay Bet Outcomes
-        lay_bet_profit_win = -liability  # Loss when lay bet loses
-        lay_bet_profit_lose = lay_stake  # Profit when lay bet wins
+elif selected_tool == "Margins Removal":
+    MarginsRemoval.run()
 
-        # Market Profit (combined outcomes)
-        market_profit_win = back_bet_profit_win + lay_bet_profit_win
-        market_profit_lose = back_bet_profit_lose + lay_bet_profit_lose
+elif selected_tool == "Alternative Lines Converter":
+    AlternativeLinesConverter.run()
 
-        return {
-            "Lay Stake": round(lay_stake, 2),
-            "Liability": round(liability, 2),
-            "Back Bet Profit Win": round(back_bet_profit_win, 2),
-            "Back Bet Profit Lose": round(back_bet_profit_lose, 2),
-            "Lay Bet Profit Win": round(lay_bet_profit_win, 2),
-            "Lay Bet Profit Lose": round(lay_bet_profit_lose, 2),
-            "Market Profit Win": round(market_profit_win, 2),
-            "Market Profit Lose": round(market_profit_lose, 2),
-        }
+elif selected_tool == "General Tab 1":
+    GeneralTab1.run()
 
-    # Input Fields
-    st.markdown("### Input Parameters")
-    col1, col2, col3, col_fake = st.columns([1, 1, 1, 2])  # Fake column for layout adjustment
-    with col1:
-        back_odds = st.number_input("Back Odds", min_value=1.01, value=2.5, step=0.01)
-    with col2:
-        lay_odds = st.number_input("Lay Odds", min_value=1.01, value=2.4, step=0.01)
-    with col3:
-        back_stake = st.number_input("Back Stake (€)", min_value=0.0, value=100.0, step=1.0)
-    with col_fake:
-        st.markdown("")  # Empty column for spacing
-
-    # Calculation Button
-    if st.button("Calculate"):
-        results = calculate_back_lay_bet(back_stake, back_odds, lay_odds)
-
-        # Display Results
-        st.markdown(
-            f"""
-            <div class="result-box">
-                <h4>Calculation Results</h4>
-                <ul>
-                    <li>Lay Stake: <span>{results['Lay Stake']}€</span></li>
-                    <li>Liability: <span>{results['Liability']}€</span></li>
-                    <h4>If Back Wins:</h4>
-                    <li>Back Bet Profit: 
-                        <span class="{'profit-positive' if results['Back Bet Profit Win'] >= 0 else 'profit-negative'}">
-                            {results['Back Bet Profit Win']}€
-                        </span>
-                    </li>
-                    <li>Lay Bet Profit: 
-                        <span class="{'profit-positive' if results['Lay Bet Profit Win'] >= 0 else 'profit-negative'}">
-                            {results['Lay Bet Profit Win']}€
-                        </span>
-                    </li>
-                    <li>Market Profit: 
-                        <span class="{'profit-positive' if results['Market Profit Win'] >= 0 else 'profit-negative'}">
-                            {results['Market Profit Win']}€
-                        </span>
-                    </li>
-                    <h4>If Back Loses:</h4>
-                    <li>Back Bet Profit: 
-                        <span class="{'profit-positive' if results['Back Bet Profit Lose'] >= 0 else 'profit-negative'}">
-                            {results['Back Bet Profit Lose']}€
-                        </span>
-                    </li>
-                    <li>Lay Bet Profit: 
-                        <span class="{'profit-positive' if results['Lay Bet Profit Lose'] >= 0 else 'profit-negative'}">
-                            {results['Lay Bet Profit Lose']}€
-                        </span>
-                    </li>
-                    <li>Market Profit: 
-                        <span class="{'profit-positive' if results['Market Profit Lose'] >= 0 else 'profit-negative'}">
-                            {results['Market Profit Lose']}€
-                        </span>
-                    </li>
-                </ul>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    # Footer
-    st.markdown("---")
+elif selected_tool == "General Tab 2":
+    GeneralTab2.run()
