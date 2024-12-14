@@ -83,7 +83,7 @@ def run():
 
         # Market Profit (combined outcomes)
         market_profit_win = back_bet_profit_win + lay_bet_profit_win
-        market_profit_lose = back_bet_profit_lose - lay_bet_profit_lose
+        market_profit_lose = back_bet_profit_lose + lay_bet_profit_lose
 
         return {
             "Lay Stake": round(lay_stake, 2),
