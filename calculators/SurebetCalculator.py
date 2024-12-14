@@ -63,17 +63,19 @@ def run():
             "Arbitrage %": round(arbitrage_percentage, 2)
         }
 
-    # Input Fields
+    # Input Fields with a Fake Column
     for i in range(1):  # Adjusted to match layout from OffPricesCalculator.py
-        # Row 1: Odds Inputs
-        col1, col2 = st.columns([1, 5])  # Equal column widths
+        # Row 1: Odds Inputs with Fake Column
+        col1, col_fake, col2 = st.columns([1, 0.3, 5])  # Added a small fake column for adjustment
         with col1:
             w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
+        with col_fake:
+            st.markdown("")  # Fake column with no content
         with col2:
             w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
 
-        # Row 2: Stake Inputs
-        col1, col2, col3 = st.columns([1, 1, 2])  # Equal column widths
+        # Row 2: Stake Inputs with Fake Column
+        col1, col_fake, col2, col_fake2, col3 = st.columns([1, 0.2, 1, 0.2, 2])  # Fake columns for more fine-tuning
         with col1:
             w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
         with col2:
