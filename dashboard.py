@@ -53,12 +53,38 @@ st.markdown(f"""
             padding: 8px !important;
         }}
 
-        /* Make all text across the app white */
-        .stApp * {{
+        /* Make all text across the app white, excluding buttons and spin buttons */
+        .stApp *:not(input[type="number"]::-webkit-inner-spin-button):not(input[type="number"]::-webkit-outer-spin-button):not(button) {{
             color: {TEXT_COLOR} !important;
+        }}
+
+        /* Styling for Streamlit buttons */
+        button[kind="primary"] {{
+            background-color: #FF0000 !important; /* Red background for buttons */
+            color: #FFFFFF !important; /* White text */
+            border: none !important;
+            border-radius: 5px !important;
+            font-weight: bold !important;
+            font-size: 16px !important;
+            padding: 10px 20px !important;
+        }}
+        button[kind="primary"]:hover {{
+            background-color: #CC0000 !important; /* Darker red on hover */
+        }}
+
+        /* Styling for + and - buttons on number inputs */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {{
+            background-color: #FF0000 !important; /* Red color */
+            color: #FFFFFF !important; /* White text */
+        }}
+        input[type="number"]::-webkit-inner-spin-button:hover,
+        input[type="number"]::-webkit-outer-spin-button:hover {{
+            background-color: #CC0000 !important; /* Darker red on hover */
         }}
     </style>
 """, unsafe_allow_html=True)
+
 
 # Sidebar navigation
 with st.sidebar:
