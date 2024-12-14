@@ -1,5 +1,8 @@
 import streamlit as st
 
+st.title("Off Prices Calculator")
+st.markdown("Enter prices below to calculate the percentage difference Kaizen odds are 1st! .")
+
 st.markdown(
     """
     <style>
