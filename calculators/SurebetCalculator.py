@@ -19,10 +19,10 @@ def run():
                 caret-color: {TEXT_COLOR} !important;
                 border: 1px solid #DEE2E6 !important;
                 border-radius: 5px !important;
-                padding: 5px !important; /* Minimal padding inside the input */
-                margin: 0 !important; /* Remove additional margins */
-                width: 30% !important; /* Ensure input fills column space */
-                box-sizing: border-box; /* Ensure proper size alignment */
+                padding: 5px !important;
+                margin: 0 !important;
+                width: 120px !important; /* Fixed width for input fields */
+                box-sizing: border-box;
             }}
             div[data-testid="stBlock"] {{
                 gap: 0px !important; /* Remove extra gaps between Streamlit blocks */
@@ -66,14 +66,14 @@ def run():
     # Input Fields
     for i in range(1):  # Adjusted to match layout from OffPricesCalculator.py
         # Row 1: Odds Inputs
-        col1, col2 = st.columns(1, 1])  # Adjusted column widths
+        col1, col2 = st.columns([1, 1])  # Equal column widths
         with col1:
             w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
         with col2:
             w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
 
         # Row 2: Stake Inputs
-        col1, col2, col3 = st.columns([1, 1, 1])  # Adjusted column widths
+        col1, col2, col3 = st.columns([1, 1, 1])  # Equal column widths
         with col1:
             w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
         with col2:
