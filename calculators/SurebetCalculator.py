@@ -8,6 +8,7 @@ def run():
     st.markdown(
         f"""
         <style>
+            /* Global background and text styling */
             .stApp {{
                 background-color: {BACKGROUND_COLOR} !important;
                 color: {TEXT_COLOR} !important;
@@ -18,17 +19,34 @@ def run():
                 caret-color: {TEXT_COLOR} !important;
                 border: 1px solid #DEE2E6 !important;
                 border-radius: 5px !important;
-                padding: 5px !important;
-                margin: 0 !important;
-                width: 100% !important;
-                max-width: 120px !important;
-                box-sizing: border-box;
+                padding: 8px !important;
+                margin: 0px !important;
+                width: 100px !important; /* Fixed width for input fields */
+                text-align: center; /* Center-align the text */
+            }}
+            .result-box {{
+                border: 2px solid #FFFFFF;
+                padding: 5px;
+                margin: 5px 10px;
+                text-align: center;
+                border-radius: 5px;
+                width: 70px;
+                display: inline-block;
+                position: relative;
+                top: 20px;
+            }}
+            .result-container {{
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 10px;
+                margin-top: 10px;
             }}
             div[data-testid="stBlock"] {{
-                gap: 5px !important;
+                gap: 0px !important; /* Remove extra gaps between Streamlit blocks */
             }}
             .css-18e3th9 {{
-                padding: 0px !important;
+                padding: 0px !important; /* Remove padding around input fields */
             }}
         </style>
         """,
@@ -37,6 +55,13 @@ def run():
 
     st.title("Surebet Calculator")
     st.markdown("Calculate stakes and profits for arbitrage betting scenarios dynamically.")
+
+    # Helper Function for Parsing Inputs
+    def parse_number(number_str):
+        try:
+            return float(number_str.replace(",", "."))
+        except ValueError:
+            return None
 
     # Function to calculate stakes and arbitrage
     def calculate_surebet(w1_odds, w2_odds, w1_stake=None, w2_stake=None, total_stake=None):
@@ -63,63 +88,64 @@ def run():
             "Arbitrage %": round(arbitrage_percentage, 2)
         }
 
-    # Input Form
-    with st.form(key="surebet_form"):
-        st.markdown("### Input Values")
-
+    # Input Fields
+    for i in range(1):  # Adjusted to match layout from OffPricesCalculator.py
         # Row 1: Odds Inputs
-        col1, col2 = st.columns([1, 1])
+        col1, col2 = st.columns([1, 1])  # Adjusted column widths for better alignment
         with col1:
-            w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
+            w1_odds = st.text_input("Kaizen Odds 1:", "2.5", key=f"w1_odds_{i}")
+            w1_odds = parse_number(w1_odds) or 0
+
         with col2:
-            w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
+            w2_odds = st.text_input("Competition Odds 1:", "2.0", key=f"w2_odds_{i}")
+            w2_odds = parse_number(w2_odds) or 0
 
         # Row 2: Stake Inputs
         col1, col2, col3 = st.columns([1, 1, 1])
         with col1:
-            w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
+            w1_stake = st.text_input("Kaizen Stakes (€):", "100", key=f"w1_stake_{i}")
+            w1_stake = parse_number(w1_stake) or 0
+
         with col2:
-            w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w2_stake")
+            w2_stake = st.text_input("Competition Stakes (€):", "0", key=f"w2_stake_{i}")
+            w2_stake = parse_number(w2_stake) or 0
+
         with col3:
-            total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01, key="total_stake")
+            total_stake = st.text_input("Total Stake (€):", "0", key=f"total_stake_{i}")
+            total_stake = parse_number(total_stake) or 0
 
-        # Submit Button
-        submitted = st.form_submit_button(label="Calculate")
+    # Perform Calculation
+    if total_stake > 0:
+        results = calculate_surebet(w1_odds, w2_odds, total_stake=total_stake)
+    elif w1_stake > 0 and w2_stake == 0:
+        results = calculate_surebet(w1_odds, w2_odds, w1_stake=w1_stake)
+    elif w2_stake > 0 and w1_stake == 0:
+        results = calculate_surebet(w1_odds, w2_odds, w2_stake=w2_stake)
+    elif w1_stake > 0 and w2_stake > 0:
+        results = calculate_surebet(w1_odds, w2_odds, w1_stake=w1_stake, w2_stake=w2_stake)
+    else:
+        results = None
 
-    # Perform Calculation after Form Submission
-    if submitted:
-        if total_stake > 0:
-            results = calculate_surebet(w1_odds, w2_odds, total_stake=total_stake)
-        elif w1_stake > 0 and w2_stake == 0:
-            results = calculate_surebet(w1_odds, w2_odds, w1_stake=w1_stake)
-        elif w2_stake > 0 and w1_stake == 0:
-            results = calculate_surebet(w1_odds, w2_odds, w2_stake=w2_stake)
-        elif w1_stake > 0 and w2_stake > 0:
-            results = calculate_surebet(w1_odds, w2_odds, w1_stake=w1_stake, w2_stake=w2_stake)
-        else:
-            results = None
+    # Display Results
+    if results:
+        arbitrage_color = "green" if results["Arbitrage %"] > 0 else "red"
+        profit_w1_color = "green" if results["Profit W1"] > 0 else "red"
+        profit_w2_color = "green" if results["Profit W2"] > 0 else "red"
 
-        # Display Results
-        if results:
-            arbitrage_color = "green" if results["Arbitrage %"] > 0 else "red"
-            profit_w1_color = "green" if results["Profit W1"] > 0 else "red"
-            profit_w2_color = "green" if results["Profit W2"] > 0 else "red"
-
-            st.markdown(
-                f"""
-                <div style="background-color:#FFD700; padding: 15px; border-radius: 5px; border: 1px solid #000;">
-                    <h4>Calculation Results:</h4>
-                    <ul>
-                        <li>Kaizen Stakes: {results['W1 Stake']}€</li>
-                        <li>Competition Stakes: {results['W2 Stake']}€</li>
-                        <li>Total Stake: {results['Total Stake']}€</li>
-                        <li>Profit Kaizen: <span style="color:{profit_w1_color}">{results['Profit W1']}€</span></li>
-                        <li>Profit Competition: <span style="color:{profit_w2_color}">{results['Profit W2']}€</span></li>
-                        <li>Arbitrage: <span style="color:{arbitrage_color}">{results['Arbitrage %']}%</span></li>
-                    </ul>
+        # Render Result Box
+        st.markdown(
+            f"""
+            <div class="result-container">
+                <div class="result-box">
+                    <strong>Kaizen Profit:</strong> {results['Profit W1']}€
                 </div>
-                """,
-                unsafe_allow_html=True,
-            )
-        else:
-            st.warning("Please ensure all required fields are filled with valid values.")
+                <div class="result-box">
+                    <strong>Competition Profit:</strong> {results['Profit W2']}€
+                </div>
+                <div class="result-box">
+                    <strong>Arbitrage:</strong> {results['Arbitrage %']}%
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
