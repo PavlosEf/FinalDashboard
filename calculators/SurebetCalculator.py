@@ -19,7 +19,7 @@ def run():
                 caret-color: {TEXT_COLOR} !important;
                 border: 1px solid #DEE2E6 !important;
                 border-radius: 1px !important;
-                padding: 8px !important;
+                padding: 1px !important;
             }}
             .result-box {{
                 background-color: #FFD700;
