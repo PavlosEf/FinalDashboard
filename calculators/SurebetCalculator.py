@@ -25,6 +25,13 @@ def run():
                 width: 100px !important; /* Fixed width for input fields */
                 box-sizing: border-box;
             }}
+            /* Remove increment and decrement buttons */
+            input[type="number"]::-webkit-inner-spin-button, 
+            input[type="number"]::-webkit-outer-spin-button {{ 
+                -webkit-appearance: none; 
+                margin: 0; 
+            }}
+            input[type="number"] {{ -moz-appearance: textfield; }}
             div[data-testid="stBlock"] {{
                 gap: 5px !important; /* Reduce gaps between Streamlit blocks */
             }}
