@@ -24,59 +24,17 @@ def run():
                 width: 120px !important; /* Fixed width for input fields */
                 box-sizing: border-box;
             }}
-            /* Styling for + and - buttons */
-            input[type="number"]::-webkit-inner-spin-button, 
-            input[type="number"]::-webkit-outer-spin-button {{
-                background-color: #2B3A42 !important; /* Dark color for buttons */
-                color: {TEXT_COLOR} !important; /* White text on buttons */
-                border: none !important; /* Remove borders around buttons */
+            /* Styling for + and - buttons with higher specificity */
+            div.stApp input[type="number"]::-webkit-inner-spin-button, 
+            div.stApp input[type="number"]::-webkit-outer-spin-button {{
+                background-color: #2B3A42 !important; /* Dark background */
+                color: #FFFFFF !important; /* White text */
+                border: none !important; /* Remove borders */
             }}
-            input[type="number"]::-webkit-inner-spin-button:hover, 
-            input[type="number"]::-webkit-outer-spin-button:hover {{
-                background-color: #1F2A32 !important; /* Darker color on hover */
-                color: #FFFFFF !important; /* White text on hover */
-            }}
-            div[data-testid="stBlock"] {{
-                gap: 0px !important; /* Remove extra gaps between Streamlit blocks */
-            }}
-            .css-18e3th9 {{
-                padding: 0px !important; /* Remove padding around input fields */
-            }}
-            /* Styling for Results Box */
-            .result-box {{
-                background-color: #2B3A42; /* Darker background */
-                border: 1px solid #DEE2E6;
-                border-radius: 8px;
-                padding: 15px;
-                margin: 15px 0;
-                color: {TEXT_COLOR};
-                font-family: Arial, sans-serif;
-            }}
-            .result-box h4 {{
-                margin-bottom: 10px;
-                color: #FFFFFF !important; /* Force white for header */
-                font-size: 18px;
-                text-align: center;
-                text-decoration: underline;
-            }}
-            .result-box ul {{
-                list-style-type: none;
-                padding: 0;
-                margin: 0;
-            }}
-            .result-box ul li {{
-                margin-bottom: 10px;
-                font-size: 16px;
-            }}
-            .result-box ul li span {{
-                font-weight: bold;
-            }}
-            /* Profit and Loss Colors */
-            .profit-positive {{
-                color: green !important; /* Green for positive values */
-            }}
-            .profit-negative {{
-                color: red !important; /* Red for negative values */
+            div.stApp input[type="number"]::-webkit-inner-spin-button:hover, 
+            div.stApp input[type="number"]::-webkit-outer-spin-button:hover {{
+                background-color: #1F2A32 !important; /* Slightly darker background on hover */
+                color: #FFFFFF !important; /* Keep text white */
             }}
         </style>
         """,
