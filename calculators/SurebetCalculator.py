@@ -36,7 +36,7 @@ def run():
                 background-color: #EAEAEA !important;
                 color: #000000 !important;
                 caret-color: #000000 !important;
-                padding: 5px !important;
+                padding: 20px !important;
                 border-radius: 5px;
                 border: 1px solid #CCCCCC !important;
             }
