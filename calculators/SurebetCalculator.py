@@ -1,6 +1,55 @@
 import streamlit as st
 
 def run():
+    # Global Styles
+    BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
+    TEXT_COLOR = "#FFFFFF"  # White text for all elements
+
+    st.markdown(
+        f"""
+        <style>
+            /* Global background and text styling */
+            .stApp {{
+                background-color: {BACKGROUND_COLOR} !important;
+                color: {TEXT_COLOR} !important;
+            }}
+            input[type="text"], input[type="number"] {{
+                background-color: {BACKGROUND_COLOR} !important;
+                color: {TEXT_COLOR} !important;
+                caret-color: {TEXT_COLOR} !important;
+                border: 1px solid #DEE2E6 !important;
+                border-radius: 5px !important;
+                padding: 8px !important;
+            }}
+            .result-box {{
+                background-color: #FFD700;
+                border: 1px solid #000000;
+                border-radius: 5px;
+                padding: 15px;
+                margin-top: 15px;
+                color: #000000;
+            }}
+            .result-box h4 {{
+                margin-bottom: 10px;
+            }}
+            .result-box ul {{
+                list-style-type: none;
+                padding: 0;
+            }}
+            .result-box ul li {{
+                margin-bottom: 5px;
+            }}
+            .result-box span {{
+                font-weight: bold;
+            }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.title("Surebet Calculator")
+    st.markdown("Calculate stakes and profits for arbitrage betting scenarios dynamically.")
+
     # Function to calculate stakes and arbitrage
     def calculate_surebet(w1_odds, w2_odds, w1_stake=None, w2_stake=None, total_stake=None):
         if total_stake:
@@ -25,29 +74,6 @@ def run():
             "Profit W2": round(profit_w2, 2),
             "Arbitrage %": round(arbitrage_percentage, 2)
         }
-
-    # Apply input box styling
-    st.markdown(
-        """
-        <style>
-            input[type="text"], input[type="number"] {
-                width: 100% !important;
-                max-width: 200px !important;
-                background-color: #EAEAEA !important;
-                color: #000000 !important;
-                caret-color: #000000 !important;
-                padding: 20px !important;
-                border-radius: 5px;
-                border: 1px solid #CCCCCC !important;
-            }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # Layout
-    st.title("Surebet Calculator")
-    st.markdown("Calculate stakes and profits for arbitrage betting scenarios dynamically.")
 
     # Input Fields
     col1, col2 = st.columns([1, 1])
@@ -78,7 +104,6 @@ def run():
 
     # Display Results
     if results:
-        st.markdown("### Results")
         arbitrage_color = "green" if results["Arbitrage %"] > 0 else "red"
         profit_w1_color = "green" if results["Profit W1"] > 0 else "red"
         profit_w2_color = "green" if results["Profit W2"] > 0 else "red"
@@ -86,12 +111,12 @@ def run():
         # Render Result Box
         st.markdown(
             f"""
-            <div style="background-color: #FFD700; padding: 15px; border-radius: 5px; border: 1px solid #000;">
+            <div class="result-box">
                 <h4>Calculation Results:</h4>
                 <ul>
-                    <li>Kaizen Stakes: {results['W1 Stake']}€</li>
-                    <li>Competition Stakes: {results['W2 Stake']}€</li>
-                    <li>Total Stake: {results['Total Stake']}€</li>
+                    <li>Kaizen Stakes: <span>{results['W1 Stake']}€</span></li>
+                    <li>Competition Stakes: <span>{results['W2 Stake']}€</span></li>
+                    <li>Total Stake: <span>{results['Total Stake']}€</span></li>
                     <li>Profit Kaizen: <span style="color:{profit_w1_color}">{results['Profit W1']}€</span></li>
                     <li>Profit Competition: <span style="color:{profit_w2_color}">{results['Profit W2']}€</span></li>
                     <li>Arbitrage: <span style="color:{arbitrage_color}">{results['Arbitrage %']}%</span></li>
