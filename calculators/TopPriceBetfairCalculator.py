@@ -21,8 +21,26 @@ def run():
                 border-radius: 5px !important;
                 padding: 5px !important;
                 margin: 0 !important;
-                width: 3000px !important; /* Fixed width for input fields */
+                width: 120px !important; /* Fixed width for input fields */
                 box-sizing: border-box;
+            }}
+            /* Styling for + and - buttons */
+            input[type="number"]::-webkit-inner-spin-button, 
+            input[type="number"]::-webkit-outer-spin-button {{
+                background-color: #2B3A42 !important; /* Dark color for buttons */
+                color: {TEXT_COLOR} !important; /* White text on buttons */
+                border: none !important; /* Remove borders around buttons */
+            }}
+            input[type="number"]::-webkit-inner-spin-button:hover, 
+            input[type="number"]::-webkit-outer-spin-button:hover {{
+                background-color: #1F2A32 !important; /* Darker color on hover */
+                color: #FFFFFF !important; /* White text on hover */
+            }}
+            div[data-testid="stBlock"] {{
+                gap: 0px !important; /* Remove extra gaps between Streamlit blocks */
+            }}
+            .css-18e3th9 {{
+                padding: 0px !important; /* Remove padding around input fields */
             }}
             /* Styling for Results Box */
             .result-box {{
