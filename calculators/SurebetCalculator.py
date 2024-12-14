@@ -5,7 +5,6 @@ def run():
     BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
     TEXT_COLOR = "#FFFFFF"  # White text for all elements
 
-    # Inject custom CSS
     st.markdown(
         f"""
         <style>
@@ -22,7 +21,7 @@ def run():
                 border-radius: 5px !important;
                 padding: 5px !important;
                 margin: 0 !important;
-                width: 100% !important; /* Make input fields fit their column */
+                width: 100% !important; /* Make input fields fit their container */
                 max-width: 120px !important; /* Explicitly limit field size */
                 box-sizing: border-box;
             }}
@@ -66,20 +65,26 @@ def run():
         }
 
     # Input Fields
-    # Row 1: Odds Inputs
-    col1, col2 = st.columns([1, 5])  # Set specific column ratios
+    st.markdown("### Odds Input")
+    col1 = st.container()
     with col1:
-        w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
-    with col2:
-        w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
+        w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds", label_visibility="visible")
 
-    # Row 2: Stake Inputs
-    col1, col2, col3 = st.columns([1, 1, 2.1])  # Set specific column ratios
-    with col1:
-        w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
+    col2 = st.container()
     with col2:
-        w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w2_stake")
+        w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds", label_visibility="visible")
+
+    st.markdown("### Stakes Input")
+    col3 = st.container()
     with col3:
+        w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
+
+    col4 = st.container()
+    with col4:
+        w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w2_stake")
+
+    col5 = st.container()
+    with col5:
         total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01, key="total_stake")
 
     # Perform Calculation
