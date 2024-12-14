@@ -110,26 +110,63 @@ def run():
     else:
         results = None
 
-    # Display Results
-    if results:
-        arbitrage_color = "green" if results["Arbitrage %"] > 0 else "red"
-        profit_w1_color = "green" if results["Profit W1"] > 0 else "red"
-        profit_w2_color = "green" if results["Profit W2"] > 0 else "red"
+  # Display Results
+if results:
+    # Define dynamic colors for profits and arbitrage
+    arbitrage_color = "green" if results["Arbitrage %"] > 0 else "red"
+    profit_w1_color = "green" if results["Profit W1"] > 0 else "red"
+    profit_w2_color = "green" if results["Profit W2"] > 0 else "red"
 
-        # Render Result Box
-        st.markdown(
-            f"""
-            <div class="result-box">
-                <h4>Calculation Results:</h4>
-                <ul>
-                    <li>Kaizen Stakes: <span>{results['W1 Stake']}€</span></li>
-                    <li>Competition Stakes: <span>{results['W2 Stake']}€</span></li>
-                    <li>Total Stake: <span>{results['Total Stake']}€</span></li>
-                    <li>Profit Kaizen: <span style="color:{profit_w1_color}">{results['Profit W1']}€</span></li>
-                    <li>Profit Competition: <span style="color:{profit_w2_color}">{results['Profit W2']}€</span></li>
-                    <li>Arbitrage: <span style="color:{arbitrage_color}">{results['Arbitrage %']}%</span></li>
-                </ul>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+    # Render Stylish Results Box
+    st.markdown(
+        f"""
+        <style>
+            .result-box {{
+                background-color: #2B3A42; /* Darker background */
+                border: 1px solid #DEE2E6;
+                border-radius: 8px;
+                padding: 15px;
+                margin: 15px 0;
+                color: {TEXT_COLOR};
+                font-family: Arial, sans-serif;
+            }}
+            .result-box h4 {{
+                margin-bottom: 10px;
+                color: #FFFFFF; /* White color for headers */
+                font-size: 18px;
+                text-align: center;
+                text-decoration: underline;
+            }}
+            .result-box ul {{
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }}
+            .result-box ul li {{
+                margin-bottom: 10px;
+                font-size: 16px;
+            }}
+            .result-box ul li span {{
+                font-weight: bold;
+            }}
+        </style>
+        <div class="result-box">
+            <h4>Calculation Results</h4>
+            <ul>
+                <li>Kaizen Stakes: <span>{results['W1 Stake']}€</span></li>
+                <li>Competition Stakes: <span>{results['W2 Stake']}€</span></li>
+                <li>Total Stake: <span>{results['Total Stake']}€</span></li>
+                <li>Profit Kaizen: 
+                    <span style="color:{profit_w1_color};">{results['Profit W1']}€</span>
+                </li>
+                <li>Profit Competition: 
+                    <span style="color:{profit_w2_color};">{results['Profit W2']}€</span>
+                </li>
+                <li>Arbitrage: 
+                    <span style="color:{arbitrage_color};">{results['Arbitrage %']}%</span>
+                </li>
+            </ul>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
