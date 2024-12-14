@@ -33,22 +33,29 @@ def run():
     result_bg_color = st.sidebar.color_picker("Result Box Background", "#FFD700")
     result_text_color = st.sidebar.color_picker("Result Box Text Color", "#000000")
     border_radius = st.sidebar.slider("Border Radius (px)", 0, 20, 8)
-    padding_size = st.sidebar.slider("Padding Size (px)", 0, 20, 10)
+    padding_size = st.sidebar.slider("Horizontal Padding (px)", 0, 20, 10)
     input_height = st.sidebar.slider("Input Height (px)", 30, 60, 40)
     input_width = st.sidebar.slider("Input Width (px)", 200, 400, 300)
 
-    # Inject dynamic styles
+    # Inject updated CSS
     st.markdown(f"""
         <style>
-            /* Input field styling */
+            /* Remove default margin and padding for number inputs */
             input[type="number"] {{
                 background-color: {input_bg_color} !important;
                 color: {input_text_color} !important;
-                height: {input_height}px !important;
-                width: {input_width}px !important;
                 border: 1px solid #DEE2E6 !important;
                 border-radius: {border_radius}px !important;
-                padding: {padding_size}px !important;
+                padding: 0px {padding_size}px !important; /* Remove vertical padding */
+                height: {input_height}px !important;
+                width: {input_width}px !important;
+                box-shadow: none !important; /* Remove shadow */
+            }}
+
+            /* Remove outer padding or margin for input containers */
+            div[data-baseweb="input"] {{
+                padding: 0 !important;
+                margin: 0 !important;
             }}
 
             /* Result box styling */
@@ -63,7 +70,7 @@ def run():
 
             /* General styling for app */
             .stApp * {{
-                color: #FFFFFF !important; /* Keep text white */
+                color: #FFFFFF !important; /* Force white text */
             }}
         </style>
     """, unsafe_allow_html=True)
@@ -81,14 +88,13 @@ def run():
         with col2:
             w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01)
 
-    # Dynamic Input for W1, W2, and Total stakes
     col1, col2, col3 = st.columns([1, 1, 1])
     with col1:
-        w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, step=0.01, value=0.0)
+        w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=0.0, step=0.01)
     with col2:
-        w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, step=0.01, value=0.0)
+        w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01)
     with col3:
-        total_stake = st.number_input("Total Stake (€)", min_value=0.0, step=0.01, value=0.0)
+        total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01)
 
     # Dynamic Calculation
     if total_stake > 0:
