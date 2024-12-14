@@ -21,7 +21,7 @@ def run():
                 border-radius: 5px !important;
                 padding: 5px !important; /* Minimal padding inside the input */
                 margin: 0 !important; /* Remove additional margins */
-                width: 120px !important; /* Set smaller input box width */
+                width: 100% !important; /* Ensure input fills column space */
                 box-sizing: border-box; /* Ensure proper size alignment */
             }}
             div[data-testid="stBlock"] {{
@@ -65,15 +65,17 @@ def run():
 
     # Input Fields
     for i in range(1):  # Adjusted to match layout from OffPricesCalculator.py
-        col1, col2, col3, col4 = st.columns([0.3, 0.3, 1, 1])  # Tight column widths
+        # Row 1: Odds Inputs
+        col1, col2 = st.columns([0.4, 0.4])  # Adjusted column widths
         with col1:
             w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
         with col2:
             w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
 
-        col1, col2, col3 = st.columns([0.3, 0.3, 1])  # Tight column widths
+        # Row 2: Stake Inputs
+        col1, col2, col3 = st.columns([0.3, 0.3, 0.4])  # Adjusted column widths
         with col1:
-            w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w1_stake")
+            w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
         with col2:
             w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w2_stake")
         with col3:
