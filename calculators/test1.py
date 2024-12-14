@@ -5,7 +5,6 @@ def run():
     BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
     TEXT_COLOR = "#FFFFFF"  # White text for all elements
 
-    # Inject custom CSS
     st.markdown(
         f"""
         <style>
@@ -22,15 +21,14 @@ def run():
                 border-radius: 5px !important;
                 padding: 5px !important;
                 margin: 0 !important;
-                width: 100px !important; /* Fixed width for input fields */
+                width: 120px !important; /* Fixed width for input fields */
                 box-sizing: border-box;
             }}
             div[data-testid="stBlock"] {{
-                gap: 5px !important; /* Reduce gaps between Streamlit blocks */
+                gap: 0px !important; /* Remove extra gaps between Streamlit blocks */
             }}
             .css-18e3th9 {{
-                padding: 0px !important; /* Remove extra padding around input fields */
-                margin: 0 auto !important; /* Center-align input boxes */
+                padding: 0px !important; /* Remove padding around input fields */
             }}
         </style>
         """,
@@ -65,22 +63,23 @@ def run():
             "Arbitrage %": round(arbitrage_percentage, 2)
         }
 
-    # Input Fields with Reduced Sizes
-    st.markdown("### Odds Input")
-    col1, col2 = st.columns([1, 1])  # Adjusted column widths for tighter layout
-    with col1:
-        w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
-    with col2:
-        w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
+    # Input Fields
+    for i in range(1):  # Adjusted to match layout from OffPricesCalculator.py
+        # Row 1: Odds Inputs
+        col1, col2 = st.columns([1, 5])  # Equal column widths
+        with col1:
+            w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
+        with col2:
+            w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
 
-    st.markdown("### Stakes Input")
-    col3, col4, col5 = st.columns([1, 1, 1])  # Adjusted column widths for tighter layout
-    with col3:
-        w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
-    with col4:
-        w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w2_stake")
-    with col5:
-        total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01, key="total_stake")
+        # Row 2: Stake Inputs
+        col1, col2, col3 = st.columns([1, 1, 2])  # Equal column widths
+        with col1:
+            w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
+        with col2:
+            w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w2_stake")
+        with col3:
+            total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01, key="total_stake")
 
     # Perform Calculation
     if total_stake > 0:
