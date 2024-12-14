@@ -5,7 +5,6 @@ def run():
     BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
     TEXT_COLOR = "#FFFFFF"  # White text for all elements
 
-    # Injecting CSS with proper f-string formatting
     st.markdown(
         f"""
         <style>
@@ -39,10 +38,6 @@ def run():
     st.title("Surebet Calculator")
     st.markdown("Calculate stakes and profits for arbitrage betting scenarios dynamically.")
 
-    # Rest of the code remains unchanged
-    # (e.g., input fields, calculation logic, and result display)
-
-
     # Function to calculate stakes and arbitrage
     def calculate_surebet(w1_odds, w2_odds, w1_stake=None, w2_stake=None, total_stake=None):
         if total_stake:
@@ -68,28 +63,27 @@ def run():
             "Arbitrage %": round(arbitrage_percentage, 2)
         }
 
-    # Input Fields with Fake Column After Competition Odds
+    # Input Fields with Fake Column After Total Stake (€)
     for i in range(1):  # Adjusted to match layout from OffPricesCalculator.py
         # Row 1: Odds Inputs
-        col1, col2, col_fake = st.columns([2, 2, 6])  # Fake column added after Competition Odds
+        col1, col2, col_fake = st.columns([2, 5, 2])  # Fake column added after Competition Odds
         with col1:
             w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
         with col2:
             w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
         with col_fake:
-            st.markdown("")  # Empty "fake" column for spacing
+            st.markdown("")  # Empty fake column for spacing
 
-        # Row 2: Stake Inputs
-       col1, col2, col3, col_fake = st.columns([1, 1, 2, 0.5])  # Fake column added at the end
-       with col1:
+        # Row 2: Stake Inputs with Fake Column at the End
+        col1, col2, col3, col_fake = st.columns([1, 1, 2, 0.5])  # Fake column added at the end
+        with col1:
             w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
-       with col2:
+        with col2:
             w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w2_stake")
-       with col3:
+        with col3:
             total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01, key="total_stake")
-       with col_fake:
-            st.markdown("")  # Fake column left empty for spacing
-
+        with col_fake:
+            st.markdown("")  # Fake column for additional spacing at the end
 
     # Perform Calculation
     if total_stake > 0:
