@@ -4,23 +4,17 @@ def run():
     # Function to calculate stakes and arbitrage
     def calculate_surebet(w1_odds, w2_odds, w1_stake=None, w2_stake=None, total_stake=None):
         if total_stake:
-            # Split total stake for equal profit
             w1_stake = total_stake / (1 + w1_odds / w2_odds)
             w2_stake = total_stake - w1_stake
         elif w1_stake:
-            # Calculate w2 stake for equal profit
             w2_stake = (w1_stake * w1_odds) / w2_odds
             total_stake = w1_stake + w2_stake
         elif w2_stake:
-            # Calculate w1 stake for equal profit
             w1_stake = (w2_stake * w2_odds) / w1_odds
             total_stake = w1_stake + w2_stake
 
-        # Calculate profits
         profit_w1 = (w1_odds * w1_stake) - total_stake
         profit_w2 = (w2_odds * w2_stake) - total_stake
-
-        # Calculate arbitrage percentage
         arbitrage_percentage = max(profit_w1, profit_w2) / total_stake * 100
 
         return {
@@ -31,6 +25,48 @@ def run():
             "Profit W2": round(profit_w2, 2),
             "Arbitrage %": round(arbitrage_percentage, 2)
         }
+
+    # Settings Panel
+    st.sidebar.title("Style Settings")
+    input_bg_color = st.sidebar.color_picker("Input Field Background", "#3E4E56")
+    input_text_color = st.sidebar.color_picker("Input Field Text Color", "#FFFFFF")
+    result_bg_color = st.sidebar.color_picker("Result Box Background", "#FFD700")
+    result_text_color = st.sidebar.color_picker("Result Box Text Color", "#000000")
+    border_radius = st.sidebar.slider("Border Radius (px)", 0, 20, 8)
+    padding_size = st.sidebar.slider("Padding Size (px)", 0, 20, 10)
+    input_height = st.sidebar.slider("Input Height (px)", 30, 60, 40)
+    input_width = st.sidebar.slider("Input Width (px)", 200, 400, 300)
+
+    # Inject dynamic styles
+    st.markdown(f"""
+        <style>
+            /* Input field styling */
+            input[type="number"] {{
+                background-color: {input_bg_color} !important;
+                color: {input_text_color} !important;
+                height: {input_height}px !important;
+                width: {input_width}px !important;
+                border: 1px solid #DEE2E6 !important;
+                border-radius: {border_radius}px !important;
+                padding: {padding_size}px !important;
+            }}
+
+            /* Result box styling */
+            .result-box {{
+                background-color: {result_bg_color} !important;
+                color: {result_text_color} !important;
+                border-radius: {border_radius}px !important;
+                padding: {padding_size}px !important;
+                margin: 10px !important;
+                border: 1px solid #000000 !important;
+            }}
+
+            /* General styling for app */
+            .stApp * {{
+                color: #FFFFFF !important; /* Keep text white */
+            }}
+        </style>
+    """, unsafe_allow_html=True)
 
     # Layout
     st.title("Surebet Calculator")
@@ -56,16 +92,12 @@ def run():
 
     # Dynamic Calculation
     if total_stake > 0:
-        # Scenario 3: Total Stake provided
         results = calculate_surebet(w1_odds, w2_odds, total_stake=total_stake)
     elif w1_stake > 0 and w2_stake == 0:
-        # Scenario 1: W1 Stake provided
         results = calculate_surebet(w1_odds, w2_odds, w1_stake=w1_stake)
     elif w2_stake > 0 and w1_stake == 0:
-        # Scenario 2: W2 Stake provided
         results = calculate_surebet(w1_odds, w2_odds, w2_stake=w2_stake)
     elif w1_stake > 0 and w2_stake > 0:
-        # Scenario 4: Both W1 and W2 stakes provided
         results = calculate_surebet(w1_odds, w2_odds, w1_stake=w1_stake, w2_stake=w2_stake)
     else:
         results = None
@@ -81,48 +113,15 @@ def run():
 
         st.markdown(
             f"""
-            <style>
-            .result-box {{
-                background-color: #3E4E56;
-                border: 1px solid #DEE2E6;
-                border-radius: 8px;
-                padding: 15px;
-                margin: 10px;
-                color: #FFFFFF;
-            }}
-            .result-box h4 {{
-                margin-bottom: 10px;
-                text-decoration: underline;
-            }}
-            .result-box ul {{
-                list-style-type: none;
-                padding: 0;
-            }}
-            .result-box ul li {{
-                margin-bottom: 5px;
-            }}
-            .arbitrage {{
-                color: {arbitrage_color};
-                font-weight: bold;
-            }}
-            .profit-w1 {{
-                color: {profit_w1_color};
-                font-weight: bold;
-            }}
-            .profit-w2 {{
-                color: {profit_w2_color};
-                font-weight: bold;
-            }}
-            </style>
             <div class="result-box">
                 <h4>Calculation Results:</h4>
                 <ul>
                     <li>Kaizen Stakes: {results['W1 Stake']}€</li>
                     <li>Competition Stakes: {results['W2 Stake']}€</li>
                     <li>Total Stake: {results['Total Stake']}€</li>
-                    <li>Profit Kaizen: <span class="profit-w1">{results['Profit W1']}€</span></li>
-                    <li>Profit Competition: <span class="profit-w2">{results['Profit W2']}€</span></li>
-                    <li>Arbitrage: <span class="arbitrage">{results['Arbitrage %']}%</span></li>
+                    <li>Profit Kaizen: <span style="color:{profit_w1_color}">{results['Profit W1']}€</span></li>
+                    <li>Profit Competition: <span style="color:{profit_w2_color}">{results['Profit W2']}€</span></li>
+                    <li>Arbitrage: <span style="color:{arbitrage_color}">{results['Arbitrage %']}%</span></li>
                 </ul>
             </div>
             """,
