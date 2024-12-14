@@ -82,7 +82,7 @@ def run():
     odds = []
     if market_type == "2-Way Market":
         st.markdown("### Enter Odds for 2-Way Market")
-        col1, col2, col_fake = st.columns([1, 1, 1])  # Adjust layout
+        col1, col2, col_fake = st.columns([1, 1, 2])  # Adjust layout
         with col1:
             odd1 = st.number_input("Odd 1", min_value=1.01, value=2.0, step=0.01)
         with col2:
