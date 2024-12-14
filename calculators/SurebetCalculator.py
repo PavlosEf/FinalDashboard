@@ -5,6 +5,7 @@ def run():
     BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
     TEXT_COLOR = "#FFFFFF"  # White text for all elements
 
+    # Inject custom CSS
     st.markdown(
         f"""
         <style>
@@ -21,15 +22,15 @@ def run():
                 border-radius: 5px !important;
                 padding: 5px !important;
                 margin: 0 !important;
-                width: 100% !important; /* Make input fields fit their container */
-                max-width: 120px !important; /* Explicitly limit field size */
+                width: 100px !important; /* Fixed width for input fields */
                 box-sizing: border-box;
             }}
             div[data-testid="stBlock"] {{
-                gap: 0px !important; /* Remove extra gaps between Streamlit blocks */
+                gap: 5px !important; /* Reduce gaps between Streamlit blocks */
             }}
             .css-18e3th9 {{
-                padding: 0px !important; /* Remove padding around input fields */
+                padding: 0px !important; /* Remove extra padding around input fields */
+                margin: 0 auto !important; /* Center-align input boxes */
             }}
         </style>
         """,
@@ -64,26 +65,20 @@ def run():
             "Arbitrage %": round(arbitrage_percentage, 2)
         }
 
-    # Input Fields
+    # Input Fields with Reduced Sizes
     st.markdown("### Odds Input")
-    col1 = st.container()
+    col1, col2 = st.columns([1, 1])  # Adjusted column widths for tighter layout
     with col1:
-        w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds", label_visibility="visible")
-
-    col2 = st.container()
+        w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
     with col2:
-        w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds", label_visibility="visible")
+        w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
 
     st.markdown("### Stakes Input")
-    col3 = st.container()
+    col3, col4, col5 = st.columns([1, 1, 1])  # Adjusted column widths for tighter layout
     with col3:
         w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
-
-    col4 = st.container()
     with col4:
         w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w2_stake")
-
-    col5 = st.container()
     with col5:
         total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01, key="total_stake")
 
