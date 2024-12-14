@@ -29,17 +29,17 @@ st.markdown(f"""
             color: {TEXT_COLOR} !important;
         }}
         section[data-testid="stSidebar"] h1, h2, h3, h4, h5, h6 {{
-            color: {TEXT_COLOR} !important;
+            color: {TEXT_COLOR} !important; /* Ensure sidebar headings are white */
         }}
         section[data-testid="stSidebar"] label {{
-            color: {TEXT_COLOR} !important;
+            color: {TEXT_COLOR} !important; /* Ensure sidebar labels are white */
         }}
         section[data-testid="stSidebar"] div[data-testid="stSidebarNav"] {{
             background-color: transparent !important;
             color: {TEXT_COLOR} !important;
         }}
         section[data-testid="stSidebar"] div[data-testid="stSidebarNav"]:hover {{
-            background-color: #1F2A32 !important;
+            background-color: #1F2A32 !important; /* Darker background on hover */
         }}
         section[data-testid="stSidebar"] {{
             padding: 20px;
@@ -48,6 +48,12 @@ st.markdown(f"""
         /* Main content styling */
         .stApp {{
             background-color: {BACKGROUND_COLOR} !important;
+        }}
+
+        /* Input titles and labels */
+        label {{
+            color: {TEXT_COLOR} !important; /* Ensure input titles are white */
+            font-weight: bold !important; /* Optional: Make titles bold */
         }}
 
         /* Input field styling */
@@ -74,8 +80,8 @@ st.markdown(f"""
 
         /* Streamlit button styling */
         button[kind="primary"] {{
-            background-color: #FF0000 !important;
-            color: #FFFFFF !important;
+            background-color: #FF0000 !important; /* Red background */
+            color: #FFFFFF !important; /* White text */
             border: none !important;
             border-radius: 5px !important;
             font-weight: bold !important;
@@ -83,19 +89,18 @@ st.markdown(f"""
             padding: 10px 20px !important;
         }}
         button[kind="primary"]:hover {{
-            background-color: #CC0000 !important;
+            background-color: #CC0000 !important; /* Darker red on hover */
         }}
 
-        /* Fix for sidebar text */
+        /* Fix for sidebar radio button text */
         [data-testid="stSidebar"] .stRadio {{
-            color: {TEXT_COLOR} !important;
+            color: {TEXT_COLOR} !important; /* White text for sidebar radio buttons */
         }}
         [data-testid="stSidebar"] .stRadio:hover {{
             color: {TEXT_COLOR} !important;
         }}
     </style>
 """, unsafe_allow_html=True)
-
 
 # Sidebar navigation
 with st.sidebar:
