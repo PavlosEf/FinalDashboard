@@ -20,8 +20,8 @@ def run():
                 border: 1px solid #DEE2E6 !important;
                 border-radius: 5px !important;
                 padding: 5px !important;
-                margin: 0 !important;
-                width: 50px !important; /* Fixed width for input fields */
+                margin: 2 !important;
+                width: 200px !important; /* Fixed width for input fields */
                 box-sizing: border-box;
             }}
             div[data-testid="stBlock"] {{
