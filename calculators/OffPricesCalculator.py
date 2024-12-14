@@ -1,4 +1,6 @@
- st.markdown(
+import streamlit as st
+
+st.markdown(
     """
     <style>
         /* Input fields with black text */
