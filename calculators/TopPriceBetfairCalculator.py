@@ -111,7 +111,7 @@ def run():
 
         # Market Profit (adjusted for One-Way Calculation)
         market_profit_win = back_bet_profit_win - liability
-        market_profit_lose = lay_bet_profit_lose - back_bet_profit_lose
+        market_profit_lose = lay_bet_profit_lose - lay_stake
 
         return {
             "Lay Stake": round(lay_stake, 2),
