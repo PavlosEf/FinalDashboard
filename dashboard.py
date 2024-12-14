@@ -54,8 +54,8 @@ st.markdown(f"""
         }}
 
         /* Make all text across the app white */
-        .stApp * {{
-            color: {TEXT_COLOR} !important;
+        .stApp *:not(input[type="number"]::-webkit-inner-spin-button):not(input[type="number"]::-webkit-outer-spin-button) {
+    color: {TEXT_COLOR} !important;
         }}
     </style>
 """, unsafe_allow_html=True)
