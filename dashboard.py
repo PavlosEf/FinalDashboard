@@ -23,7 +23,7 @@ TEXT_COLOR = "#FFFFFF"  # White text for all elements
 # Apply locked global CSS
 st.markdown(f"""
     <style>
-        /* Locked sidebar styling */
+        /* Sidebar styling */
         section[data-testid="stSidebar"] {{
             background-color: {SIDEBAR_BACKGROUND} !important;
             color: {TEXT_COLOR} !important;
@@ -35,36 +35,47 @@ st.markdown(f"""
             color: {TEXT_COLOR} !important;
         }}
         section[data-testid="stSidebar"] div[data-testid="stSidebarNav"] {{
-            background-color: transparent !important; /* Fix for sidebar selections */
+            background-color: transparent !important;
             color: {TEXT_COLOR} !important;
         }}
         section[data-testid="stSidebar"] div[data-testid="stSidebarNav"]:hover {{
-            background-color: #1F2A32 !important; /* Darker background on hover */
+            background-color: #1F2A32 !important;
         }}
         section[data-testid="stSidebar"] {{
             padding: 20px;
         }}
-        
-        /* Locked main content styling */
+
+        /* Main content styling */
         .stApp {{
             background-color: {BACKGROUND_COLOR} !important;
-            color: {TEXT_COLOR} !important;
         }}
 
-        /* Default input styling (make text white and background consistent) */
+        /* Input field styling */
         input[type="text"], input[type="number"], textarea {{
-            background-color: #3E4E56 !important; /* Same as app background */
-            color: {TEXT_COLOR} !important; /* White text */
-            caret-color: {TEXT_COLOR} !important; /* White caret */
+            background-color: #3E4E56 !important;
+            color: {TEXT_COLOR} !important;
+            caret-color: {TEXT_COLOR} !important;
             border: 1px solid #DEE2E6 !important;
             border-radius: 5px !important;
             padding: 8px !important;
         }}
 
-        /* Fix for sidebar and primary buttons */
+        /* Styling for + and - buttons */
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button {{
+            background-color: #FF0000 !important;
+            color: #FFFFFF !important;
+            border: none !important;
+        }}
+        input[type="number"]::-webkit-inner-spin-button:hover, 
+        input[type="number"]::-webkit-outer-spin-button:hover {{
+            background-color: #CC0000 !important;
+        }}
+
+        /* Streamlit button styling */
         button[kind="primary"] {{
-            background-color: #FF0000 !important; /* Red background */
-            color: #FFFFFF !important; /* White text */
+            background-color: #FF0000 !important;
+            color: #FFFFFF !important;
             border: none !important;
             border-radius: 5px !important;
             font-weight: bold !important;
@@ -72,35 +83,19 @@ st.markdown(f"""
             padding: 10px 20px !important;
         }}
         button[kind="primary"]:hover {{
-            background-color: #CC0000 !important; /* Darker red on hover */
+            background-color: #CC0000 !important;
         }}
 
-        /* Styling for + and - buttons on number inputs */
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {{
-            background-color: #FF0000 !important; /* Red color */
-            color: #FFFFFF !important; /* White text */
-        }}
-        input[type="number"]::-webkit-inner-spin-button:hover,
-        input[type="number"]::-webkit-outer-spin-button:hover {{
-            background-color: #CC0000 !important; /* Darker red on hover */
-        }}
-
-        /* Ensure all other elements are properly visible */
-        .stApp * {{
-            color: inherit !important;
-        }}
-
-        /* Specific fix for sidebar selections */
+        /* Fix for sidebar text */
         [data-testid="stSidebar"] .stRadio {{
-            color: {TEXT_COLOR} !important; /* White text */
-            font-size: 14px !important;
+            color: {TEXT_COLOR} !important;
         }}
         [data-testid="stSidebar"] .stRadio:hover {{
             color: {TEXT_COLOR} !important;
         }}
     </style>
 """, unsafe_allow_html=True)
+
 
 # Sidebar navigation
 with st.sidebar:
