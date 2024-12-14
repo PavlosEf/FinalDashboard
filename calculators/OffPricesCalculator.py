@@ -72,7 +72,7 @@ def run():
         else:
             return '<div class="result-box">None</div>'
 
-    # Initialize session state for inputs
+    # Initialize session state for inputs (check if key exists before assigning)
     for i in range(5):
         if f"price_a_{i}" not in st.session_state:
             st.session_state[f"price_a_{i}"] = ""
