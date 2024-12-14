@@ -66,7 +66,7 @@ def run():
     # Input Fields with Fake Column After Total Stake (€)
     for i in range(1):  # Adjusted to match layout from OffPricesCalculator.py
         # Row 1: Odds Inputs
-        col1, col2, col_fake = st.columns([2, 2, 5])  # Fake column added after Competition Odds
+        col1, col2, col_fake = st.columns([1, 1, 5])  # Fake column added after Competition Odds
         with col1:
             w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
         with col2:
