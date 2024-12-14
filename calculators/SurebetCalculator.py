@@ -19,13 +19,13 @@ def run():
                 caret-color: {TEXT_COLOR} !important;
                 border: 1px solid #DEE2E6 !important;
                 border-radius: 5px !important;
-                padding: 5px !important; /* Ensure minimal padding inside the input */
+                padding: 5px !important; /* Minimal padding inside the input */
                 margin: 0 !important; /* Remove additional margins */
                 width: 120px !important; /* Set smaller input box width */
                 box-sizing: border-box; /* Ensure proper size alignment */
             }}
-            div[data-testid="stHorizontalBlock"] > div {{
-                gap: 0px !important; /* Remove extra gaps between columns */
+            div[data-testid="stBlock"] {{
+                gap: 0px !important; /* Remove extra gaps between Streamlit blocks */
             }}
             .css-18e3th9 {{
                 padding: 0px !important; /* Remove padding around input fields */
@@ -64,19 +64,20 @@ def run():
         }
 
     # Input Fields
-    col1, col2 = st.columns([1, 1], gap="small")  # Use the "gap" argument to reduce column spacing
-    with col1:
-        w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
-    with col2:
-        w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
+    for i in range(1):  # Adjusted to match layout from OffPricesCalculator.py
+        col1, col2, col3, col4 = st.columns([0.3, 0.3, 1, 1])  # Tight column widths
+        with col1:
+            w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
+        with col2:
+            w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
 
-    col1, col2, col3 = st.columns([1, 1, 1], gap="small")  # Use "small" to reduce gap
-    with col1:
-        w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w1_stake")
-    with col2:
-        w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w2_stake")
-    with col3:
-        total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01, key="total_stake")
+        col1, col2, col3 = st.columns([0.3, 0.3, 1])  # Tight column widths
+        with col1:
+            w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w1_stake")
+        with col2:
+            w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w2_stake")
+        with col3:
+            total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01, key="total_stake")
 
     # Perform Calculation
     if total_stake > 0:
