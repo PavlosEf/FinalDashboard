@@ -31,7 +31,7 @@ def run():
                 border-radius: 8px;
                 padding: 15px;
                 margin: 15px 0;
-                width: 50%; /* Smaller width */
+                width: 25%; /* Smaller width */
                 color: {TEXT_COLOR};
                 font-family: Arial, sans-serif;
                 display: inline-block;
