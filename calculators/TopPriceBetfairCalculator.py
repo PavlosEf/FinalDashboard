@@ -24,7 +24,7 @@ def run():
                 width: 120px !important; /* Fixed width for input fields */
                 box-sizing: border-box;
             }}
-            /* Styling for Results Boxes */
+            /* Styling for Results Box */
             .result-box {{
                 background-color: #2B3A42; /* Darker background */
                 border: 1px solid #DEE2E6;
@@ -74,12 +74,12 @@ def run():
         liability = lay_stake * (lay_odds - 1)
 
         # Back Bet Outcomes
-        back_bet_profit_win = back_stake * (back_odds - 1)
-        back_bet_profit_lose = -back_stake
+        back_bet_profit_win = back_stake * (back_odds - 1)  # Profit when back bet wins
+        back_bet_profit_lose = -back_stake  # Loss when back bet loses
 
         # Lay Bet Outcomes
-        lay_bet_profit_win = -liability
-        lay_bet_profit_lose = lay_stake
+        lay_bet_profit_win = -liability  # Loss when lay bet loses
+        lay_bet_profit_lose = lay_stake  # Profit when lay bet wins
 
         # Market Profit (combined outcomes)
         market_profit_win = back_bet_profit_win + lay_bet_profit_win
@@ -102,12 +102,12 @@ def run():
         liability = lay_stake * (lay_odds - 1)
 
         # Back Bet Outcomes
-        back_bet_profit_win = back_stake * (back_odds - 1)
-        back_bet_profit_lose = -back_stake
+        back_bet_profit_win = back_stake * (back_odds - 1)  # Profit only when back bet wins
+        back_bet_profit_lose = -back_stake  # Loss when back bet loses
 
         # Lay Bet Outcomes
-        lay_bet_profit_win = -liability
-        lay_bet_profit_lose = back_stake  # Return only the back stake
+        lay_bet_profit_win = -liability  # Loss when lay bet loses
+        lay_bet_profit_lose = back_stake  # Return only the back stake if lay bet wins
 
         # Market Profit (adjusted for One-Way Calculation)
         market_profit_win = back_bet_profit_win
@@ -141,66 +141,48 @@ def run():
         equal_profit_results = calculate_equal_profit(back_stake, back_odds, lay_odds)
         one_way_results = calculate_one_way(back_stake, back_odds, lay_odds)
 
-        # Results Display: Side-by-Side
-        col1, col2 = st.columns(2)
-        with col1:
-            st.markdown("### Equal Profit Calculation Results")
-            st.markdown(
-                f"""
-                <div class="result-box">
-                    <ul>
-                        <li>Lay Stake: <span>{equal_profit_results['Lay Stake']}€</span></li>
-                        <li>Liability: <span>{equal_profit_results['Liability']}€</span></li>
-                        <h4>If Back Wins:</h4>
-                        <li>Back Bet Profit: 
-                            <span class="{'profit-positive' if equal_profit_results['Back Bet Profit Win'] >= 0 else 'profit-negative'}">
-                                {equal_profit_results['Back Bet Profit Win']}€
-                            </span>
-                        </li>
-                        <li>Lay Bet Profit: 
-                            <span class="{'profit-positive' if equal_profit_results['Lay Bet Profit Win'] >= 0 else 'profit-negative'}">
-                                {equal_profit_results['Lay Bet Profit Win']}€
-                            </span>
-                        </li>
-                        <li>Market Profit: 
-                            <span class="{'profit-positive' if equal_profit_results['Market Profit Win'] >= 0 else 'profit-negative'}">
-                                {equal_profit_results['Market Profit Win']}€
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-        with col2:
-            st.markdown("### One-Way Calculation Results")
-            st.markdown(
-                f"""
-                <div class="result-box">
-                    <ul>
-                        <li>Lay Stake: <span>{one_way_results['Lay Stake']}€</span></li>
-                        <li>Liability: <span>{one_way_results['Liability']}€</span></li>
-                        <h4>If Back Wins:</h4>
-                        <li>Back Bet Profit: 
-                            <span class="{'profit-positive' if one_way_results['Back Bet Profit Win'] >= 0 else 'profit-negative'}">
-                                {one_way_results['Back Bet Profit Win']}€
-                            </span>
-                        </li>
-                        <li>Lay Bet Profit: 
-                            <span class="{'profit-positive' if one_way_results['Lay Bet Profit Win'] >= 0 else 'profit-negative'}">
-                                {one_way_results['Lay Bet Profit Win']}€
-                            </span>
-                        </li>
-                        <li>Market Profit: 
-                            <span class="{'profit-positive' if one_way_results['Market Profit Win'] >= 0 else 'profit-negative'}">
-                                {one_way_results['Market Profit Win']}€
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
+        # Results Display
+        st.markdown("### Equal Profit Calculation Results")
+        st.markdown(
+            f"""
+            <div class="result-box">
+                <ul>
+                    <li>Lay Stake: <span>{equal_profit_results['Lay Stake']}€</span></li>
+                    <li>Liability: <span>{equal_profit_results['Liability']}€</span></li>
+                    <h4>If Back Wins:</h4>
+                    <li>Back Bet Profit: <span class="{'profit-positive' if equal_profit_results['Back Bet Profit Win'] >= 0 else 'profit-negative'}">{equal_profit_results['Back Bet Profit Win']}€</span></li>
+                    <li>Lay Bet Profit: <span class="{'profit-positive' if equal_profit_results['Lay Bet Profit Win'] >= 0 else 'profit-negative'}">{equal_profit_results['Lay Bet Profit Win']}€</span></li>
+                    <li>Market Profit: <span class="{'profit-positive' if equal_profit_results['Market Profit Win'] >= 0 else 'profit-negative'}">{equal_profit_results['Market Profit Win']}€</span></li>
+                    <h4>If Back Loses:</h4>
+                    <li>Back Bet Profit: <span class="{'profit-positive' if equal_profit_results['Back Bet Profit Lose'] >= 0 else 'profit-negative'}">{equal_profit_results['Back Bet Profit Lose']}€</span></li>
+                    <li>Lay Bet Profit: <span class="{'profit-positive' if equal_profit_results['Lay Bet Profit Lose'] >= 0 else 'profit-negative'}">{equal_profit_results['Lay Bet Profit Lose']}€</span></li>
+                    <li>Market Profit: <span class="{'profit-positive' if equal_profit_results['Market Profit Lose'] >= 0 else 'profit-negative'}">{equal_profit_results['Market Profit Lose']}€</span></li>
+                </ul>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        st.markdown("### One-Way Calculation Results")
+        st.markdown(
+            f"""
+            <div class="result-box">
+                <ul>
+                    <li>Lay Stake: <span>{one_way_results['Lay Stake']}€</span></li>
+                    <li>Liability: <span>{one_way_results['Liability']}€</span></li>
+                    <h4>If Back Wins:</h4>
+                    <li>Back Bet Profit: <span class="{'profit-positive' if one_way_results['Back Bet Profit Win'] >= 0 else 'profit-negative'}">{one_way_results['Back Bet Profit Win']}€</span></li>
+                    <li>Lay Bet Profit: <span class="{'profit-positive' if one_way_results['Lay Bet Profit Win'] >= 0 else 'profit-negative'}">{one_way_results['Lay Bet Profit Win']}€</span></li>
+                    <li>Market Profit: <span class="{'profit-positive' if one_way_results['Market Profit Win'] >= 0 else 'profit-negative'}">{one_way_results['Market Profit Win']}€</span></li>
+                    <h4>If Back Loses:</h4>
+                    <li>Back Bet Profit: <span class="{'profit-positive' if one_way_results['Back Bet Profit Lose'] >= 0 else 'profit-negative'}">{one_way_results['Back Bet Profit Lose']}€</span></li>
+                    <li>Lay Bet Profit: <span class="{'profit-positive' if one_way_results['Lay Bet Profit Lose'] >= 0 else 'profit-negative'}">{one_way_results['Lay Bet Profit Lose']}€</span></li>
+                    <li>Market Profit: <span class="{'profit-positive' if one_way_results['Market Profit Lose'] >= 0 else 'profit-negative'}">{one_way_results['Market Profit Lose']}€</span></li>
+                </ul>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
     # Footer
     st.markdown("---")
