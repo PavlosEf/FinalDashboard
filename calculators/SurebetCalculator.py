@@ -4,6 +4,7 @@ def run():
     # Global Styles
     BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
     TEXT_COLOR = "#FFFFFF"  # White text for all elements
+    BUTTON_COLOR = "#DEE2E6"  # Button color for + and -
 
     st.markdown(
         f"""
@@ -23,6 +24,18 @@ def run():
                 margin: 0 !important;
                 width: 120px !important; /* Fixed width for input fields */
                 box-sizing: border-box;
+            }}
+            /* Styling for + and - buttons */
+            input[type="number"]::-webkit-inner-spin-button, 
+            input[type="number"]::-webkit-outer-spin-button {{
+                background-color: {BUTTON_COLOR} !important; /* Set button background color */
+                color: {BACKGROUND_COLOR} !important; /* Set button text color */
+                border: 1px solid #FFFFFF !important; /* Button border */
+            }}
+            input[type="number"]::-webkit-inner-spin-button:hover, 
+            input[type="number"]::-webkit-outer-spin-button:hover {{
+                background-color: #FFFFFF !important; /* Highlight button on hover */
+                color: #000000 !important; /* Text color on hover */
             }}
             div[data-testid="stBlock"] {{
                 gap: 0px !important; /* Remove extra gaps between Streamlit blocks */
