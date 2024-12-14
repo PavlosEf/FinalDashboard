@@ -33,7 +33,7 @@ def run():
     result_bg_color = st.sidebar.color_picker("Result Box Background", "#FFD700")
     result_text_color = st.sidebar.color_picker("Result Box Text Color", "#000000")
     border_radius = st.sidebar.slider("Border Radius (px)", 0, 20, 8)
-    padding_size = st.sidebar.slider("Horizontal Padding (px)", 0, 20, 10)
+    padding_size = st.sidebar.slider("Padding Size (px)", 0, 20, 10)
     input_height = st.sidebar.slider("Input Height (px)", 30, 60, 40)
     input_width = st.sidebar.slider("Input Width (px)", 200, 400, 300)
 
@@ -100,5 +100,39 @@ def run():
     with col3:
         total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01)
 
-    # Display Results (example result box to test styling)
-    st.markdown('<div class="result-box">Example Result Box</div>', unsafe_allow_html=True)
+    # Perform Calculation
+    if total_stake > 0:
+        results = calculate_surebet(w1_odds, w2_odds, total_stake=total_stake)
+    elif w1_stake > 0 and w2_stake == 0:
+        results = calculate_surebet(w1_odds, w2_odds, w1_stake=w1_stake)
+    elif w2_stake > 0 and w1_stake == 0:
+        results = calculate_surebet(w1_odds, w2_odds, w2_stake=w2_stake)
+    elif w1_stake > 0 and w2_stake > 0:
+        results = calculate_surebet(w1_odds, w2_odds, w1_stake=w1_stake, w2_stake=w2_stake)
+    else:
+        results = None
+
+    # Display Results
+    if results:
+        st.markdown("### Results")
+        arbitrage_color = "green" if results["Arbitrage %"] > 0 else "red"
+        profit_w1_color = "green" if results["Profit W1"] > 0 else "red"
+        profit_w2_color = "green" if results["Profit W2"] > 0 else "red"
+
+        # Render Result Box
+        st.markdown(
+            f"""
+            <div class="result-box">
+                <h4>Calculation Results:</h4>
+                <ul>
+                    <li>Kaizen Stakes: {results['W1 Stake']}€</li>
+                    <li>Competition Stakes: {results['W2 Stake']}€</li>
+                    <li>Total Stake: {results['Total Stake']}€</li>
+                    <li>Profit Kaizen: <span style="color:{profit_w1_color}">{results['Profit W1']}€</span></li>
+                    <li>Profit Competition: <span style="color:{profit_w2_color}">{results['Profit W2']}€</span></li>
+                    <li>Arbitrage: <span style="color:{arbitrage_color}">{results['Arbitrage %']}%</span></li>
+                </ul>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
