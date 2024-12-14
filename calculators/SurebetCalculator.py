@@ -5,11 +5,15 @@ def run():
     BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
     TEXT_COLOR = "#FFFFFF"  # White text for all elements
 
+    # Injecting CSS with proper f-string formatting
     st.markdown(
         f"""
         <style>
             /* Global background and text styling */
-            .stApp {background-color: {BACKGROUND_COLOR} !important; color: {TEXT_COLOR} !important;}
+            .stApp {{
+                background-color: {BACKGROUND_COLOR} !important;
+                color: {TEXT_COLOR} !important;
+            }}
             input[type="text"], input[type="number"] {{
                 background-color: {BACKGROUND_COLOR} !important;
                 color: {TEXT_COLOR} !important;
@@ -21,8 +25,12 @@ def run():
                 width: 120px !important; /* Fixed width for input fields */
                 box-sizing: border-box;
             }}
-            div[data-testid="stBlock"] {{ gap: 0px !important; }} /* Remove extra gaps between Streamlit blocks */
-            .css-18e3th9 {{ padding: 0px !important; }} /* Remove padding around input fields */
+            div[data-testid="stBlock"] {{
+                gap: 0px !important; /* Remove extra gaps between Streamlit blocks */
+            }}
+            .css-18e3th9 {{
+                padding: 0px !important; /* Remove padding around input fields */
+            }}
         </style>
         """,
         unsafe_allow_html=True,
@@ -30,6 +38,10 @@ def run():
 
     st.title("Surebet Calculator")
     st.markdown("Calculate stakes and profits for arbitrage betting scenarios dynamically.")
+
+    # Rest of the code remains unchanged
+    # (e.g., input fields, calculation logic, and result display)
+
 
     # Function to calculate stakes and arbitrage
     def calculate_surebet(w1_odds, w2_odds, w1_stake=None, w2_stake=None, total_stake=None):
