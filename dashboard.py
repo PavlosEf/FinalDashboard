@@ -54,10 +54,11 @@ st.markdown(f"""
         }}
         /* Fix for +/- spinner buttons in number inputs */
         input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
+        input[type="number"]::-webkit-outer-spin-button {{
             background-color: #3E4E56 !important; /* Same as app background */
             color: #000000 !important; /* Black icons for visibility */
-        }
+        }}
+
         /* Make all text across the app white */
         .stApp * {{
             color: {TEXT_COLOR} !important;
