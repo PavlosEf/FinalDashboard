@@ -43,17 +43,7 @@ st.markdown(f"""
             color: {TEXT_COLOR} !important;
         }}
 
-        /* Default input styling (make text white and background consistent) */
-        input[type="text"], input[type="number"], textarea {{
-            background-color: #3E4E56 !important; /* Same as app background */
-            color: {TEXT_COLOR} !important; /* White text */
-            caret-color: {TEXT_COLOR} !important; /* White caret */
-            border: 1px solid #DEE2E6 !important;
-            border-radius: 5px !important;
-            padding: 8px !important;
-        }}
-      
-
+    
         /* Make all text across the app white */
         .stApp * {{
             color: {TEXT_COLOR} !important;
