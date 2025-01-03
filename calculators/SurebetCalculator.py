@@ -4,7 +4,7 @@ def run():
     # Global Styles
     BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
     TEXT_COLOR = "#FFFFFF"  # White text for all elements
-    BUTTON_COLOR = "#FFFFFF"  # Button color for + and -
+    BUTTON_COLOR = "#3E4E56"  # Button color for + and -
 
     st.markdown(
         f"""
@@ -34,7 +34,7 @@ def run():
             }}
             input[type="number"]::-webkit-inner-spin-button:hover, 
             input[type="number"]::-webkit-outer-spin-button:hover {{
-                background-color: #FFFFFF !important; /* Highlight button on hover */
+                background-color: #3E4E56 !important; /* Highlight button on hover */
                 color: #000000 !important; /* Text color on hover */
             }}
             div[data-testid="stBlock"] {{
