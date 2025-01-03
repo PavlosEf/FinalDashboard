@@ -29,7 +29,7 @@ def run():
             input[type="number"]::-webkit-inner-spin-button, 
             input[type="number"]::-webkit-outer-spin-button {{
                 background-color: #3E4E56 !important; /* Set button background color */
-                color: ##3E4E56 !important; /* Set button text color */
+                color: #3E4E56 !important; /* Set button text color */
                 border: 1px solid #FFFFFF !important; /* Button border */
             }}
             input[type="number"]::-webkit-inner-spin-button:hover, 
