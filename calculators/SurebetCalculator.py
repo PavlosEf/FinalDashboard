@@ -4,7 +4,7 @@ def run():
     # Global Styles
     BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
     TEXT_COLOR = "#FFFFFF"  # White text for all elements
-    BUTTON_COLOR = "#DEE2E6"  # Button color for + and -
+    BUTTON_COLOR = "#FFFFFF"  # Button color for + and -
 
     st.markdown(
         f"""
