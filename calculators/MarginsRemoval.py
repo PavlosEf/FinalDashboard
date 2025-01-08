@@ -2,7 +2,7 @@ import streamlit as st
 
 def run():
     # Global Styles
-    BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
+    BACKGROUND_COLOR = "#000000"  # Grey background for the main app
     TEXT_COLOR = "#FFFFFF"  # White text for all elements
 
     st.markdown(
