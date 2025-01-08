@@ -36,7 +36,7 @@ def run():
             }}
             .result-box h4 {{
                 margin-bottom: 10px;
-                color: #00000 !important; /* Force white for header */
+                color: #000000 !important; /* Force white for header */
                 font-size: 18px;
                 text-align: center;
                 text-decoration: underline;
