@@ -14,7 +14,10 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-
+# Locked global styles (for sidebar and main background, and text color)
+BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
+SIDEBAR_BACKGROUND = "#2B3A42"  # Darker grey for the sidebar
+TEXT_COLOR = "#FFFFFF"  # White text for all elements
 
 # Apply locked global CSS
 st.markdown(f"""
