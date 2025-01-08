@@ -53,10 +53,10 @@ class DifferentLinesCalculator:
         return odds  # Return the same odds if at boundary
 
     def calculate_competition_odds(self, kaizen_line: float, kaizen_odds: float,
-                                   comp_line: float, comp_odds: float) -> float:
+                                   comp_line: float, comp_odds: float, direction: str) -> float:
         """Calculates the competition's odds adjusted to the Kaizen line."""
         line_diff = int(kaizen_line - comp_line)
-        step_up = line_diff > 0
+        step_up = line_diff > 0 if direction == "over" else line_diff < 0
 
         # Find the closest pattern to comp_odds
         closest_pattern = find_closest_pattern(comp_odds, self.patterns)
@@ -83,10 +83,10 @@ class DifferentLinesCalculator:
             return "Off 1"
 
     def calculate(self, kaizen_line: float, kaizen_odds: float,
-                   comp_line: float, comp_odds: float) -> OddsResult:
+                   comp_line: float, comp_odds: float, direction: str) -> OddsResult:
         """Performs the complete calculation and returns a result object."""
         comp_at_kaizen = self.calculate_competition_odds(
-            kaizen_line, kaizen_odds, comp_line, comp_odds)
+            kaizen_line, kaizen_odds, comp_line, comp_odds, direction)
         difference = self.calculate_difference(kaizen_odds, comp_at_kaizen)
         status = self.get_status(difference)
 
@@ -120,6 +120,9 @@ def main():
         comp_line = st.number_input("Competition Line", value=0.0, step=0.5)
         comp_odds = st.number_input("Competition Odds", value=1.0, min_value=1.0, step=0.01)
 
+    # Add direction selector
+    direction = st.radio("Select Adjustment Direction", ("over", "under"))
+
     # Add calculate button
     if st.button("Calculate", type="primary"):
         try:
@@ -128,7 +131,8 @@ def main():
                 kaizen_line=kaizen_line,
                 kaizen_odds=kaizen_odds,
                 comp_line=comp_line,
-                comp_odds=comp_odds
+                comp_odds=comp_odds,
+                direction=direction
             )
 
             # Display results in a nice format
@@ -171,3 +175,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
