@@ -132,9 +132,10 @@ def run():
                 }}
                 .result-box h4 {{
                     margin-bottom: 10px;
-                    color: #FFFFFF !important; /* Force white for header */
-                    font-size: 18px;
+                    color: #000000 !important; /* Force black for header */
+                    font-size: 22px;
                     text-align: center;
+                    font-weight: bold;
                     text-decoration: underline;
                 }}
                 .result-box ul {{
