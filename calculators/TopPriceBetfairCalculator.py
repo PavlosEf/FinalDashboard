@@ -144,7 +144,7 @@ def run():
         # Results Display: Side-by-Side
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown("### Equal Profit Calculation Results")
+            st.markdown("## **<span style='color: black;'>Equal Profit Calculation Results</span>**", unsafe_allow_html=True)
             st.markdown(
                 f"""
                 <div class="result-box">
