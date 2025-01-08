@@ -16,7 +16,4 @@ def run():
         unsafe_allow_html=True
     )
 
-    # Display content
-    st.title("General Tab 1")
-    st.write("This section is under construction.")
-
+   
