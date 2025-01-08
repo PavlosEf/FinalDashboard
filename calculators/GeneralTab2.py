@@ -17,6 +17,5 @@ def run():
     )
 
     # Display content
-    st.title("General Tab 1")
-    st.write("This section is under construction.")
+    
 
