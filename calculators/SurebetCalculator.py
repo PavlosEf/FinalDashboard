@@ -3,7 +3,7 @@ import streamlit as st
 def run():
     # Global Styles
     BACKGROUND_COLOR = "#FFFFFF"  # Grey background for the main app
-    TEXT_COLOR = "#FFFFFF"  # White text for all elements
+    TEXT_COLOR = "#000000"  # White text for all elements
     BUTTON_COLOR = "#3E4E56"  # Button color for + and -
 
     st.markdown(
