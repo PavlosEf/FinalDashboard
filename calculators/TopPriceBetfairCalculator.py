@@ -26,7 +26,7 @@ def run():
             }}
             /* Styling for Results Boxes */
             .result-box {{
-                background-color: #FFFFFF; /* Darker background */
+                background-color: #e9f2f7; /* Darker background */
                 border: 1px solid #DEE2E6;
                 border-radius: 8px;
                 padding: 15px;
