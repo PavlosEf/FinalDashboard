@@ -24,7 +24,7 @@ st.markdown(f"""
         /* Locked sidebar styling */
         section[data-testid="stSidebar"] {{
             background-color: {SIDEBAR_BACKGROUND} !important;
-            color: {TEXT_COLOR} !important;
+            color: "#FFFFFF" !important;
         }}
         section[data-testid="stSidebar"] h1, h2, h3, h4, h5, h6 {{
             color: {TEXT_COLOR} !important;
