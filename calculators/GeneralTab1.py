@@ -6,7 +6,7 @@ def run():
         """
         <style>
             .stApp {
-                background-image: url("https://png.pngtree.com/png-vector/20241009/ourlarge/pngtree-coming-soon-under-construction-vector-png-image_14018490.png");  /* Replace with your image URL */
+                background-image: url("https://img.freepik.com/free-vector/construction-with-black-yellow-stripes_1017-30755.jpg?semt=ais_hybrid");  /* Replace with your image URL */
                 background-size: 75%;  /* Ensures the image covers the entire background */
                 background-position: center;  /* Centers the image */
                 background-repeat: no-repeat;  /* Prevents the image from repeating */
