@@ -3,7 +3,7 @@ import calculators.OffPricesCalculator as OffPricesCalculator
 import calculators.SurebetCalculator as SurebetCalculator
 import calculators.TopPriceBetfairCalculator as TopPriceBetfairCalculator
 import calculators.MarginsRemoval as MarginsRemoval
-import calculators.calculators/DifferentLines as AlternativeLinesConverter
+import calculators.DifferentLines as AlternativeLinesConverter
 import calculators.GeneralTab1 as GeneralTab1
 import calculators.GeneralTab2 as GeneralTab2
 
