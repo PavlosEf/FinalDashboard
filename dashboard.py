@@ -14,12 +14,11 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Locked global styles (for sidebar and main background, and text color)
-BACKGROUND_COLOR = "#3E4E56"  # Grey background for the main app
+# Sidebar styles
 SIDEBAR_BACKGROUND = "#2B3A42"  # Darker grey for the sidebar
 TEXT_COLOR = "#FFFFFF"  # White text for all elements
 
-# Apply locked global CSS
+# Apply locked global CSS for sidebar only
 st.markdown(f"""
     <style>
         /* Locked sidebar styling */
@@ -35,18 +34,6 @@ st.markdown(f"""
         }}
         section[data-testid="stSidebar"] {{
             padding: 20px;
-        }}
-        
-        /* Locked main content styling */
-        .stApp {{
-            background-color: {BACKGROUND_COLOR} !important;
-            color: {TEXT_COLOR} !important;
-        }}
-
-    
-        /* Make all text across the app white */
-        .stApp * {{
-            color: {TEXT_COLOR} !important;
         }}
     </style>
 """, unsafe_allow_html=True)
