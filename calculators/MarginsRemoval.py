@@ -26,7 +26,7 @@ def run():
             }}
             /* Styling for Smaller Results Box */
             .small-result-box {{
-                background-color: #2B3A42;
+                background-color: #e9f2f7;
                 border: 1px solid #DEE2E6;
                 border-radius: 8px;
                 padding: 15px;
