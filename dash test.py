@@ -3,7 +3,7 @@ import calculators.OffPricesCalculator as OffPricesCalculator
 import calculators.SurebetCalculator as SurebetCalculator
 import calculators.TopPriceBetfairCalculator as TopPriceBetfairCalculator
 import calculators.MarginsRemoval as MarginsRemoval
-import calculators.AlternativeLinesConverter as AlternativeLinesConverter
+import calculators.DifferentLines as AlternativeLinesConverter
 import calculators.GeneralTab1 as GeneralTab1
 import calculators.GeneralTab2 as GeneralTab2
 
@@ -43,22 +43,7 @@ st.markdown(f"""
             color: {TEXT_COLOR} !important;
         }}
 
-        /* Default input styling (make text white and background consistent) */
-        input[type="text"], input[type="number"], textarea {{
-            background-color: #3E4E56 !important; /* Same as app background */
-            color: {TEXT_COLOR} !important; /* White text */
-            caret-color: {TEXT_COLOR} !important; /* White caret */
-            border: 1px solid #DEE2E6 !important;
-            border-radius: 5px !important;
-            padding: 8px !important;
-        }}
-        /* Fix for +/- spinner buttons in number inputs */
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {{
-            background-color: #3E4E56 !important; /* Same as app background */
-            color: #000000 !important; /* Black icons for visibility */
-        }}
-
+    
         /* Make all text across the app white */
         .stApp * {{
             color: {TEXT_COLOR} !important;
