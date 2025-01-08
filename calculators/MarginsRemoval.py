@@ -39,6 +39,7 @@ def run():
             }}
             .small-result-box h4 {{
                 margin-bottom: 10px;
+                color: #000000 !important;
                 font-size: 16px;
                 text-decoration: underline;
                 text-align: center;
