@@ -189,7 +189,7 @@ def run():
                 unsafe_allow_html=True,
             )
         with col2:
-            st.markdown("### One-Way Calculation Results")
+            st.markdown("## **<span style='color: black;'>One-Way Calculation Results</span>**", unsafe_allow_html=True)
             st.markdown(
                 f"""
                 <div class="result-box">
