@@ -101,7 +101,7 @@ class DifferentLinesCalculator:
 # Streamlit interface
 st.set_page_config(page_title="Different Lines Calculator", layout="wide")
 
-def main():
+def run():
     st.title("Different Lines Calculator")
 
     # Initialize calculator
@@ -174,5 +174,4 @@ def main():
             st.error(f"An unexpected error occurred: {str(e)}")
 
 if __name__ == "__main__":
-    main()
-
+    run()
