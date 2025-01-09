@@ -2,10 +2,10 @@ import streamlit as st
 
 def run():
     # Global Styles
-    BACKGROUND_COLOR = "#FFFFFF"  # Background color for the app
-    TEXT_COLOR = "#000000"  # Text color for all elements
+    BACKGROUND_COLOR = "#FFFFFF"
+    TEXT_COLOR = "#000000"
 
-    # Inject global CSS for styling
+    # Inject global CSS
     st.markdown(
         f"""
         <style>
@@ -48,13 +48,12 @@ def run():
     st.markdown("Calculate stakes and profits dynamically for 2-way, 3-way, or 4-way betting scenarios.")
 
     # Market selection
+    st.markdown("### Select Market Type")
     market_type = st.radio("Market Type", ["2-Way Market", "3-Way Market", "4-Way Market"], horizontal=True)
-
-    # Stake option
-    stake_option = st.radio("Calculation Based On:", ["Kaizen Stakes", "Total Stake"], horizontal=True)
 
     # Odds inputs
     odds = []
+    st.markdown("### Enter Odds")
     if market_type == "2-Way Market":
         col1, col2 = st.columns(2)
         with col1:
@@ -83,22 +82,30 @@ def run():
             odd4 = st.number_input("Competition 3 Odds", min_value=1.01, value=4.0, step=0.01)
         odds = [odd1, odd2, odd3, odd4]
 
-    # Stake input
-    if stake_option == "Kaizen Stakes":
-        kaizen_stake = st.number_input("Kaizen Stake (€)", min_value=0.0, value=100.0, step=0.01)
-    else:
-        total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=100.0, step=0.01)
+    # Stake inputs
+    st.markdown("### Enter Stakes")
+    kaizen_stake = st.number_input("Kaizen Stake (€)", min_value=0.0, value=0.0, step=0.01)
+    total_stake = st.number_input("Total Stake (€)", min_value=0.0, value=0.0, step=0.01)
 
-    # Calculation function
+    # Calculation logic
     def calculate_surebet(odds, kaizen_stake=None, total_stake=None):
         probabilities = [1 / odd for odd in odds]
         total_probability = sum(probabilities)
 
-        if kaizen_stake is not None:
+        if kaizen_stake > 0 and total_stake == 0:
             stakes = [kaizen_stake * (prob / probabilities[0]) for prob in probabilities]
             total_stake = sum(stakes)
-        else:
+        elif total_stake > 0 and kaizen_stake == 0:
             stakes = [total_stake * (prob / total_probability) for prob in probabilities]
+        elif kaizen_stake > 0 and total_stake > 0:
+            stakes = [kaizen_stake * (prob / probabilities[0]) for prob in probabilities]
+            stakes[0] = kaizen_stake  # Ensure Kaizen stake remains fixed
+            remaining_stake = total_stake - kaizen_stake
+            if remaining_stake > 0:
+                for i in range(1, len(stakes)):
+                    stakes[i] += remaining_stake * (probabilities[i] / sum(probabilities[1:]))
+        else:
+            stakes = [0] * len(odds)
 
         profits = [round((odds[i] * stakes[i]) - total_stake, 2) for i in range(len(odds))]
         arbitrage_percentage = (1 - total_probability) * 100
@@ -110,14 +117,10 @@ def run():
             "Arbitrage %": round(arbitrage_percentage, 2)
         }
 
-    # Calculate results
+    # Perform calculation and display results
     if st.button("Calculate Surebet"):
-        if stake_option == "Kaizen Stakes":
-            results = calculate_surebet(odds, kaizen_stake=kaizen_stake)
-        else:
-            results = calculate_surebet(odds, total_stake=total_stake)
+        results = calculate_surebet(odds, kaizen_stake=kaizen_stake, total_stake=total_stake)
 
-        # Display results
         st.markdown("### Results")
         st.markdown(
             f"""
