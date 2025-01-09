@@ -16,7 +16,7 @@ st.set_page_config(
 
 # Sidebar styles
 SIDEBAR_BACKGROUND = "#FFFFFF"  # Darker grey for the sidebar
-TEXT_COLOR = "#FFFFFF"  # White text for all elements
+TEXT_COLOR = "#0a0a0a"  # White text for all elements
 
 # Apply locked global CSS for sidebar only
 st.markdown(f"""
