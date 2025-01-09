@@ -158,7 +158,7 @@ def run():
 
             st.markdown(
                 f"""
-                <div style='padding: 10px; border-radius: 5px; background-color: {status_colors.get(result.status, "gray")}; color: white;'>
+                <div style='padding: 5px; border-radius: 5px; background-color: {status_colors.get(result.status, "gray")}; color: white;'>
                     <h3 style='text-align: center; margin: 0;'>Status: {result.status}</h3>
                 </div>
                 """,
