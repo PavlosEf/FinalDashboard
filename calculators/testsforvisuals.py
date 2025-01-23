@@ -2,12 +2,10 @@ import streamlit as st
 from typing import List
 from dataclasses import dataclass
 
-
 def find_closest_pattern(odds: float, patterns: List[List[float]]) -> List[float]:
     """ Finds the closest pattern of odds to match the input odds based on proximity. """
     closest_pattern = min(patterns, key=lambda p: min(abs(o - odds) for o in p))
     return closest_pattern
-
 
 @dataclass
 class OddsResult:
@@ -17,7 +15,6 @@ class OddsResult:
     comp_at_kaizen_line: float
     difference_percentage: float
     status: str
-
 
 class DifferentLinesCalculator:
     """ Calculator for analyzing odds differences between kaizen and competition using pattern matching. """
@@ -93,7 +90,6 @@ class DifferentLinesCalculator:
             status=status
         )
 
-
 # Streamlit interface
 st.set_page_config(page_title="Different Lines Calculator", layout="wide")
 
@@ -104,15 +100,11 @@ st.markdown(
     body {
         background-color: #f0f2f5;  /* Light gray background */
     }
-    .header {
-        text-align: center;
-        color: #FF4B4B;  /* Primary theme color */
-    }
     .result-box {
         padding: 20px;
         border-radius: 10px;
         background-color: white;  /* White background for results */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         margin: 10px 0;
     }
     .status-ok {
