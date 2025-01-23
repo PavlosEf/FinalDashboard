@@ -208,7 +208,20 @@ def run():
     # Direction selector
     direction = st.radio("Select Adjustment Direction", ("over", "under"))
 
-    # Calculate button
+    # --- Placeholder for results box (always present) ---
+    # Initially shows a "No results yet" placeholder. 
+    # We'll update this content once the calculation happens.
+    result_placeholder = st.empty()
+
+    # Before calculation, show the placeholder result box
+    initial_result_box = """
+        <div class="result-card">
+            <div class="result-heading">Calculation Results</div>
+            <div class="result-line">No results yet. Please fill in the fields and press "Calculate".</div>
+        </div>
+    """
+    result_placeholder.markdown(initial_result_box, unsafe_allow_html=True)
+
     if st.button("Calculate"):
         try:
             result = calculator.calculate(
@@ -218,9 +231,9 @@ def run():
                 comp_odds=comp_odds,
                 direction=direction
             )
-            # Display results with shadowed box
-            st.markdown(
-                f"""
+
+            # Build the final result HTML
+            final_result_box = f"""
                 <div class="result-card">
                     <div class="result-heading">Calculation Results</div>
                     <div class="result-line">Kaizen Line: <strong>{result.kaizen_line}</strong></div>
@@ -229,9 +242,11 @@ def run():
                     <div class="result-line">Difference Percentage: <strong>{result.difference_percentage:.2f}%</strong></div>
                     <div class="result-line">Status: <strong>{result.status}</strong></div>
                 </div>
-                """,
-                unsafe_allow_html=True
-            )
+            """
+
+            # Replace placeholder content with final results
+            result_placeholder.markdown(final_result_box, unsafe_allow_html=True)
+
             st.caption("Disclaimer: This is an approximated calculator. Real odds may differ.")
 
         except ValueError as e:
