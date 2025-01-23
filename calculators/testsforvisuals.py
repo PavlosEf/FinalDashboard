@@ -2,10 +2,12 @@ import streamlit as st
 from typing import List
 from dataclasses import dataclass
 
+
 def find_closest_pattern(odds: float, patterns: List[List[float]]) -> List[float]:
     """ Finds the closest pattern of odds to match the input odds based on proximity. """
     closest_pattern = min(patterns, key=lambda p: min(abs(o - odds) for o in p))
     return closest_pattern
+
 
 @dataclass
 class OddsResult:
@@ -15,6 +17,7 @@ class OddsResult:
     comp_at_kaizen_line: float
     difference_percentage: float
     status: str
+
 
 class DifferentLinesCalculator:
     """ Calculator for analyzing odds differences between kaizen and competition using pattern matching. """
@@ -90,26 +93,27 @@ class DifferentLinesCalculator:
             status=status
         )
 
+
 # Streamlit interface
 st.set_page_config(page_title="Different Lines Calculator", layout="wide")
 
-# Custom CSS for styling
+# Custom CSS for the styling
 st.markdown(
     """
     <style>
     body {
-        background-color: #f2f2f2; /* Light background */
+        background-color: #f0f2f5;  /* Light gray background */
     }
     .header {
-        color: #FF4B4B;
         text-align: center;
+        color: #FF4B4B;  /* Primary theme color */
     }
     .result-box {
         padding: 20px;
         border-radius: 10px;
-        background-color: #ffffff;
+        background-color: white;  /* White background for results */
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        margin: 10px;
+        margin: 10px 0;
     }
     .status-ok {
         color: green;
@@ -128,8 +132,9 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+
 def run():
-    st.title("Different Lines Calculator", anchor="header")
+    st.title("Different Lines Calculator")
 
     calculator = DifferentLinesCalculator()
 
@@ -138,19 +143,19 @@ def run():
 
     with col1:
         st.subheader("Kaizen Data")
-        kaizen_line = st.number_input("Kaizen Line", value=0.0, step=0.5)
+        kaizen_line = st.number_input("Kaizen Line", value=0.0, step=0.5, format="%.1f")
         kaizen_odds = st.number_input("Kaizen Odds", value=1.0, min_value=1.0, step=0.01)
 
     with col2:
         st.subheader("Competition Data")
-        comp_line = st.number_input("Competition Line", value=0.0, step=0.5)
+        comp_line = st.number_input("Competition Line", value=0.0, step=0.5, format="%.1f")
         comp_odds = st.number_input("Competition Odds", value=1.0, min_value=1.0, step=0.01)
 
     # Add direction selector
     direction = st.radio("Select Adjustment Direction", ("over", "under"))
 
     # Add calculate button
-    if st.button("Calculate"):
+    if st.button("Calculate", type="primary"):
         try:
             # Calculate results
             result = calculator.calculate(
@@ -165,7 +170,7 @@ def run():
             st.markdown("<hr>", unsafe_allow_html=True)
             st.subheader("Results")
 
-            # Wrap results in a box
+            # Create a results box
             status_class = {
                 "ok": "status-ok",
                 "off 2": "status-off2",
@@ -174,11 +179,11 @@ def run():
 
             results_box = f"""
             <div class='result-box'>
-                <h3>Our Line: {result.kaizen_line}</h3>
-                <h3>Our Odds: {result.kaizen_odds}</h3>
-                <h3>Competition at Our Line: {result.comp_at_kaizen_line:.3f}</h3>
-                <h3>Difference: {result.difference_percentage:.2f}%</h3>
-                <h3 class="{status_class[result.status]}">Status: {result.status}</h3>
+                <h4>Our Line: {result.kaizen_line:.1f}</h4>
+                <h4>Our Odds: {result.kaizen_odds:.2f}</h4>
+                <h4>Competition at Our Line: {result.comp_at_kaizen_line:.3f}</h4>
+                <h4>Difference: {result.difference_percentage:.2f}%</h4>
+                <h4 class="{status_class[result.status]}">Status: {result.status}</h4>
             </div>
             """
             st.markdown(results_box, unsafe_allow_html=True)
@@ -188,6 +193,7 @@ def run():
             st.error(f"Error: {str(e)}")
         except Exception as e:
             st.error(f"An unexpected error occurred: {str(e)}")
+
 
 if __name__ == "__main__":
     run()
