@@ -2,6 +2,10 @@ import streamlit as st
 from typing import List
 from dataclasses import dataclass
 
+# =========================
+#         LOGIC
+# =========================
+
 def find_closest_pattern(odds: float, patterns: List[List[float]]) -> List[float]:
     """ Finds the closest pattern of odds to match the input odds based on proximity. """
     closest_pattern = min(patterns, key=lambda p: min(abs(o - odds) for o in p))
@@ -52,7 +56,6 @@ class DifferentLinesCalculator:
 
         # Find the closest pattern to comp_odds
         closest_pattern = find_closest_pattern(comp_odds, self.patterns)
-
         current_odds = comp_odds
 
         # Adjust odds based on line difference using the closest pattern
@@ -78,7 +81,8 @@ class DifferentLinesCalculator:
                    comp_line: float, comp_odds: float, direction: str) -> OddsResult:
         """ Performs the complete calculation and returns a result object. """
         comp_at_kaizen = self.calculate_competition_odds(
-            kaizen_line, kaizen_odds, comp_line, comp_odds, direction)
+            kaizen_line, kaizen_odds, comp_line, comp_odds, direction
+        )
         difference = self.calculate_difference(kaizen_odds, comp_at_kaizen)
         status = self.get_status(difference)
 
@@ -90,47 +94,105 @@ class DifferentLinesCalculator:
             status=status
         )
 
-# Streamlit interface
-st.set_page_config(page_title="Different Lines Calculator", layout="wide")
+# =========================
+#        INTERFACE
+# =========================
 
-# Custom CSS for the styling
-st.markdown(
-    """
-    <style>
-    body {
-        background-color: #f0f2f5;  /* Light gray background */
-    }
-    .result-box {
-        padding: 20px;
-        border-radius: 10px;
-        background-color: white;  /* White background for results */
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        margin: 10px 0;
-    }
-    .status-ok {
-        color: green;
-        font-weight: bold;
-    }
-    .status-off2 {
-        color: orange;
-        font-weight: bold;
-    }
-    .status-off1 {
-        color: red;
-        font-weight: bold;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+st.set_page_config(page_title="Dark Different Lines Calculator", layout="wide")
+
+# ----- Dark Theme Styling -----
+dark_theme_css = """
+<style>
+/* Scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 5px;
+}
+
+/* Body Styling */
+body, .block-container {
+    background-color: #1e1e1e !important;
+    color: #e8e6e3 !important;
+    font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+/* Titles/Subheaders */
+h1, h2, h3, h4, h5, h6 {
+    color: #e8e6e3;
+    font-weight: 600;
+}
+
+/* Widgets (input boxes, sliders, etc.) */
+.css-19rwf2r { /* Generic input label styling */
+    color: #f0f0f0;
+}
+.stNumberInput input {
+    background-color: #2f2f2f;
+    color: #ffffff;
+    border: 1px solid #565656;
+    border-radius: 5px;
+}
+.stRadio input[type="radio"] + div > div {
+    color: #f0f0f0;
+}
+.stButton button {
+    background: linear-gradient(135deg, #3a3a3a, #444444);
+    color: #ffffff;
+    border: 1px solid #565656;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+.stButton button:hover {
+    background: linear-gradient(135deg, #444444, #4a4a4a);
+}
+
+/* Result Box */
+.result-card {
+    background-color: #2f2f2f;
+    padding: 1.2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+.result-heading {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #fdfdfd;
+    margin-bottom: 0.8rem;
+}
+.result-line {
+    color: #d1d1d1;
+    font-size: 0.95rem;
+    margin: 0.3rem 0;
+}
+
+/* Radio Buttons */
+.css-18jnyl1, .stRadio {
+    color: #e8e6e3;
+}
+
+/* Captions */
+.css-1lb1m8j {
+    color: #cccccc;
+    font-size: 0.8rem;
+    margin-top: -0.5rem;
+}
+</style>
+"""
+
+st.markdown(dark_theme_css, unsafe_allow_html=True)
 
 
 def run():
-    st.title("Different Lines Calculator")
+    st.title("Dark Themed Different Lines Calculator")
 
     calculator = DifferentLinesCalculator()
 
-    # Create input fields in columns for better layout
+    # Create input fields in columns
     col1, col2 = st.columns(2)
 
     with col1:
@@ -143,13 +205,12 @@ def run():
         comp_line = st.number_input("Competition Line", value=0.0, step=0.5, format="%.1f")
         comp_odds = st.number_input("Competition Odds", value=1.0, min_value=1.0, step=0.01)
 
-    # Add direction selector
+    # Direction selector
     direction = st.radio("Select Adjustment Direction", ("over", "under"))
 
-    # Add calculate button
-    if st.button("Calculate", type="primary"):
+    # Calculate button
+    if st.button("Calculate"):
         try:
-            # Calculate results
             result = calculator.calculate(
                 kaizen_line=kaizen_line,
                 kaizen_odds=kaizen_odds,
@@ -157,35 +218,26 @@ def run():
                 comp_odds=comp_odds,
                 direction=direction
             )
-
-            # Display results
-            st.markdown("<hr>", unsafe_allow_html=True)
-            st.subheader("Results")
-
-            # Create a results box
-            status_class = {
-                "ok": "status-ok",
-                "off 2": "status-off2",
-                "off 1": "status-off1"
-            }
-
-            results_box = f"""
-            <div class='result-box'>
-                <h4>Our Line: {result.kaizen_line:.1f}</h4>
-                <h4>Our Odds: {result.kaizen_odds:.2f}</h4>
-                <h4>Competition at Our Line: {result.comp_at_kaizen_line:.3f}</h4>
-                <h4>Difference: {result.difference_percentage:.2f}%</h4>
-                <h4 class="{status_class[result.status]}">Status: {result.status}</h4>
-            </div>
-            """
-            st.markdown(results_box, unsafe_allow_html=True)
+            # Display results with shadowed box
+            st.markdown(
+                f"""
+                <div class="result-card">
+                    <div class="result-heading">Calculation Results</div>
+                    <div class="result-line">Kaizen Line: <strong>{result.kaizen_line}</strong></div>
+                    <div class="result-line">Kaizen Odds: <strong>{result.kaizen_odds}</strong></div>
+                    <div class="result-line">Competition @ Kaizen Line: <strong>{result.comp_at_kaizen_line}</strong></div>
+                    <div class="result-line">Difference Percentage: <strong>{result.difference_percentage:.2f}%</strong></div>
+                    <div class="result-line">Status: <strong>{result.status}</strong></div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
             st.caption("Disclaimer: This is an approximated calculator. Real odds may differ.")
 
         except ValueError as e:
             st.error(f"Error: {str(e)}")
         except Exception as e:
             st.error(f"An unexpected error occurred: {str(e)}")
-
 
 if __name__ == "__main__":
     run()
