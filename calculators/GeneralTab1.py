@@ -8,7 +8,7 @@ def calculate_total_bets(outcomes_per_selection):
 def calculate_profit(win_odds, stake, total_stakes):
     return (win_odds * stake) - total_stakes
 
-def main():
+def run():
     st.title("Bonus Abuse Betting Calculator")
     
     # Number of selections
