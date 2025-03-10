@@ -4,7 +4,7 @@ from PIL import Image
 import os
 
 # Path to the flags folder
-FLAGS_FOLDER = "flags"
+FLAGS_FOLDER = "Flags"
 
 # Currency to country mapping
 CURRENCY_TO_COUNTRY = {
