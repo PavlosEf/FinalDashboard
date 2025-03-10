@@ -4,7 +4,7 @@ from PIL import Image
 import os
 
 # Path to the flags folder
-FLAGS_FOLDER = "Flags"
+FLAGS_FOLDER = "flags"
 
 # Currency to country mapping
 CURRENCY_TO_COUNTRY = {
@@ -17,7 +17,7 @@ CURRENCY_TO_COUNTRY = {
     "COP": {"name": "Colombia", "flag": "CO.png"},
     "CZK": {"name": "Czech Republic", "flag": "CZ.png"},
     "DKK": {"name": "Denmark", "flag": "DK.png"},
-    "USD": {"name": "Ecuador", "flag": "EC.png"},  # Ecuador uses USD    
+    "USD": {"name": "Ecuador", "flag": "EC.png"},  # Ecuador uses USD
     "MXN": {"name": "Mexico", "flag": "MX.png"},
     "NGN": {"name": "Nigeria", "flag": "Nigeria.png"},
     "PEN": {"name": "Peru", "flag": "PE.png"},
@@ -26,7 +26,7 @@ CURRENCY_TO_COUNTRY = {
 
 # Fetch today's exchange rates
 def fetch_exchange_rates(base_currency):
-    API_KEY = "f155bbe573194b9c9eb48462"  # Replace with your API key
+    API_KEY = "YOUR_API_KEY"  # Replace with your API key
     url = f"https://v6.exchangerate-api.com/v6/{API_KEY}/latest/{base_currency}"
     response = requests.get(url)
     if response.status_code == 200:
@@ -70,6 +70,7 @@ def run():
         from_currency = st.selectbox(
             "From",
             options=list(CURRENCY_TO_COUNTRY.keys()),
+            index=0,  # Default to Euro (EUR)
             format_func=lambda x: f"{CURRENCY_TO_COUNTRY[x]['name']} ({x})",
         )
         from_flag = display_flag(from_currency)
@@ -80,6 +81,7 @@ def run():
         to_currency = st.selectbox(
             "To",
             options=list(CURRENCY_TO_COUNTRY.keys()),
+            index=0,  # Default to Euro (EUR)
             format_func=lambda x: f"{CURRENCY_TO_COUNTRY[x]['name']} ({x})",
         )
         to_flag = display_flag(to_currency)
