@@ -62,7 +62,7 @@ def run():
 
          # Add a small delay to refresh the clock
         time.sleep(1)
-        st.experimental_rerun()
+        st.rerun()
         
 
 if __name__ == "__main__":
