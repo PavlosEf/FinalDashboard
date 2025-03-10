@@ -1,25 +1,31 @@
 import streamlit as st
 
 def calculate_percentage_of():
-    x = st.number_input("Enter percentage (X):", min_value=0.0)
-    y = st.number_input("Enter number (Y):", min_value=0.0)
+    col1, col2 = st.columns([0.3, 0.7])  # 30% for inputs, 70% for other content
+    with col1:
+        x = st.number_input("Enter percentage (X):", min_value=0.0)
+        y = st.number_input("Enter number (Y):", min_value=0.0)
     if st.button("Calculate X% of Y"):
         result = (x / 100) * y
-        st.write(f"{x}% of {y} is {result}")
+        st.write(f"{x}% of {y} is **{result}**")
 
 def calculate_what_percent():
-    x = st.number_input("Enter number (X):", min_value=0.0)
-    y = st.number_input("Enter number (Y):", min_value=0.0)
+    col1, col2 = st.columns([0.3, 0.7])  # 30% for inputs, 70% for other content
+    with col1:
+        x = st.number_input("Enter number (X):", min_value=0.0)
+        y = st.number_input("Enter number (Y):", min_value=0.0)
     if st.button("Calculate X is what percent of Y"):
         result = (x / y) * 100
-        st.write(f"{x} is {result}% of {y}")
+        st.write(f"{x} is **{result}%** of {y}")
 
 def calculate_percentage_change():
-    x = st.number_input("Enter initial number (X):", min_value=0.0)
-    y = st.number_input("Enter final number (Y):", min_value=0.0)
+    col1, col2 = st.columns([0.3, 0.7])  # 30% for inputs, 70% for other content
+    with col1:
+        x = st.number_input("Enter initial number (X):", min_value=0.0)
+        y = st.number_input("Enter final number (Y):", min_value=0.0)
     if st.button("Calculate percentage change from X to Y"):
         result = ((y - x) / x) * 100
-        st.write(f"The percentage change from {x} to {y} is {result}%")
+        st.write(f"The percentage change from {x} to {y} is **{result}%**")
 
 def run():
     st.title("Percentage Calculator")
