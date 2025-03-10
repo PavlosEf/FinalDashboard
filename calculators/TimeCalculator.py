@@ -59,7 +59,7 @@ def run():
                 st.write(f"**{country}**")
             with col3:
                 st.write(f"`{get_current_time(timezone)}`")
-        
+      time.sleep(1)  
 
 if __name__ == "__main__":
     run()
