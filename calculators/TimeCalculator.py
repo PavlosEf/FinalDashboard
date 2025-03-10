@@ -6,7 +6,7 @@ import os
 import time
 
 # Path to the flags folder
-FLAGS_FOLDER = "flags"
+FLAGS_FOLDER = "Flags"
 
 # Country to timezone and flag mapping
 COUNTRY_TO_TIMEZONE = {
