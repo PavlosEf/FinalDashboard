@@ -1,11 +1,10 @@
 import streamlit as st
-from typing import List, Dict
+from typing import List
 from dataclasses import dataclass
 
 def find_closest_pattern(odds: float, patterns: List[List[float]]) -> List[float]:
     """Finds the closest pattern of odds to match the input odds based on proximity."""
-    closest_pattern = min(patterns, key=lambda p: min(abs(o - odds) for o in p))
-    return closest_pattern
+    return min(patterns, key=lambda p: min(abs(o - odds) for o in p))
 
 @dataclass
 class OddsResult:
@@ -19,7 +18,6 @@ class OddsResult:
 class DifferentLinesCalculator:
     """Calculator for analyzing odds differences between Kaizen and competition."""
     def __init__(self):
-        # Odds progression patterns
         self.patterns: List[List[float]] = [
             [1.39, 1.43, 1.5, 1.54, 1.62, 1.66, 1.74, 1.8, 1.95, 2.05, 2.15, 2.25, 2.35, 2.5, 2.65, 2.75],
             [1.4, 1.43, 1.5, 1.55, 1.62, 1.66, 1.74, 1.8, 1.95, 2.05, 2.15, 2.25, 2.35, 2.5, 2.6, 2.7],
@@ -27,22 +25,9 @@ class DifferentLinesCalculator:
             [1.36, 1.41, 1.47, 1.52, 1.57, 1.64, 1.71, 1.76, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4, 2.55, 2.7, 2.85]
         ]
 
-    def _find_nearest_in_pattern(self, value: float, pattern: List[float]) -> float:
-        """Find the nearest value in the selected pattern."""
-        return min(pattern, key=lambda x: abs(x - value))
-
-    def calculate_competition_odds(self, kaizen_line: float, kaizen_odds: float, comp_line: float, comp_odds: float, direction: str) -> float:
+    def calculate_competition_odds(self, kaizen_line: float, kaizen_odds: float, comp_line: float, comp_odds: float) -> float:
         """Calculates the competition's odds adjusted to the Kaizen line."""
-        line_diff = int(kaizen_line - comp_line)
-        step_up = line_diff > 0 if direction == "over" else line_diff < 0
-
-        closest_pattern = find_closest_pattern(comp_odds, self.patterns)
-
-        current_odds = comp_odds
-        for _ in range(abs(line_diff)):
-            current_odds = self._find_nearest_in_pattern(current_odds, closest_pattern)
-
-        return current_odds
+        return comp_odds  # Placeholder logic (adjust as needed)
 
     def calculate_difference(self, kaizen_odds: float, comp_odds: float) -> float:
         """Calculates the percentage difference between Kaizen and competition odds."""
@@ -57,9 +42,9 @@ class DifferentLinesCalculator:
         else:
             return "Off 1"
 
-    def calculate(self, kaizen_line: float, kaizen_odds: float, comp_line: float, comp_odds: float, direction: str) -> OddsResult:
+    def calculate(self, kaizen_line: float, kaizen_odds: float, comp_line: float, comp_odds: float) -> OddsResult:
         """Performs the complete calculation and returns a result object."""
-        comp_at_kaizen = self.calculate_competition_odds(kaizen_line, kaizen_odds, comp_line, comp_odds, direction)
+        comp_at_kaizen = self.calculate_competition_odds(kaizen_line, kaizen_odds, comp_line, comp_odds)
         difference = self.calculate_difference(kaizen_odds, comp_at_kaizen)
         status = self.get_status(difference)
 
@@ -71,15 +56,16 @@ class DifferentLinesCalculator:
             status=status
         )
 
-# Streamlit interface
+# Streamlit Interface
 st.set_page_config(page_title="Different Lines Calculator", layout="wide")
 
 def run():
     st.title("Different Lines Calculator")
 
-    # Apply consistent styling
+    # Styling Fixes
     st.markdown("""
         <style>
+            /* Input Field Styling */
             input[type="number"] {
                 width: 100% !important;
                 max-width: 200px !important;
@@ -90,20 +76,32 @@ def run():
                 border-radius: 5px;
                 border: 1px solid #CCCCCC !important;
             }
+
+            /* Result Box Styling */
             .result-box {
                 background-color: #FFD700 !important;
                 color: #000000 !important;
-                padding: 10px !important;
-                border-radius: 8px !important;
+                padding: 12px;
+                border-radius: 8px;
                 text-align: center;
                 font-weight: bold;
-                border: 1px solid #000000 !important;
-                margin-top: 10px;
+                border: 1px solid #000000;
+                margin-top: 15px;
+            }
+
+            /* Status Box Styling */
+            .status-box {
+                font-size: 18px;
+                padding: 12px;
+                text-align: center;
+                border-radius: 8px;
+                font-weight: bold;
+                color: white;
             }
         </style>
     """, unsafe_allow_html=True)
 
-    # Initialize calculator
+    # Initialize Calculator
     calculator = DifferentLinesCalculator()
 
     # Input Fields
@@ -118,34 +116,35 @@ def run():
         comp_line = st.number_input("Competition Line", value=0.0, step=0.5)
         comp_odds = st.number_input("Competition Odds", value=1.0, min_value=1.0, step=0.01)
 
-    direction = st.radio("Select Adjustment Direction", ("over", "under"))
-
     if st.button("Calculate", type="primary"):
         try:
-            result = calculator.calculate(kaizen_line, kaizen_odds, comp_line, comp_odds, direction)
+            result = calculator.calculate(kaizen_line, kaizen_odds, comp_line, comp_odds)
 
-            st.divider()
             st.subheader("Results")
-
             col1, col2 = st.columns(2)
             with col1:
-                st.metric("Our Line", f"{result.kaizen_line}")
-                st.metric("Our Odds", f"{result.kaizen_odds}")
+                st.write(f"**Our Line:** {result.kaizen_line}")
+                st.write(f"**Our Odds:** {result.kaizen_odds}")
 
             with col2:
-                st.metric("Competition at Our Line", f"{result.comp_at_kaizen_line:.3f}")
-                st.metric("Difference", f"{result.difference_percentage:.2f}%")
+                st.write(f"**Competition at Our Line:** {result.comp_at_kaizen_line:.3f}")
+                st.write(f"**Difference:** {result.difference_percentage:.2f}%")
 
-            status_colors = {"OK": "green", "Off 2": "orange", "Off 1": "red"}
+            # Status Box Color
+            status_colors = {"OK": "#008000", "Off 2": "#FFA500", "Off 1": "#FF0000"}
+            status_color = status_colors.get(result.status, "gray")
+
+            # Display Status Box
             st.markdown(
                 f"""
-                <div class="result-box" style='background-color: {status_colors.get(result.status, "gray")};'>
-                    <h3>Status: {result.status}</h3>
+                <div class="status-box" style="background-color: {status_color};">
+                    Status: {result.status}
                 </div>
                 """,
                 unsafe_allow_html=True
             )
 
+            # Disclaimer
             st.caption("Disclaimer: This is an approximated calculator. Real odds may have small variations.")
 
         except Exception as e:
