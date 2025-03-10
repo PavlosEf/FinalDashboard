@@ -12,7 +12,7 @@ def run():
     # Function to clear input fields
     def clear_input(key):
         st.session_state[key] = ""
-        st.experimental_rerun()
+        st.rerun()  # Updated from st.experimental_rerun() to st.rerun()
 
     # 🔹 **Basic Percentage Calculator**
     st.subheader("Basic Percentage Calculator")
@@ -30,7 +30,7 @@ def run():
                 result1 = str((float(perc1) / 100) * float(perc2))
             except:
                 result1 = "Invalid Input"
-            st.experimental_rerun()
+            st.rerun()
 
     # 🔹 **Percentage Calculator in Common Phrases**
     st.subheader("Percentage Calculator in Common Phrases")
@@ -50,7 +50,7 @@ def run():
                 result2 = str((float(perc3) / 100) * float(perc4))
             except:
                 result2 = "Invalid Input"
-            st.experimental_rerun()
+            st.rerun()
 
     # **"X is what percent of Y?"**
     col1, col2, col3 = st.columns([1, 1, 1])
@@ -67,7 +67,7 @@ def run():
                 result3 = str((float(perc5) / float(perc6)) * 100) + " %"
             except:
                 result3 = "Invalid Input"
-            st.experimental_rerun()
+            st.rerun()
 
     # 🔹 **Percentage Difference Calculator**
     st.subheader("Percentage Difference Calculator")
@@ -85,7 +85,7 @@ def run():
                 result4 = str(abs((float(perc7) - float(perc8)) / ((float(perc7) + float(perc8)) / 2) * 100)) + " %"
             except:
                 result4 = "Invalid Input"
-            st.experimental_rerun()
+            st.rerun()
 
 if __name__ == "__main__":
     run()
