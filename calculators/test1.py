@@ -1,81 +1,87 @@
 import streamlit as st
+import requests
 
-def calculate_percentage_of():
-    col1, col2 = st.columns([0.15, 0.85])  # 15% for inputs, 85% for other content
-    with col1:
-        x = st.number_input("Enter percentage (X):", min_value=0.0)
-        y = st.number_input("Enter number (Y):", min_value=0.0)
-    if st.button("Calculate X% of Y"):
-        result = (x / 100) * y
-        st.markdown(f"""
-            <div style="border: 2px solid #4CAF50; padding: 10px; border-radius: 5px; font-size: 24px;">
-                {x}% of {y} is <strong>{result}</strong>
-            </div>
-        """, unsafe_allow_html=True)
+# Country flags (Unicode emojis)
+COUNTRY_FLAGS = {
+    "EUR": "🇪🇺",  # Euro
+    "RON": "🇷🇴",  # Romania
+    "BRL": "🇧🇷",  # Brazil
+    "BGN": "🇧🇬",  # Bulgaria
+    "CZK": "🇨🇿",  # Czech Republic
+    "CLP": "🇨🇱",  # Chile
+    "PEN": "🇵🇪",  # Peru
+    "USD": "🇺🇸",  # Ecuador (uses USD)
+    "NGN": "🇳🇬",  # Nigeria
+    "CAD": "🇨🇦",  # Canada
+    "COP": "🇨🇴",  # Colombia
+    "MXN": "🇲🇽",  # Mexico
+    "ARS": "🇦🇷",  # Argentina
+    "DKK": "🇩🇰",  # Denmark
+}
 
-def calculate_what_percent():
-    col1, col2 = st.columns([0.15, 0.85])  # 15% for inputs, 85% for other content
-    with col1:
-        x = st.number_input("Enter number (X):", min_value=0.0)
-        y = st.number_input("Enter number (Y):", min_value=0.0)
-    if st.button("Calculate X is what percent of Y"):
-        result = (x / y) * 100
-        st.markdown(f"""
-            <div style="border: 2px solid #4CAF50; padding: 10px; border-radius: 5px; font-size: 24px;">
-                {x} is <strong>{result}%</strong> of {y}
-            </div>
-        """, unsafe_allow_html=True)
+# Fetch today's exchange rates
+def fetch_exchange_rates(base_currency):
+    API_KEY = "f155bbe573194b9c9eb48462"  # Replace with your API key
+    url = f"https://v6.exchangerate-api.com/v6/{API_KEY}/latest/{base_currency}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()["conversion_rates"]
+    else:
+        st.error("Failed to fetch exchange rates. Please try again later.")
+        return None
 
-def calculate_percentage_change():
-    col1, col2 = st.columns([0.15, 0.85])  # 15% for inputs, 85% for other content
-    with col1:
-        x = st.number_input("Enter initial number (X):", min_value=0.0)
-        y = st.number_input("Enter final number (Y):", min_value=0.0)
-    if st.button("Calculate percentage change from X to Y"):
-        result = ((y - x) / x) * 100
-        st.markdown(f"""
-            <div style="border: 2px solid #4CAF50; padding: 10px; border-radius: 5px; font-size: 24px;">
-                The percentage change from {x} to {y} is <strong>{result}%</strong>
-            </div>
-        """, unsafe_allow_html=True)
-
-def calculate_x_is_what_percent_of_y():
-    col1, col2 = st.columns([0.15, 0.85])  # 15% for inputs, 85% for other content
-    with col1:
-        x = st.number_input("Enter number (X):", min_value=0.0, key="x_percent")
-        y = st.number_input("Enter number (Y):", min_value=0.0, key="y_percent")
-    if st.button("Calculate X is what % of Y"):
-        result = (x / y) * 100
-        st.markdown(f"""
-            <div style="border: 2px solid #4CAF50; padding: 10px; border-radius: 5px; font-size: 24px;">
-                {x} is <strong>{result}%</strong> of {y}
-            </div>
-        """, unsafe_allow_html=True)
+# Currency converter function
+def convert_currency(amount, from_currency, to_currency, rates):
+    if from_currency == to_currency:
+        return amount
+    if from_currency not in rates or to_currency not in rates:
+        st.error("Invalid currency selection.")
+        return None
+    return amount * rates[to_currency] / rates[from_currency]
 
 def run():
-    st.title("Percentage (%) Calculations")
-    
-    # Use columns to constrain the dropdown width to 15%
+    st.title("Currency Converter")
+
+    # Fetch exchange rates (base: EUR)
+    rates = fetch_exchange_rates("EUR")
+    if not rates:
+        return
+
+    # Input fields
     col1, col2 = st.columns([0.15, 0.85])
     with col1:
-        option = st.selectbox(
-            "Choose a calculation:",
-            (
-                "What is X% of Y?",
-                "X is what percent of Y?",
-                "X is what % of Y?",
-                "Percentage increase/decrease from X to Y"
-            )
+        amount = st.number_input("Amount", min_value=0.0, value=100.0)
+        from_currency = st.selectbox(
+            "From",
+            options=list(COUNTRY_FLAGS.keys()),
+            format_func=lambda x: f"{COUNTRY_FLAGS[x]} {x}",
         )
-    
-    if option == "What is X% of Y?":
-        calculate_percentage_of()
-    elif option == "X is what percent of Y?":
-        calculate_what_percent()
-    elif option == "X is what % of Y?":
-        calculate_x_is_what_percent_of_y()
-    elif option == "Percentage increase/decrease from X to Y":
-        calculate_percentage_change()
+        to_currency = st.selectbox(
+            "To",
+            options=list(COUNTRY_FLAGS.keys()),
+            format_func=lambda x: f"{COUNTRY_FLAGS[x]} {x}",
+        )
+
+    # Convert currency
+    if st.button("Convert"):
+        result = convert_currency(amount, from_currency, to_currency, rates)
+        if result is not None:
+            st.markdown(f"""
+                <div style="
+                    border-bottom: 4px solid #4CAF50;
+                    border-bottom-width: 12.5%;
+                    background-color: rgba(211, 211, 211, 0.3);
+                    padding: 10px;
+                    border-radius: 5px;
+                    font-size: 24px;
+                ">
+                    {amount} {from_currency} = <strong>{result:.6f} {to_currency}</strong>
+                </div>
+            """, unsafe_allow_html=True)
+
+            # Display exchange rates
+            st.write(f"1 {from_currency} = {rates[to_currency] / rates[from_currency]:.6f} {to_currency}")
+            st.write(f"1 {to_currency} = {rates[from_currency] / rates[to_currency]:.6f} {from_currency}")
 
 if __name__ == "__main__":
     run()
