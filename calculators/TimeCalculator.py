@@ -50,7 +50,7 @@ def run():
             flag_file = data["flag"]
             
             # Create columns for flag, country name, and time
-            col1, spacer1, col2, spacer2, col3 = st.columns([0.15, 0.05, 0.25, 0.05, 0.15])  # Adjust spacing
+            col1, col2, col3 = st.columns([0.21, 0.31, 0.21])
             with col1:
                 flag = display_flag(flag_file)
                 if flag:
