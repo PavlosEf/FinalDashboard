@@ -81,7 +81,7 @@ def run():
         # Row 1: Odds Inputs
         col1, col2, col_fake = st.columns([1, 1, 5])  # Fake column added after Competition Odds
         with col1:
-            w1_odds = st.number_input("Kaizen Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
+            w1_odds = st.number_input("Our Odds", min_value=1.01, value=2.5, step=0.01, key="w1_odds")
         with col2:
             w2_odds = st.number_input("Competition Odds", min_value=1.01, value=2.0, step=0.01, key="w2_odds")
         with col_fake:
@@ -90,7 +90,7 @@ def run():
         # Row 2: Stake Inputs with Fake Column at the End
         col1, col2, col3, col_fake = st.columns([0.5, 0.5, 0.5, 2])  # Fake column added at the end
         with col1:
-            w1_stake = st.number_input("Kaizen Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
+            w1_stake = st.number_input("Our Stakes (€)", min_value=0.0, value=100.0, step=0.01, key="w1_stake")
         with col2:
             w2_stake = st.number_input("Competition Stakes (€)", min_value=0.0, value=0.0, step=0.01, key="w2_stake")
         with col3:
@@ -162,10 +162,10 @@ def run():
             <div class="result-box">
                 <h4>Calculation Results</h4>
                 <ul>
-                    <li>Kaizen Stakes: <span>{results['W1 Stake']}€</span></li>
+                    <li>Our Stakes: <span>{results['W1 Stake']}€</span></li>
                     <li>Competition Stakes: <span>{results['W2 Stake']}€</span></li>
                     <li>Total Stake: <span>{results['Total Stake']}€</span></li>
-                    <li>Profit Kaizen: 
+                    <li>Profit Our: 
                         <span class="{'profit-positive' if results['Profit W1'] >= 0 else 'profit-negative'}">
                             {results['Profit W1']}€
                         </span>
