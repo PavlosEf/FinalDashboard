@@ -2,7 +2,7 @@ import streamlit as st
 
 def run():
     st.title("Off Prices Calculator")
-    st.markdown("Enter prices below to calculate the percentage difference Kaizen odds are 1st!")
+    st.markdown("Enter prices below to calculate the percentage difference. Our odds are 1st!")
 
     # Add custom CSS for styling
     st.markdown(
@@ -77,7 +77,7 @@ def run():
         col1, col2, col3, col4 = st.columns([0.3, 0.3, 1, 1])  # Adjust column sizes
 
         with col1:
-            price_a = st.text_input(f"Kaizen Odds {i + 1}:", key=f"price_a_{i}")
+            price_a = st.text_input(f"Our Odds {i + 1}:", key=f"price_a_{i}")
         with col2:
             price_b = st.text_input(f"Competition Odds {i + 1}:", key=f"price_b_{i}")
 
