@@ -4,7 +4,7 @@ import calculators.SurebetCalculator as SurebetCalculator
 import calculators.TopPriceBetfairCalculator as TopPriceBetfairCalculator
 import calculators.MarginsRemoval as MarginsRemoval
 import calculators.AlternativeLinesConverter as AlternativeLinesConverter
-import calculators.GeneralTab1 as GeneralTab1
+import calculators.PercentageCalculations as PercentageCalculations
 import calculators.GeneralTab2 as GeneralTab2
 
 # Set page configuration
@@ -49,7 +49,7 @@ with st.sidebar:
             "Top Price / Betfair Calculator",
             "Margins Removal",
             "Alternative Lines Converter",
-            "General Tab 1",
+            "Percentage (%) Calculations",
             "General Tab 2"
         ]
     )
@@ -70,8 +70,8 @@ elif selected_tool == "Margins Removal":
 elif selected_tool == "Alternative Lines Converter":
     AlternativeLinesConverter.run()
 
-elif selected_tool == "General Tab 1":
-    GeneralTab1.run()
+elif selected_tool == "Percentage (%) Calculations":
+    PercentageCalculations.run()
 
 elif selected_tool == "General Tab 2":
     GeneralTab2.run() 
