@@ -26,7 +26,7 @@ CURRENCY_TO_COUNTRY = {
 
 # Fetch today's exchange rates
 def fetch_exchange_rates(base_currency):
-    API_KEY = "f155bbe573194b9c9eb48462"  # Replace with your API key 
+    API_KEY = "f155bbe573194b9c9eb48462"  # Replace with your API key
     url = f"https://v6.exchangerate-api.com/v6/{API_KEY}/latest/{base_currency}"
     response = requests.get(url)
     if response.status_code == 200:
@@ -53,6 +53,40 @@ def display_flag(currency_code):
         st.warning(f"Flag for {currency_code} not found.")
         return None
 
+# Custom dropdown with flags
+def custom_dropdown(label, options, default_index=0):
+    st.markdown(f"""
+        <style>
+            .dropdown {{
+                position: relative;
+                display: inline-block;
+            }}
+            .dropdown-content {{
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }}
+            .dropdown-content a {{
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }}
+            .dropdown-content a:hover {{
+                background-color: #f1f1f1;
+            }}
+            .dropdown:hover .dropdown-content {{
+                display: block;
+            }}
+        </style>
+    """, unsafe_allow_html=True)
+
+    selected_option = st.selectbox(label, options, index=default_index)
+    return selected_option
+
 def run():
     st.title("Currency Converter")
 
@@ -67,22 +101,20 @@ def run():
         amount = st.number_input("Amount", min_value=0.0, value=100.0)
         
         # From currency dropdown with flag
-        from_currency = st.selectbox(
+        from_currency = custom_dropdown(
             "From",
             options=list(CURRENCY_TO_COUNTRY.keys()),
-            index=0,  # Default to Euro (EUR)
-            format_func=lambda x: f"{CURRENCY_TO_COUNTRY[x]['name']} ({x})",
+            default_index=0,  # Default to Euro (EUR)
         )
         from_flag = display_flag(from_currency)
         if from_flag:
             st.image(from_flag, width=30)  # Display flag image
 
         # To currency dropdown with flag
-        to_currency = st.selectbox(
+        to_currency = custom_dropdown(
             "To",
             options=list(CURRENCY_TO_COUNTRY.keys()),
-            index=0,  # Default to Euro (EUR)
-            format_func=lambda x: f"{CURRENCY_TO_COUNTRY[x]['name']} ({x})",
+            default_index=0,  # Default to Euro (EUR)
         )
         to_flag = display_flag(to_currency)
         if to_flag:
