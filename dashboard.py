@@ -5,6 +5,7 @@ import calculators.TopPriceBetfairCalculator as TopPriceBetfairCalculator
 import calculators.MarginsRemoval as MarginsRemoval
 import calculators.AlternativeLinesConverter as AlternativeLinesConverter
 import calculators.PercentageCalculations as PercentageCalculations
+import calculators.CurrencyConverter as CurrencyConverter 
 import calculators.GeneralTab2 as GeneralTab2
 
 # Set page configuration
@@ -50,6 +51,7 @@ with st.sidebar:
             "Margins Removal",
             "Alternative Lines Converter",
             "Percentage (%) Calculations",
+            "Currency Converter",
             "General Tab 2"
         ]
     )
@@ -72,6 +74,9 @@ elif selected_tool == "Alternative Lines Converter":
 
 elif selected_tool == "Percentage (%) Calculations":
     PercentageCalculations.run()
+    
+elif selected_tool == "Currency Converter":  # New option
+    CurrencyConverter.run()    
 
 elif selected_tool == "General Tab 2":
     GeneralTab2.run() 
