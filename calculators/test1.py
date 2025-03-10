@@ -1,22 +1,27 @@
 import streamlit as st
 import requests
+from PIL import Image
+import os
 
-# Country flags (Unicode emojis)
-COUNTRY_FLAGS = {
-    "EUR": "🇪🇺",  # Euro
-    "RON": "🇷🇴",  # Romania
-    "BRL": "🇧🇷",  # Brazil
-    "BGN": "🇧🇬",  # Bulgaria
-    "CZK": "🇨🇿",  # Czech Republic
-    "CLP": "🇨🇱",  # Chile
-    "PEN": "🇵🇪",  # Peru
-    "USD": "🇺🇸",  # Ecuador (uses USD)
-    "NGN": "🇳🇬",  # Nigeria
-    "CAD": "🇨🇦",  # Canada
-    "COP": "🇨🇴",  # Colombia
-    "MXN": "🇲🇽",  # Mexico
-    "ARS": "🇦🇷",  # Argentina
-    "DKK": "🇩🇰",  # Denmark
+# Path to the flags folder
+FLAGS_FOLDER = "Flags"
+
+# Currency to country mapping
+CURRENCY_TO_COUNTRY = {
+    "EUR": {"name": "Euro", "flag": "EUR.png"},
+    "ARS": {"name": "Argentina", "flag": "AR.png"},
+    "BGN": {"name": "Bulgaria", "flag": "BG.png"},
+    "BRL": {"name": "Brazil", "flag": "BR.png"},
+    "CAD": {"name": "Canada", "flag": "CA.png"},
+    "CLP": {"name": "Chile", "flag": "CL.png"},
+    "COP": {"name": "Colombia", "flag": "CO.png"},
+    "CZK": {"name": "Czech Republic", "flag": "CZ.png"},
+    "DKK": {"name": "Denmark", "flag": "DK.png"},
+    "USD": {"name": "Ecuador", "flag": "EC.png"},  # Ecuador uses USD    
+    "MXN": {"name": "Mexico", "flag": "MX.png"},
+    "NGN": {"name": "Nigeria", "flag": "Nigeria.png"},
+    "PEN": {"name": "Peru", "flag": "PE.png"},
+    "RON": {"name": "Romania", "flag": "RO.png"},
 }
 
 # Fetch today's exchange rates
@@ -39,6 +44,15 @@ def convert_currency(amount, from_currency, to_currency, rates):
         return None
     return amount * rates[to_currency] / rates[from_currency]
 
+# Function to display flag image
+def display_flag(currency_code):
+    flag_path = os.path.join(FLAGS_FOLDER, CURRENCY_TO_COUNTRY[currency_code]["flag"])
+    if os.path.exists(flag_path):
+        return Image.open(flag_path)
+    else:
+        st.warning(f"Flag for {currency_code} not found.")
+        return None
+
 def run():
     st.title("Currency Converter")
 
@@ -51,16 +65,26 @@ def run():
     col1, col2 = st.columns([0.15, 0.85])
     with col1:
         amount = st.number_input("Amount", min_value=0.0, value=100.0)
+        
+        # From currency dropdown with flag
         from_currency = st.selectbox(
             "From",
-            options=list(COUNTRY_FLAGS.keys()),
-            format_func=lambda x: f"{COUNTRY_FLAGS[x]} {x}",
+            options=list(CURRENCY_TO_COUNTRY.keys()),
+            format_func=lambda x: f"{CURRENCY_TO_COUNTRY[x]['name']} ({x})",
         )
+        from_flag = display_flag(from_currency)
+        if from_flag:
+            st.image(from_flag, width=30)  # Display flag image
+
+        # To currency dropdown with flag
         to_currency = st.selectbox(
             "To",
-            options=list(COUNTRY_FLAGS.keys()),
-            format_func=lambda x: f"{COUNTRY_FLAGS[x]} {x}",
+            options=list(CURRENCY_TO_COUNTRY.keys()),
+            format_func=lambda x: f"{CURRENCY_TO_COUNTRY[x]['name']} ({x})",
         )
+        to_flag = display_flag(to_currency)
+        if to_flag:
+            st.image(to_flag, width=30)  # Display flag image
 
     # Convert currency
     if st.button("Convert"):
