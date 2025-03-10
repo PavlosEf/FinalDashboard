@@ -21,7 +21,7 @@ COUNTRY_FLAGS = {
 
 # Fetch today's exchange rates
 def fetch_exchange_rates(base_currency):
-    API_KEY = "YOUR_API_KEY"  # Replace with your API key
+    API_KEY = "f155bbe573194b9c9eb48462"  # Replace with your API key
     url = f"https://v6.exchangerate-api.com/v6/{API_KEY}/latest/{base_currency}"
     response = requests.get(url)
     if response.status_code == 200:
