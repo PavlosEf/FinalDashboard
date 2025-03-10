@@ -8,7 +8,14 @@ def calculate_percentage_of():
     if st.button("Calculate X% of Y"):
         result = (x / 100) * y
         st.markdown(f"""
-            <div style="border: 2px solid #4CAF50; padding: 10px; border-radius: 5px; font-size: 24px;">
+            <div style="
+                border-bottom: 4px solid #4CAF50;
+                border-bottom-width: 12.5%;
+                background-color: rgba(211, 211, 211, 0.3);
+                padding: 10px;
+                border-radius: 5px;
+                font-size: 24px;
+            ">
                 {x}% of {y} is <strong>{result}</strong>
             </div>
         """, unsafe_allow_html=True)
@@ -21,7 +28,14 @@ def calculate_what_percent():
     if st.button("Calculate X is what percent of Y"):
         result = (x / y) * 100
         st.markdown(f"""
-            <div style="border: 2px solid #4CAF50; padding: 10px; border-radius: 5px; font-size: 24px;">
+            <div style="
+                border-bottom: 4px solid #4CAF50;
+                border-bottom-width: 12.5%;
+                background-color: rgba(211, 211, 211, 0.3);
+                padding: 10px;
+                border-radius: 5px;
+                font-size: 24px;
+            ">
                 {x} is <strong>{result}%</strong> of {y}
             </div>
         """, unsafe_allow_html=True)
@@ -34,7 +48,14 @@ def calculate_percentage_change():
     if st.button("Calculate percentage change from X to Y"):
         result = ((y - x) / x) * 100
         st.markdown(f"""
-            <div style="border: 2px solid #4CAF50; padding: 10px; border-radius: 5px; font-size: 24px;">
+            <div style="
+                border-bottom: 4px solid #4CAF50;
+                border-bottom-width: 12.5%;
+                background-color: rgba(211, 211, 211, 0.3);
+                padding: 10px;
+                border-radius: 5px;
+                font-size: 24px;
+            ">
                 The percentage change from {x} to {y} is <strong>{result}%</strong>
             </div>
         """, unsafe_allow_html=True)
@@ -47,7 +68,14 @@ def calculate_x_is_what_percent_of_y():
     if st.button("Calculate X is what % of Y"):
         result = (x / y) * 100
         st.markdown(f"""
-            <div style="border: 2px solid #4CAF50; padding: 10px; border-radius: 5px; font-size: 24px;">
+            <div style="
+                border-bottom: 4px solid #4CAF50;
+                border-bottom-width: 12.5%;
+                background-color: rgba(211, 211, 211, 0.3);
+                padding: 10px;
+                border-radius: 5px;
+                font-size: 24px;
+            ">
                 {x} is <strong>{result}%</strong> of {y}
             </div>
         """, unsafe_allow_html=True)
