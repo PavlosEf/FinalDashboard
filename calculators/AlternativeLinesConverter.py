@@ -14,15 +14,15 @@ class OddsResult:
     """
     Stores the calculation results for odds comparison across different lines.
     """
-    kaizen_line: float
-    kaizen_odds: float
-    comp_at_kaizen_line: float
+    our_line: float
+    our_odds: float
+    comp_at_our_line: float
     difference_percentage: float
     status: str
 
 class DifferentLinesCalculator:
     """
-    Calculator for analyzing odds differences between Kaizen and competition
+    Calculator for analyzing odds differences between Our and competition
     when they have different lines using pattern matching.
     """
 
@@ -52,10 +52,10 @@ class DifferentLinesCalculator:
             return pattern[index - 1]
         return odds  # Return the same odds if at boundary
 
-    def calculate_competition_odds(self, kaizen_line: float, kaizen_odds: float,
+    def calculate_competition_odds(self, our_line: float, our_odds: float,
                                    comp_line: float, comp_odds: float, direction: str) -> float:
-        """Calculates the competition's odds adjusted to the Kaizen line."""
-        line_diff = int(kaizen_line - comp_line)
+        """Calculates the competition's odds adjusted to the Our line."""
+        line_diff = int(our_line - comp_line)
         step_up = line_diff > 0 if direction == "over" else line_diff < 0
 
         # Find the closest pattern to comp_odds
@@ -69,9 +69,9 @@ class DifferentLinesCalculator:
 
         return current_odds
 
-    def calculate_difference(self, kaizen_odds: float, comp_odds: float) -> float:
-        """Calculates the percentage difference between Kaizen and competition odds."""
-        return ((1 / kaizen_odds) - (1 / comp_odds)) * 100
+    def calculate_difference(self, our_odds: float, comp_odds: float) -> float:
+        """Calculates the percentage difference between Our and competition odds."""
+        return ((1 / our_odds) - (1 / comp_odds)) * 100
 
     def get_status(self, difference: float) -> str:
         """Determines the status based on the calculated difference percentage."""
@@ -82,18 +82,18 @@ class DifferentLinesCalculator:
         else:
             return "Off 1"
 
-    def calculate(self, kaizen_line: float, kaizen_odds: float,
+    def calculate(self, our_line: float, our_odds: float,
                    comp_line: float, comp_odds: float, direction: str) -> OddsResult:
         """Performs the complete calculation and returns a result object."""
-        comp_at_kaizen = self.calculate_competition_odds(
-            kaizen_line, kaizen_odds, comp_line, comp_odds, direction)
-        difference = self.calculate_difference(kaizen_odds, comp_at_kaizen)
+        comp_at_our = self.calculate_competition_odds(
+            our_line, our_odds, comp_line, comp_odds, direction)
+        difference = self.calculate_difference(our_odds, comp_at_our)
         status = self.get_status(difference)
 
         return OddsResult(
-            kaizen_line=kaizen_line,
-            kaizen_odds=kaizen_odds,
-            comp_at_kaizen_line=comp_at_kaizen,
+            our_line=our_line,
+            our_odds=our_odds,
+            comp_at_our_line=comp_at_our,
             difference_percentage=difference,
             status=status
         )
@@ -111,9 +111,9 @@ def run():
     col1, col2 = st.columns(2)
 
     with col1:
-        st.subheader("Kaizen Data")
-        kaizen_line = st.number_input("Kaizen Line", value=0.0, step=0.5)
-        kaizen_odds = st.number_input("Kaizen Odds", value=1.0, min_value=1.0, step=0.01)
+        st.subheader("Our Data")
+        our_line = st.number_input("Our Line", value=0.0, step=0.5)
+        our_odds = st.number_input("Our Odds", value=1.0, min_value=1.0, step=0.01)
 
     with col2:
         st.subheader("Competition Data")
@@ -128,8 +128,8 @@ def run():
         try:
             # Calculate results
             result = calculator.calculate(
-                kaizen_line=kaizen_line,
-                kaizen_odds=kaizen_odds,
+                our_line=our_line,
+                our_odds=our_odds,
                 comp_line=comp_line,
                 comp_odds=comp_odds,
                 direction=direction
@@ -142,11 +142,11 @@ def run():
             # Display main results
             col1, col2 = st.columns(2)
             with col1:
-                st.metric("Our Line", f"{result.kaizen_line}")
-                st.metric("Our Odds", f"{result.kaizen_odds}")
+                st.metric("Our Line", f"{result.our_line}")
+                st.metric("Our Odds", f"{result.our_odds}")
 
             with col2:
-                st.metric("Competition at Our Line", f"{result.comp_at_kaizen_line:.3f}")
+                st.metric("Competition at Our Line", f"{result.comp_at_our_line:.3f}")
                 st.metric("Difference", f"{result.difference_percentage:.2f}%")
 
             # Display status with appropriate color
