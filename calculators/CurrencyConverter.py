@@ -8,6 +8,7 @@ FLAGS_FOLDER = "Flags"
 
 # Currency to country mapping
 CURRENCY_TO_COUNTRY = {
+    "EUR": {"name": "Euro", "flag": "EUR.png"},
     "ARS": {"name": "Argentina", "flag": "AR.png"},
     "BGN": {"name": "Bulgaria", "flag": "BG.png"},
     "BRL": {"name": "Brazil", "flag": "BR.png"},
@@ -16,8 +17,7 @@ CURRENCY_TO_COUNTRY = {
     "COP": {"name": "Colombia", "flag": "CO.png"},
     "CZK": {"name": "Czech Republic", "flag": "CZ.png"},
     "DKK": {"name": "Denmark", "flag": "DK.png"},
-    "USD": {"name": "Ecuador", "flag": "EC.png"},  # Ecuador uses USD
-    "EUR": {"name": "Euro", "flag": "EUR.png"},
+    "USD": {"name": "Ecuador", "flag": "EC.png"},  # Ecuador uses USD    
     "MXN": {"name": "Mexico", "flag": "MX.png"},
     "NGN": {"name": "Nigeria", "flag": "Nigeria.png"},
     "PEN": {"name": "Peru", "flag": "PE.png"},
