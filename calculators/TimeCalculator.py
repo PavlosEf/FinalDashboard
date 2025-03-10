@@ -1,4 +1,3 @@
-
 import streamlit as st
 from datetime import datetime
 import pytz
@@ -38,32 +37,33 @@ def display_flag(flag_file):
     if os.path.exists(flag_path):
         return Image.open(flag_path)
     else:
-        st.warning(f"Flag for {flag_file} not found.")
-        return None
+        return None  # Don't display warnings, just skip if flag is missing
 
 def run():
-    st.title("World Clock 🌍")
+    st.title("🌍 World Clock")
+
+    # Auto-refresh every 5 seconds
+    st.markdown("#### Refreshing every 5 seconds...")
+    time.sleep(5)  # Adds a delay before refresh
 
     # Display live clock for each country
-    while True:
-        for country, data in COUNTRY_TO_TIMEZONE.items():
-            timezone = data["timezone"]
-            flag_file = data["flag"]
-            
-            # Create columns for flag, country name, and time
-            col1, col2, col3 = st.columns([1, 3, 2])
-            with col1:
-                flag = display_flag(flag_file)
-                if flag:
-                    st.image(flag, width=30)
-            with col2:
-                st.write(f"**{country}**")
-            with col3:
-                st.write(f"`{get_current_time(timezone)}`")
+    for country, data in COUNTRY_TO_TIMEZONE.items():
+        timezone = data["timezone"]
+        flag_file = data["flag"]
         
-        # Add a small delay to refresh the clock
-        time.sleep(1)
-        st.experimental_rerun()
+        # Create columns for flag, country name, and time
+        col1, col2, col3 = st.columns([1, 3, 2])
+        with col1:
+            flag = display_flag(flag_file)
+            if flag:
+                st.image(flag, width=30)
+        with col2:
+            st.write(f"**{country}**")
+        with col3:
+            st.write(f"`{get_current_time(timezone)}`")
+
+    # Auto-refresh using Streamlit's rerun mechanism
+    st.experimental_rerun()
 
 if __name__ == "__main__":
     run()
