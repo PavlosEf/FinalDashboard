@@ -3,7 +3,7 @@ import calculators.OffPricesCalculator as OffPricesCalculator
 import calculators.SurebetCalculator as SurebetCalculator
 import calculators.TopPriceBetfairCalculator as TopPriceBetfairCalculator
 import calculators.MarginsRemoval as MarginsRemoval
-import calculators.DifferentLines as AlternativeLinesConverter
+import calculators.AlternativeLinesConverter as AlternativeLinesConverter
 import calculators.GeneralTab1 as GeneralTab1
 import calculators.GeneralTab2 as GeneralTab2
 
@@ -74,4 +74,4 @@ elif selected_tool == "General Tab 1":
     GeneralTab1.run()
 
 elif selected_tool == "General Tab 2":
-    GeneralTab2.run()
+    GeneralTab2.run() 
