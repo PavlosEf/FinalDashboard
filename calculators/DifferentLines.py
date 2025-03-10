@@ -63,43 +63,47 @@ def run():
     st.title("Different Lines Calculator")
 
     # Styling Fixes
-    st.markdown("""
-        <style>
-            /* Input Field Styling */
-            input[type="number"] {
-                width: 100% !important;
-                max-width: 200px !important;
-                background-color: #EAEAEA !important;
-                color: #000000 !important;
-                caret-color: #000000 !important;
-                padding: 5px !important;
-                border-radius: 5px;
-                border: 1px solid #CCCCCC !important;
-            }
+   # Improved Result Box with Light Blue Background
+st.markdown(
+    """
+    <style>
+        .result-container {
+            background-color: #EFF6FC; /* Light Blue Background */
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #B3D7FF;
+            text-align: left;
+        }
+        .result-container h4 {
+            text-decoration: underline;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .result-container p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        .green-text {
+            color: #008000;
+            font-weight: bold;
+        }
+        .bold-text {
+            font-weight: bold;
+        }
+    </style>
+    <div class="result-container">
+        <h4>Calculation Results</h4>
+        <p>Kaizen Stakes: <span class="bold-text">{result.kaizen_line:.1f}€</span></p>
+        <p>Competition Stakes: <span class="bold-text">{result.comp_at_kaizen_line:.1f}€</span></p>
+        <p>Total Stake: <span class="bold-text">{result.kaizen_odds:.1f}€</span></p>
+        <p>Profit Kaizen: <span class="green-text">{result.difference_percentage:.2f}€</span></p>
+        <p>Profit Competition: <span class="green-text">{result.difference_percentage:.2f}€</span></p>
+        <p>Arbitrage: <span class="green-text">{result.difference_percentage:.2f}%</span></p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-            /* Result Box Styling */
-            .result-box {
-                background-color: #FFD700 !important;
-                color: #000000 !important;
-                padding: 12px;
-                border-radius: 8px;
-                text-align: center;
-                font-weight: bold;
-                border: 1px solid #000000;
-                margin-top: 15px;
-            }
-
-            /* Status Box Styling */
-            .status-box {
-                font-size: 18px;
-                padding: 12px;
-                text-align: center;
-                border-radius: 8px;
-                font-weight: bold;
-                color: white;
-            }
-        </style>
-    """, unsafe_allow_html=True)
 
     # Initialize Calculator
     calculator = DifferentLinesCalculator()
