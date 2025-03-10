@@ -3,7 +3,7 @@ from datetime import datetime
 import pytz
 from PIL import Image
 import os
-from streamlit_autorefresh import st_autorefresh  # ✅ Fix: Use autorefresh
+
 
 # Path to the flags folder
 FLAGS_FOLDER = "Flags"
