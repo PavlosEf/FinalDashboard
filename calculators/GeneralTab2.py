@@ -56,9 +56,6 @@ class DifferentLinesCalculator:
             status=status
         )
 
-# Streamlit Interface
-st.set_page_config(page_title="Different Lines Calculator", layout="wide")
-
 def run():
     st.title("Different Lines Calculator")
 
@@ -78,25 +75,24 @@ def run():
             }
 
             /* Result Box Styling */
-            .result-box {
-                background-color: #FFD700 !important;
-                color: #000000 !important;
-                padding: 12px;
+            .result-container {
+                background-color: #EFF6FC; /* Light Blue Background */
+                padding: 15px;
                 border-radius: 8px;
-                text-align: center;
-                font-weight: bold;
-                border: 1px solid #000000;
-                margin-top: 15px;
+                border: 1px solid #B3D7FF;
+                text-align: left;
             }
-
-            /* Status Box Styling */
-            .status-box {
-                font-size: 18px;
-                padding: 12px;
-                text-align: center;
-                border-radius: 8px;
+            .result-container h4 {
+                text-decoration: underline;
                 font-weight: bold;
-                color: white;
+                margin-bottom: 10px;
+            }
+            .green-text {
+                color: #008000;
+                font-weight: bold;
+            }
+            .bold-text {
+                font-weight: bold;
             }
         </style>
     """, unsafe_allow_html=True)
@@ -121,24 +117,16 @@ def run():
             result = calculator.calculate(kaizen_line, kaizen_odds, comp_line, comp_odds)
 
             st.subheader("Results")
-            col1, col2 = st.columns(2)
-            with col1:
-                st.write(f"**Our Line:** {result.kaizen_line}")
-                st.write(f"**Our Odds:** {result.kaizen_odds}")
-
-            with col2:
-                st.write(f"**Competition at Our Line:** {result.comp_at_kaizen_line:.3f}")
-                st.write(f"**Difference:** {result.difference_percentage:.2f}%")
-
-            # Status Box Color
-            status_colors = {"OK": "#008000", "Off 2": "#FFA500", "Off 1": "#FF0000"}
-            status_color = status_colors.get(result.status, "gray")
-
-            # Display Status Box
             st.markdown(
                 f"""
-                <div class="status-box" style="background-color: {status_color};">
-                    Status: {result.status}
+                <div class="result-container">
+                    <h4>Calculation Results</h4>
+                    <p>Kaizen Stakes: <span class="bold-text">{result.kaizen_line:.1f}€</span></p>
+                    <p>Competition Stakes: <span class="bold-text">{result.comp_at_kaizen_line:.1f}€</span></p>
+                    <p>Total Stake: <span class="bold-text">{result.kaizen_odds:.1f}€</span></p>
+                    <p>Profit Kaizen: <span class="green-text">{result.difference_percentage:.2f}€</span></p>
+                    <p>Profit Competition: <span class="green-text">{result.difference_percentage:.2f}€</span></p>
+                    <p>Arbitrage: <span class="green-text">{result.difference_percentage:.2f}%</span></p>
                 </div>
                 """,
                 unsafe_allow_html=True
@@ -150,7 +138,6 @@ def run():
         except Exception as e:
             st.error(f"Error: {str(e)}")
 
+# Ensure the script runs correctly
 if __name__ == "__main__":
     run()
-
-
