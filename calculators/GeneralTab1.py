@@ -30,10 +30,13 @@ def calculate_percentage_change():
 def run():
     st.title("Percentage Calculator")
     
-    option = st.selectbox(
-        "Choose a calculation:",
-        ("What is X% of Y?", "X is what percent of Y?", "Percentage increase/decrease from X to Y")
-    )
+    # Use columns to constrain the dropdown width to 30%
+    col1, col2 = st.columns([0.3, 0.7])
+    with col1:
+        option = st.selectbox(
+            "Choose a calculation:",
+            ("What is X% of Y?", "X is what percent of Y?", "Percentage increase/decrease from X to Y")
+        )
     
     if option == "What is X% of Y?":
         calculate_percentage_of()
