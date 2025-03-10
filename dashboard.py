@@ -7,6 +7,7 @@ import calculators.AlternativeLinesConverter as AlternativeLinesConverter
 import calculators.PercentageCalculations as PercentageCalculations
 import calculators.CurrencyConverter as CurrencyConverter 
 import calculators.GeneralTab2 as GeneralTab2
+import calculators.TimeCalculator as TimeCalculator
 
 # Set page configuration
 st.set_page_config(
@@ -52,6 +53,7 @@ with st.sidebar:
             "Alternative Lines Converter",
             "Percentage (%) Calculations",
             "Currency Converter",
+            "Current Time Calculator",
             "General Tab 2"
         ]
     )
@@ -78,5 +80,8 @@ elif selected_tool == "Percentage (%) Calculations":
 elif selected_tool == "Currency Converter":  # New option
     CurrencyConverter.run()    
 
+elif selected_tool == "Current Time Calculator":  # New option
+    TimeCalculator.run()   
+    
 elif selected_tool == "General Tab 2":
     GeneralTab2.run() 
