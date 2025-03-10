@@ -3,25 +3,12 @@ import streamlit as st
 def run():
     st.title("Percentage Calculator")
 
-    # Initialize session state to store values
-    if "percent_x" not in st.session_state:
-        st.session_state["percent_x"] = ""
-    if "percent_y" not in st.session_state:
-        st.session_state["percent_y"] = ""
-    if "percent_result" not in st.session_state:
-        st.session_state["percent_result"] = ""
-
-    if "what_percent_x" not in st.session_state:
-        st.session_state["what_percent_x"] = ""
-    if "what_percent_y" not in st.session_state:
-        st.session_state["what_percent_y"] = ""
-    if "what_percent_result" not in st.session_state:
-        st.session_state["what_percent_result"] = ""
-
-    if "increase_x" not in st.session_state:
-        st.session_state["increase_x"] = ""
-    if "increase_y" not in st.session_state:
-        st.session_state["increase_result"] = ""
+    # Initialize session state variables
+    for key in ["percent_x", "percent_y", "percent_result",
+                "what_percent_x", "what_percent_y", "what_percent_result",
+                "increase_x", "increase_y", "increase_result"]:
+        if key not in st.session_state:
+            st.session_state[key] = ""
 
     # Function to calculate: "What is X% of Y?"
     def calculate_percent_of():
@@ -92,11 +79,11 @@ def run():
     st.markdown('<div class="calculator-box">', unsafe_allow_html=True)
     col1, col2, col3, col4, col5 = st.columns([2, 1, 2, 2, 1])
     with col1:
-        st.session_state["percent_x"] = st.text_input("", st.session_state["percent_x"], key="percent_x", placeholder="X%", label_visibility="collapsed")
+        percent_x = st.text_input("", key="percent_x", placeholder="X%", label_visibility="collapsed")
     with col2:
         st.markdown("<p style='font-size:18px; text-align:center;'>%</p>", unsafe_allow_html=True)
     with col3:
-        st.session_state["percent_y"] = st.text_input("", st.session_state["percent_y"], key="percent_y", placeholder="Y", label_visibility="collapsed")
+        percent_y = st.text_input("", key="percent_y", placeholder="Y", label_visibility="collapsed")
     with col4:
         st.button("CALCULATE", on_click=calculate_percent_of, use_container_width=True)
     with col5:
@@ -108,11 +95,11 @@ def run():
     st.markdown('<div class="calculator-box">', unsafe_allow_html=True)
     col1, col2, col3, col4, col5 = st.columns([2, 3, 2, 2, 1])
     with col1:
-        st.session_state["what_percent_x"] = st.text_input("", st.session_state["what_percent_x"], key="what_percent_x", placeholder="X", label_visibility="collapsed")
+        what_percent_x = st.text_input("", key="what_percent_x", placeholder="X", label_visibility="collapsed")
     with col2:
         st.markdown("<p style='font-size:18px; text-align:center;'>is what percent of</p>", unsafe_allow_html=True)
     with col3:
-        st.session_state["what_percent_y"] = st.text_input("", st.session_state["what_percent_y"], key="what_percent_y", placeholder="Y", label_visibility="collapsed")
+        what_percent_y = st.text_input("", key="what_percent_y", placeholder="Y", label_visibility="collapsed")
     with col4:
         st.button("CALCULATE", on_click=calculate_what_percent, use_container_width=True)
     with col5:
@@ -126,15 +113,14 @@ def run():
     with col1:
         st.markdown("<p style='font-size:18px; text-align:right;'>from</p>", unsafe_allow_html=True)
     with col2:
-        st.session_state["increase_x"] = st.text_input("", st.session_state["increase_x"], key="increase_x", placeholder="X", label_visibility="collapsed")
+        increase_x = st.text_input("", key="increase_x", placeholder="X", label_visibility="collapsed")
     with col3:
         st.markdown("<p style='font-size:18px; text-align:right;'>to</p>", unsafe_allow_html=True)
     with col4:
-        st.session_state["increase_y"] = st.text_input("", st.session_state["increase_y"], key="increase_y", placeholder="Y", label_visibility="collapsed")
+        increase_y = st.text_input("", key="increase_y", placeholder="Y", label_visibility="collapsed")
     with col5:
         st.button("CALCULATE", on_click=calculate_percentage_change, use_container_width=True)
     with col6:
         st.text_input("", st.session_state["increase_result"], key="increase_result_display", label_visibility="collapsed", disabled=True)
 
     st.markdown('</div>', unsafe_allow_html=True)
-
