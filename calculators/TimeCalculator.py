@@ -60,9 +60,6 @@ def run():
             with col3:
                 st.write(f"`{get_current_time(timezone)}`")
         
-        # Add a small delay to refresh the clock
-        time.sleep(1)
-        st.experimental_rerun()
 
 if __name__ == "__main__":
     run()
