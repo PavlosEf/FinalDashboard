@@ -4,6 +4,10 @@ import pytz
 from PIL import Image
 import os
 
+st.markdown(
+    """<meta http-equiv="refresh" content="5">""",
+    unsafe_allow_html=True
+)
 
 # Path to the flags folder
 FLAGS_FOLDER = "Flags"
