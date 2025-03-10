@@ -64,5 +64,58 @@ def run():
         except ValueError:
             st.session_state["is_percent_result"] = "Invalid Input"
 
-if __name__ == "__main__":
-    run()
+    # ✅ UI: Input Fields & Buttons for Each Calculation
+    st.subheader("1️⃣ What is X% of Y?")
+    col1, col2, col3 = st.columns([2, 2, 1])
+    with col1:
+        st.session_state["percent_find_x"] = st.text_input(" ", st.session_state["percent_find_x"], key="percent_find_x", placeholder="Enter %")
+    with col2:
+        st.session_state["percent_find_y"] = st.text_input(" ", st.session_state["percent_find_y"], key="percent_find_y", placeholder="Enter Value")
+    with col3:
+        st.button("Calculate", on_click=calculate_percent_of)
+
+    if st.session_state["percent_result"]:
+        st.markdown(f"**Result:** {st.session_state['percent_find_x']}% of {st.session_state['percent_find_y']} = **{st.session_state['percent_result']}**")
+
+    st.divider()
+
+    st.subheader("2️⃣ X is what percent of Y?")
+    col1, col2, col3 = st.columns([2, 2, 1])
+    with col1:
+        st.session_state["percent_of_x"] = st.text_input(" ", st.session_state["percent_of_x"], key="percent_of_x", placeholder="Enter X")
+    with col2:
+        st.session_state["percent_of_y"] = st.text_input(" ", st.session_state["percent_of_y"], key="percent_of_y", placeholder="Enter Y")
+    with col3:
+        st.button("Calculate", on_click=calculate_what_percent)
+
+    if st.session_state["percent_of_result"]:
+        st.markdown(f"**Result:** {st.session_state['percent_of_x']} is **{st.session_state['percent_of_result']}** of {st.session_state['percent_of_y']}")
+
+    st.divider()
+
+    st.subheader("3️⃣ Percentage Increase/Decrease")
+    col1, col2, col3 = st.columns([2, 2, 1])
+    with col1:
+        st.session_state["increase_x"] = st.text_input(" ", st.session_state["increase_x"], key="increase_x", placeholder="Start Value")
+    with col2:
+        st.session_state["increase_z"] = st.text_input(" ", st.session_state["increase_z"], key="increase_z", placeholder="End Value")
+    with col3:
+        st.button("Calculate", on_click=calculate_percentage_increase)
+
+    if st.session_state["increase_result"]:
+        st.markdown(f"**Result:** Change from {st.session_state['increase_x']} to {st.session_state['increase_z']} = **{st.session_state['increase_result']}**")
+
+    st.divider()
+
+    st.subheader("4️⃣ X is Z% of what?")
+    col1, col2, col3 = st.columns([2, 2, 1])
+    with col1:
+        st.session_state["is_percent_x"] = st.text_input(" ", st.session_state["is_percent_x"], key="is_percent_x", placeholder="Enter X")
+    with col2:
+        st.session_state["is_percent_z"] = st.text_input(" ", st.session_state["is_percent_z"], key="is_percent_z", placeholder="Enter %")
+    with col3:
+        st.button("Calculate", on_click=calculate_is_percent_of)
+
+    if st.session_state["is_percent_result"]:
+        st.markdown(f"**Result:** {st.session_state['is_percent_x']} is {st.session_state['is_percent_z']}% of **{st.session_state['is_percent_result']}**")
+
