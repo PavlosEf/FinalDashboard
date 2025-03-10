@@ -21,7 +21,7 @@ def calculate_percentage_change():
         result = ((y - x) / x) * 100
         st.write(f"The percentage change from {x} to {y} is {result}%")
 
-def main():
+def run():
     st.title("Percentage Calculator")
     
     option = st.selectbox(
@@ -37,4 +37,4 @@ def main():
         calculate_percentage_change()
 
 if __name__ == "__main__":
-    main()
+    run()
