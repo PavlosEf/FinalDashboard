@@ -3,7 +3,7 @@ from datetime import datetime
 import pytz
 from PIL import Image
 import os
-import time
+from streamlit_autorefresh import st_autorefresh  # ✅ Fix: Use autorefresh
 
 # Path to the flags folder
 FLAGS_FOLDER = "Flags"
@@ -37,20 +37,19 @@ def display_flag(flag_file):
     if os.path.exists(flag_path):
         return Image.open(flag_path)
     else:
-        return None  # Don't display warnings, just skip if flag is missing
+        return None  # Skip flag if missing
 
 def run():
     st.title("🌍 World Clock")
 
-    # Auto-refresh every 5 seconds
-    st.markdown("#### Refreshing every 5 seconds...")
-    time.sleep(5)  # Adds a delay before refresh
+    # ✅ Fix: Automatically refresh every 5 seconds
+    st_autorefresh(interval=5000, key="clock_refresh")
 
     # Display live clock for each country
     for country, data in COUNTRY_TO_TIMEZONE.items():
         timezone = data["timezone"]
         flag_file = data["flag"]
-        
+
         # Create columns for flag, country name, and time
         col1, col2, col3 = st.columns([1, 3, 2])
         with col1:
@@ -61,9 +60,6 @@ def run():
             st.write(f"**{country}**")
         with col3:
             st.write(f"`{get_current_time(timezone)}`")
-
-    # Auto-refresh using Streamlit's rerun mechanism
-    st.experimental_rerun()
 
 if __name__ == "__main__":
     run()
