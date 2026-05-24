@@ -1,0 +1,3 @@
+nicegui
+pytz
+pandas  # (Include this if your calculators use it)
