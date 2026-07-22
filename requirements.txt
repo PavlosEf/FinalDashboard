@@ -1,3 +1,4 @@
-nicegui
+streamlit
+requests
+pillow
 pytz
-pandas  # (Include this if your calculators use it)

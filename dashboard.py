@@ -54,7 +54,9 @@ with st.sidebar:
             "Percentage (%) Calculations",
             "Currency Converter",
             "Current Time Calculator",
-            "General Tab 2"
+            "General Tab 2",
+            "Sports DB",
+            "Polymarket",
         ]
     )
 
@@ -84,4 +86,16 @@ elif selected_tool == "Current Time Calculator":  # New option
     TimeCalculator.run()   
     
 elif selected_tool == "General Tab 2":
-    GeneralTab2.run() 
+    GeneralTab2.run()
+
+elif selected_tool == "Sports DB":
+    st.header("Sports Database Dashboard")
+    st.write("Sports data warehouse and pricing models, running on the home PC.")
+    st.link_button("Open Sports DB Dashboard →", "https://pkot.tailf37e23.ts.net/sportsdb")
+    st.caption("Only reachable while the home PC is on. You'll be asked for its password.")
+
+elif selected_tool == "Polymarket":
+    st.header("Polymarket Intelligence Dashboard")
+    st.write("Prediction market tracker, running on the home PC.")
+    st.link_button("Open Polymarket Dashboard →", "https://pkot.tailf37e23.ts.net/polymarket")
+    st.caption("Only reachable while the home PC is on. You'll be asked for its password.")
